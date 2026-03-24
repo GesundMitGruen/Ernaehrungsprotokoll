@@ -620,15 +620,19 @@
     @media (max-width: 900px){
       .hero{
         flex-wrap:wrap;
-        gap:16px;
+        gap:14px;
+      }
+      .hero-content{
+        flex:1 1 100%;
       }
       .hero-brand{
+        width:100%;
         margin-left:0;
-        justify-content:flex-start;
+        justify-content:center;
       }
       .hero-brand img{
-        width:140px;
-        max-width:140px;
+        width:160px;
+        max-width:160px;
       }
     }
 
@@ -782,6 +786,7 @@
     const feelingPresets = ['Zufrieden', 'Sehr gut', 'Erfrischt', 'Müde', 'Völlegefühl', 'Übel', 'Blähungen', 'Schlechtes Gewissen'];
 
     let activeTextTarget = null;
+    let activeTextTargetKind = null;
     let activeDayId = null;
 
     let state = {
@@ -1177,11 +1182,11 @@
             </div>
             <div class="col-6">
               <label>Motivation</label>
-              <input value="${escapeHtml(item.motivation || '')}" placeholder="z. B. Hunger oder Appetit" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','motivation',this.value)" onfocus="activeTextTarget=this" />
+              <input value="${escapeHtml(item.motivation || '')}" placeholder="z. B. Hunger oder Appetit" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','motivation',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'" />
             </div>
             <div class="col-6">
               <label>Anmerkungen</label>
-              <input value="${escapeHtml(item.notes || '')}" placeholder="z. B. gut vertragen oder Völlegefühl" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','notes',this.value)" onfocus="activeTextTarget=this" />
+              <input value="${escapeHtml(item.notes || '')}" placeholder="z. B. gut vertragen oder Völlegefühl" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','notes',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'" />
             </div>
           </div>
         </div>
@@ -1212,11 +1217,11 @@
             </div>
             <div class="col-6">
               <label>Motivation</label>
-              <input value="${escapeHtml(item.motivation || '')}" placeholder="z. B. Durst oder Gewohnheit" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','motivation',this.value)" onfocus="activeTextTarget=this" />
+              <input value="${escapeHtml(item.motivation || '')}" placeholder="z. B. Durst oder Gewohnheit" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','motivation',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'" />
             </div>
             <div class="col-6">
               <label>Anmerkungen</label>
-              <input value="${escapeHtml(item.notes || '')}" placeholder="z. B. gut vertragen oder aufgebläht" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','notes',this.value)" onfocus="activeTextTarget=this" />
+              <input value="${escapeHtml(item.notes || '')}" placeholder="z. B. gut vertragen oder aufgebläht" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','notes',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'" />
             </div>
           </div>
         </div>
@@ -1363,7 +1368,7 @@
               <div class="row">
                 <div class="col-12">
                   <label>Uhrzeit / Zeitraum</label>
-                  <input value="${escapeHtml(entry.time)}" inputmode="numeric" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this" />
+                  <input value="${escapeHtml(entry.time)}" inputmode="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this; activeTextTargetKind='time'" />
                   <div class="inline-help">Erlaubt sind z. B. 08:30, 08:30-09:15 oder 8-9.</div>
                   <div class="field-error">Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.</div>
                 </div>
@@ -1534,12 +1539,20 @@
       const feelingWrap = document.getElementById('feelingChips');
 
       motivationWrap.innerHTML = motivationPresets.map(text => `<span class="chip" onclick="insertPreset('${text.replaceAll("'", "\\'")}','motivation')">${text}</span>`).join('');
-      feelingWrap.innerHTML = feelingPresets.map(text => `<span class="chip" onclick="insertPreset('${text.replaceAll("'", "\\'")}','feeling')">${text}</span>`).join('');
+      feelingWrap.innerHTML = feelingPresets.map(text => `<span class="chip" onclick="insertPreset('${text.replaceAll("'", "\\'")}','notes')">${text}</span>`).join('');
     }
 
-    function insertPreset(text){
-      if (!activeTextTarget) {
-        setStatus('Bitte tippe zuerst in ein Feld bei einer Speise oder einem Getränk.');
+    function insertPreset(text, presetType){
+      if (!activeTextTarget || !activeTextTargetKind) {
+        setStatus('Bitte tippe zuerst in ein passendes Feld bei einer Speise oder einem Getränk.');
+        return;
+      }
+      if (activeTextTargetKind !== presetType) {
+        if (presetType === 'motivation'){
+          setStatus('Diese Schnellhilfe passt zum Feld Motivation.');
+        } else if (presetType === 'notes'){
+          setStatus('Diese Schnellhilfe passt zum Feld Anmerkungen.');
+        }
         return;
       }
       const current = activeTextTarget.value.trim();
