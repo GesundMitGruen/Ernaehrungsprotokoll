@@ -632,6 +632,23 @@
       }
     }
 
+
+    .input-invalid{
+      border-color:#d96b6b !important;
+      box-shadow:0 0 0 2px rgba(217,107,107,0.12);
+      background:#fff8f8;
+    }
+    .field-error{
+      margin-top:4px;
+      font-size:12px;
+      color:#b94a48;
+      line-height:1.35;
+      display:none;
+    }
+    .field-error.show{
+      display:block;
+    }
+
 </style>
 </head>
 <body>
@@ -807,15 +824,56 @@
         .trim();
     }
 
+    function isStrictValidTimeValue(value){
+      const raw = sanitizeTimeValue(value);
+      if (!raw) return true;
+
+      let match = raw.match(/^(\d{1,2}):(\d{2})(?:\s*-\s*(\d{1,2}):(\d{2}))?$/);
+      if (match){
+        const h1 = parseInt(match[1], 10);
+        const m1 = parseInt(match[2], 10);
+        if (h1 > 23 || m1 > 59) return false;
+        if (match[3] && match[4]){
+          const h2 = parseInt(match[3], 10);
+          const m2 = parseInt(match[4], 10);
+          if (h2 > 23 || m2 > 59) return false;
+        }
+        return true;
+      }
+
+      match = raw.match(/^(\d{1,2})(?:\s*-\s*(\d{1,2}))?$/);
+      if (match){
+        const h1 = parseInt(match[1], 10);
+        if (h1 > 23) return false;
+        if (match[2]){
+          const h2 = parseInt(match[2], 10);
+          if (h2 > 23) return false;
+        }
+        return true;
+      }
+
+      return false;
+    }
+
     function validateTimeInput(el){
       const value = sanitizeTimeValue(el.value);
       el.value = value;
-      if (!value || TIME_PATTERN.test(value)){
+      const valid = !value || (TIME_PATTERN.test(value) && isStrictValidTimeValue(value));
+
+      if (valid){
         el.setCustomValidity('');
+        el.classList.remove('input-invalid');
       } else {
         el.setCustomValidity('Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.');
+        el.classList.add('input-invalid');
       }
-      return el.checkValidity();
+
+      const errorEl = el.parentElement ? el.parentElement.querySelector('.field-error') : null;
+      if (errorEl){
+        errorEl.classList.toggle('show', !valid);
+      }
+
+      return valid;
     }
 
     function createEmptyDay(dateStr = null){
@@ -1305,8 +1363,9 @@
               <div class="row">
                 <div class="col-12">
                   <label>Uhrzeit / Zeitraum</label>
-                  <input value="${escapeHtml(entry.time)}" inputmode="numeric" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this" />
+                  <input value="${escapeHtml(entry.time)}" inputmode="numeric" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this" />
                   <div class="inline-help">Erlaubt sind z. B. 08:30, 08:30-09:15 oder 8-9.</div>
+                  <div class="field-error">Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.</div>
                 </div>
               </div>
 
@@ -1668,18 +1727,113 @@
       URL.revokeObjectURL(url);
     }
 
+    function hasInvalidTimeEntries(){
+      return (state.days || []).some(day =>
+        (day.entries || []).some(entry => !isStrictValidTimeValue(entry.time || ''))
+      );
+    }
+
     function exportJson(){
+      if (hasInvalidTimeEntries()){
+        alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+        return;
+      }
       const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.json`;
       download(fileName, JSON.stringify(normalizedData(), null, 2), 'application/json;charset=utf-8');
       setStatus('JSON-Datei exportiert.');
     }
 
+
     function csvEscape(value=''){
-      const v = String(value ?? '').replaceAll('"','""');
+      const normalized = String(value ?? '')
+        .normalize('NFC')
+        .replace(/\r\n/g, ' ')
+        .replace(/[\r\n]+/g, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+      const v = normalized.replaceAll('"','""');
       return `"${v}"`;
     }
 
+    function parseDateForCsv(dateStr){
+      if (!dateStr) return null;
+      const trimmed = String(dateStr).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)){
+        const [y,m,d] = trimmed.split('-').map(Number);
+        return new Date(y, m - 1, d);
+      }
+      if (/^\d{2}\.\d{2}\.\d{4}$/.test(trimmed)){
+        const [d,m,y] = trimmed.split('.').map(Number);
+        return new Date(y, m - 1, d);
+      }
+      return null;
+    }
+
+    function formatDateForCsv(dateStr){
+      const d = parseDateForCsv(dateStr);
+      if (!d || Number.isNaN(d.getTime())) return String(dateStr || '').trim();
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${day}.${month}.${year}`;
+    }
+
+    function timeSortValue(timeStr){
+      const raw = String(timeStr || '').trim().replace(/\s+/g, '');
+      if (!raw) return Number.MAX_SAFE_INTEGER;
+
+      let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
+      if (match){
+        return (parseInt(match[1], 10) * 60) + parseInt(match[2], 10);
+      }
+
+      match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
+      if (match){
+        return parseInt(match[1], 10) * 60;
+      }
+
+      return Number.MAX_SAFE_INTEGER - 1;
+    }
+
+    function formatTimeForCsv(timeStr){
+      const raw = String(timeStr || '').trim().replace(/\s+/g, '');
+      if (!raw) return '';
+
+      let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
+      if (match){
+        const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
+        const m1 = String(parseInt(match[2], 10)).padStart(2, '0');
+        if (match[3] && match[4]){
+          const h2 = String(parseInt(match[3], 10)).padStart(2, '0');
+          const m2 = String(parseInt(match[4], 10)).padStart(2, '0');
+          return `${h1}:${m1}-${h2}:${m2}`;
+        }
+        return `${h1}:${m1}`;
+      }
+
+      match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
+      if (match){
+        const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
+        if (match[2]){
+          const h2 = String(parseInt(match[2], 10)).padStart(2, '0');
+          return `${h1}:00-${h2}:00`;
+        }
+        return `${h1}:00`;
+      }
+
+      return raw.replace(/–/g, '-');
+    }
+
+    function daySortValue(dateStr){
+      const d = parseDateForCsv(dateStr);
+      return d && !Number.isNaN(d.getTime()) ? d.getTime() : Number.MAX_SAFE_INTEGER;
+    }
+
     function exportCsv(){
+      if (hasInvalidTimeEntries()){
+        alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+        return;
+      }
       const rows = [[
         'Name','Kunden-E-Mail','Datum','Tagesart','Uhrzeit / Zeitraum',
         'Bereich','Art / Bezeichnung','Menge','Einheit','Dauer','Dauer-Einheit',
@@ -1691,9 +1845,9 @@
         rows.push([
           state.clientName || '',
           state.clientEmail || '',
-          day.date || '',
+          formatDateForCsv(day.date || ''),
           day.dayType || '',
-          entry.time || '',
+          formatTimeForCsv(entry.time || ''),
           area,
           isSport ? (item.type || '') : (item.name || ''),
           isSport ? '' : (item.amount || ''),
@@ -1705,19 +1859,44 @@
         ]);
       }
 
-      (state.days || []).forEach(day => {
-        (day.entries || []).forEach(entry => {
-          const foods = (entry.foods || []).filter(item => String(item.name || '').trim() || String(item.amount || '').trim() || String(item.motivation || '').trim() || String(item.notes || '').trim());
-          const drinks = (entry.drinks || []).filter(item => String(item.name || '').trim() || String(item.amount || '').trim() || String(item.motivation || '').trim() || String(item.notes || '').trim());
-          const sports = (entry.sports || []).filter(item => String(item.type || '').trim() || String(item.duration || '').trim());
+      const sortedDays = [...(state.days || [])].sort((a, b) => {
+        const dateDiff = daySortValue(a.date) - daySortValue(b.date);
+        if (dateDiff !== 0) return dateDiff;
+        return String(a.dayType || '').localeCompare(String(b.dayType || ''), 'de');
+      });
+
+      sortedDays.forEach(day => {
+        const sortedEntries = [...(day.entries || [])].sort((a, b) => {
+          const timeDiff = timeSortValue(a.time) - timeSortValue(b.time);
+          if (timeDiff !== 0) return timeDiff;
+          return String(a.time || '').localeCompare(String(b.time || ''), 'de');
+        });
+
+        sortedEntries.forEach(entry => {
+          const foods = (entry.foods || []).filter(item =>
+            String(item.name || '').trim() ||
+            String(item.amount || '').trim() ||
+            String(item.motivation || '').trim() ||
+            String(item.notes || '').trim()
+          );
+          const drinks = (entry.drinks || []).filter(item =>
+            String(item.name || '').trim() ||
+            String(item.amount || '').trim() ||
+            String(item.motivation || '').trim() ||
+            String(item.notes || '').trim()
+          );
+          const sports = (entry.sports || []).filter(item =>
+            String(item.type || '').trim() ||
+            String(item.duration || '').trim()
+          );
 
           if (!foods.length && !drinks.length && !sports.length) {
             rows.push([
               state.clientName || '',
               state.clientEmail || '',
-              day.date || '',
+              formatDateForCsv(day.date || ''),
               day.dayType || '',
-              entry.time || '',
+              formatTimeForCsv(entry.time || ''),
               '',
               '',
               '',
@@ -1735,11 +1914,12 @@
         });
       });
 
-      const csv = rows.map(r => r.map(csvEscape).join(';')).join('\\n');
+      const csv = '\ufeff' + rows.map(r => r.map(csvEscape).join(';')).join('\n');
       const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
       download(fileName, csv, 'text/csv;charset=utf-8');
       setStatus('CSV-Datei exportiert.');
     }
+
 
     function buildMailBody(){
       const days = state.days || [];
@@ -1764,6 +1944,10 @@
     }
 
     function prepareMail(){
+      if (hasInvalidTimeEntries()){
+        alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+        return;
+      }
       const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
       const subject = encodeURIComponent(`Ernährungsprotokoll – ${state.clientName || 'Kunde'}`);
       const body = encodeURIComponent(buildMailBody());
