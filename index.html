@@ -730,6 +730,21 @@
       }
     }
 
+
+    .action-toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .action-toolbar > button{
+      flex:1 1 220px;
+    }
+    @media (max-width: 900px){
+      .action-toolbar > button{
+        flex:1 1 100%;
+      }
+    }
+
 </style>
 </head>
 <body>
@@ -778,7 +793,7 @@
     </section>
 
     <section class="card actions-card">
-     <div class="toolbar">
+     <div class="toolbar action-toolbar">
       <button id="addDayBtn">+ Neuen Tag hinzufügen</button>
       <button id="saveDraftBtn" class="secondary">Zwischenstand speichern</button>
       <button id="resetAllBtn" class="danger">Alles zurücksetzen</button>
