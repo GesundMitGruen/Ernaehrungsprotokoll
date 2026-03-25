@@ -695,6 +695,41 @@
       font-size:12px;
       color:var(--muted);
     }
+
+    .toolbar > button{
+      min-height:42px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .day-nav{
+      position:sticky;
+      top:0;
+      z-index:120;
+      background:var(--card);
+    }
+    .day-nav-list{
+      position:relative;
+      z-index:121;
+    }
+    @media (max-width: 900px){
+      .toolbar > button{
+        min-height:44px;
+      }
+      .day-nav{
+        z-index:160;
+      }
+      .day-nav-list{
+        z-index:161;
+      }
+      .inline-suggest-wrap{
+        z-index:40 !important;
+      }
+      .inline-suggest-menu{
+        z-index:41 !important;
+      }
+    }
+
 </style>
 </head>
 <body>
