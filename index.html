@@ -703,6 +703,16 @@
       font-size:12px;
       color:var(--muted);
     }
+
+    .mail-workflow-overlay{position:fixed;inset:0;background:rgba(35,48,60,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+    .mail-workflow-overlay.show{display:flex}
+    .mail-workflow-dialog{width:min(620px,100%);background:#fff;color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:22px}
+    .mail-workflow-dialog h3{margin:0 0 10px 0;font-size:24px;color:var(--brand-dark)}
+    .mail-workflow-dialog p{margin:0 0 10px 0;line-height:1.5}
+    .mail-workflow-file{margin:12px 0;padding:12px 14px;border-radius:14px;background:#f4f8fb;border:1px solid #d6e2ea;font-weight:700;word-break:break-word}
+    .mail-workflow-steps{margin:14px 0 8px 0;padding-left:18px}
+    .mail-workflow-steps li{margin:0 0 8px 0;line-height:1.45}
+    .mail-workflow-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 </style>
 </head>
 <body>
@@ -2092,22 +2102,42 @@
   }
 
 
-  function showMailAttachmentNotice(csvFileName){
-   const overlay = document.getElementById('mailAttachmentOverlay');
-   const fileNameEl = document.getElementById('mailAttachmentFileName');
-   if (fileNameEl) fileNameEl.textContent = csvFileName || 'ernaehrungsprotokoll.csv';
+  let pendingMailToOpen = null;
+  let pendingCsvFileName = null;
+  let pendingCsvContent = null;
+
+  function showMailWorkflowDialog(csvFileName, csvContent, mailUrl){
+   pendingCsvFileName = csvFileName || 'ernaehrungsprotokoll.csv';
+   pendingCsvContent = csvContent || '';
+   pendingMailToOpen = mailUrl || null;
+
+   const overlay = document.getElementById('mailWorkflowOverlay');
+   const fileNameEl = document.getElementById('mailWorkflowFileName');
+   if (fileNameEl) fileNameEl.textContent = pendingCsvFileName;
    if (overlay){
     overlay.classList.add('show');
     overlay.setAttribute('aria-hidden', 'false');
    }
   }
 
-  function hideMailAttachmentNotice(){
-   const overlay = document.getElementById('mailAttachmentOverlay');
+  function hideMailWorkflowDialog(){
+   const overlay = document.getElementById('mailWorkflowOverlay');
    if (overlay){
     overlay.classList.remove('show');
     overlay.setAttribute('aria-hidden', 'true');
    }
+  }
+
+  function downloadPendingCsv(){
+   if (!pendingCsvFileName || !pendingCsvContent) return;
+   download(pendingCsvFileName, pendingCsvContent, 'text/csv;charset=utf-8');
+   setStatus(`CSV-Datei heruntergeladen: ${pendingCsvFileName}`);
+  }
+
+  function openPendingMail(){
+   if (!pendingMailToOpen) return;
+   window.location.href = pendingMailToOpen;
+   setStatus('E-Mail geöffnet. Bitte hänge jetzt noch die heruntergeladene CSV-Datei an.');
   }
 
   function buildMailBody(csvFileName){
@@ -2143,19 +2173,15 @@
 
    const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
    const csv = buildCsvPayload();
-   download(csvFileName, csv, 'text/csv;charset=utf-8');
-   showMailAttachmentNotice(csvFileName);
 
    const daysWithEntries = countDaysWithEntries();
    const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
    const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
    const body = encodeURIComponent(buildMailBody(csvFileName));
+   const mailUrl = `mailto:${to}?subject=${subject}&body=${body}`;
 
-   setTimeout(() => {
-    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-   }, 250);
-
-   setStatus(`CSV-Datei heruntergeladen: ${csvFileName}. Bitte füge die Datei jetzt noch an.`);
+   showMailWorkflowDialog(csvFileName, csv, mailUrl);
+   setStatus('Bitte führe jetzt Schritt 1 und Schritt 2 nacheinander aus.');
   }
 
   function importJson(file){
@@ -2265,6 +2291,37 @@
    }, 120);
   });
 
+
+
+
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!target || typeof target.closest !== 'function') return;
+
+    if (target.closest('#mailWorkflowCloseBtn')){
+      event.preventDefault();
+      hideMailWorkflowDialog();
+      return;
+    }
+
+    if (target.closest('#mailWorkflowDownloadBtn')){
+      event.preventDefault();
+      downloadPendingCsv();
+      return;
+    }
+
+    if (target.closest('#mailWorkflowOpenMailBtn')){
+      event.preventDefault();
+      openPendingMail();
+      return;
+    }
+
+    const overlay = target.closest('#mailWorkflowOverlay');
+    if (overlay && event.target === overlay){
+      hideMailWorkflowDialog();
+    }
+  });
+
   if (!loadDraft()){
    state.days = [createEmptyDay()];
   }
@@ -2272,17 +2329,22 @@
   activeDayId = state.days[0]?.id || null;
   renderAll();
  </script>
-
- <div id="mailAttachmentOverlay" class="mail-attachment-overlay" aria-hidden="true">
-  <div class="mail-attachment-dialog" role="dialog" aria-modal="true" aria-labelledby="mailAttachmentTitle">
-   <h3 id="mailAttachmentTitle">Wichtiger letzter Schritt</h3>
-   <p>Bitte hänge jetzt die heruntergeladene CSV-Datei an Deine E-Mail an.</p>
-   <div class="mail-attachment-file" id="mailAttachmentFileName">ernaehrungsprotokoll.csv</div>
-   <p>Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.</p>
-   <div class="mail-attachment-actions">
-    <button type="button" id="mailAttachmentCloseBtn">Verstanden</button>
-   </div>
+  <div id="mailWorkflowOverlay" class="mail-workflow-overlay" aria-hidden="true">
+    <div class="mail-workflow-dialog" role="dialog" aria-modal="true" aria-labelledby="mailWorkflowTitle">
+      <h3 id="mailWorkflowTitle">E-Mail-Versand vorbereiten</h3>
+      <p>Bitte gehe die folgenden zwei Schritte nacheinander durch.</p>
+      <ol class="mail-workflow-steps">
+        <li><strong>CSV-Datei herunterladen</strong></li>
+        <li><strong>E-Mail öffnen</strong> und die heruntergeladene Datei an die vorbereitete Nachricht anhängen</li>
+      </ol>
+      <div class="mail-workflow-file" id="mailWorkflowFileName">ernaehrungsprotokoll.csv</div>
+      <p>Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.</p>
+      <div class="mail-workflow-actions">
+        <button type="button" id="mailWorkflowDownloadBtn" class="secondary">1. CSV herunterladen</button>
+        <button type="button" id="mailWorkflowOpenMailBtn" class="warning">2. E-Mail öffnen</button>
+        <button type="button" id="mailWorkflowCloseBtn">Schließen</button>
+      </div>
+    </div>
   </div>
- </div>
 </body>
 </html>
