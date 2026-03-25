@@ -649,7 +649,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    }
   }
 
-
   .input-invalid{
    border-color:#d96b6b !important;
    box-shadow:0 0 0 2px rgba(217,107,107,0.12);
@@ -736,7 +735,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
       }
     }
 
-
     .action-toolbar{
       display:flex;
       gap:10px;
@@ -750,7 +748,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
         flex:1 1 100%;
       }
     }
-
 
     body::before{
       content:"";
@@ -810,7 +807,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
      <div class="split">
       <div>
        <h2>Deine Angaben</h2>
-       <div class="muted">Bitte trage hier Deine Angaben ein und ergänze danach darunter die einzelnen Tage. Deine Eingaben werden lokal im Browser auf dem jeweils verwendeten Gerät gespeichert, bis Du sie versendest oder bewusst zurücksetzt. Bitte nutze für die Erfassung möglichst durchgehend dasselbe Gerät – also entweder einen PC oder ein Mobilgerät. Ein geräteübergreifendes Fortsetzen zwischen verschiedenen Geräten ist derzeit nicht möglich.</div>
+       <div class="muted">Bitte trage hier Deine Angaben ein und ergänze danach darunter die einzelnen Tage. Deine Eingaben werden lokal im Browser auf dem jeweils verwendeten Gerät gespeichert, bis Du sie versendest oder bewusst zurücksetzt. Bitte nutze für die Erfassung möglichst durchgehend dasselbe Gerät – also entweder einen PC oder ein Mobilgerät. Ein geräteübergreifendes Fortsetzen zwischen verschiedenen Geräten ist derzeit nicht möglich.<br><br>Wie Du Deine Angaben anschließend versenden kannst, findest Du weiter unten im Abschnitt „Export & Versand“.</div>
       </div>
      </div>
 
@@ -823,15 +820,9 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
        <label for="clientEmail">E-Mail</label>
        <input id="clientEmail" type="email" placeholder="kunde@example.de" />
       </div>
-      <div class="col-12">
-       <label for="consultantEmail">Empfänger-E-Mail</label>
-       <input id="consultantEmail" type="email" value="gesundmitgruen@gmail.com" readonly />
-       <div class="inline-help">Wenn Du auf „E-Mail vorbereiten“ klickst, wird Dein Mailprogramm geöffnet und die Nachricht an gesundmitgruen@gmail.com adressiert.</div>
-      </div>
      </div>
 
     </section>
-
 
     <section class="card actions-card">
      <div class="toolbar action-toolbar">
@@ -1418,7 +1409,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
      <button class="day-nav-item ${isActive ? 'active' : ''}" onclick="selectDay('${day.id}')">
       <span class="nav-title">Tag ${idx + 1}</span>
       <span class="nav-meta">${escapeHtml(formatDateDisplay(day.date))}</span>
-      <span class="nav-meta">${escapeHtml(day.dayType || 'ohne Tagesart')} · ${(day.entries || []).length} Einträge</span>
+      <span class="nav-meta">${escapeHtml(day.dayType || 'ohne Tagesart')} · ${formatEntryCountLabel((day.entries || []).length)}</span>
      </button>
     `;
    }).join('');
@@ -1626,6 +1617,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     .join(' | ');
   }
 
+
+  function formatEntryCountLabel(count){
+   return `${count} ${count === 1 ? 'Eintrag' : 'Einträge'}`;
+  }
+
   function renderSummary(){
    const days = [...(state.days || [])].sort((a, b) => compareDates(a.date, b.date));
    const entries = (state.days || []).flatMap(d => d.entries || []);
@@ -1688,7 +1684,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   function insertPreset(text, presetType){
    return;
   }
-
 
   function parseSuggestionValues(value){
    return String(value || '')
@@ -1881,7 +1876,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    setStatus('Aktuelle Eingaben wurden zurückgesetzt.');
   }
 
-
   function normalizeTextValue(value){
    return String(value ?? '')
     .normalize('NFC')
@@ -2012,7 +2006,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    return '\ufeff' + rows.map(r => r.map(csvEscape).join(';')).join('\n');
   }
 
-
   function normalizedData(){
    return {
     meta: {
@@ -2085,7 +2078,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    download(fileName, JSON.stringify(normalizedData(), null, 2), 'application/json;charset=utf-8');
    setStatus('JSON-Datei exportiert.');
   }
-
 
   function csvEscape(value=''){
    const normalized = String(value ?? '')
@@ -2217,7 +2209,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    ].filter(Boolean);
 
    days.slice().sort((a, b) => daySortValue(a.date) - daySortValue(b.date)).forEach(day => {
-    summaryLines.push(`${formatDateForCsv(day.date || '') || (day.date || 'ohne Datum')} | ${day.dayType || 'ohne Tagesart'} | ${(day.entries || []).length} Einträge`);
+    summaryLines.push(`${formatDateForCsv(day.date || '') || (day.date || 'ohne Datum')} | ${day.dayType || 'ohne Tagesart'} | ${formatEntryCountLabel((day.entries || []).length)}`);
    });
 
    return summaryLines.join('\n');
@@ -2304,7 +2296,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   window.loadPortalItem = loadPortalItem;
   window.deletePortalItem = deletePortalItem;
 
-
   document.addEventListener('DOMContentLoaded', () => {
    const mailAttachmentCloseBtn = document.getElementById('mailAttachmentCloseBtn');
    if (mailAttachmentCloseBtn){
@@ -2323,7 +2314,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     });
    }
   });
-
 
   document.addEventListener('pointerdown', (event) => {
    const option = event.target.closest('.inline-suggest-option');
