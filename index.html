@@ -660,14 +660,6 @@
    display:block;
   }
 
-  .mail-attachment-overlay{position:fixed;inset:0;background:rgba(35,48,60,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
-  .mail-attachment-overlay.show{display:flex}
-  .mail-attachment-dialog{width:min(560px,100%);background:#fff;color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:22px}
-  .mail-attachment-dialog h3{margin:0 0 10px 0;font-size:20px;color:var(--brand-dark)}
-  .mail-attachment-dialog p{margin:0 0 10px 0;line-height:1.5}
-  .mail-attachment-file{margin:12px 0;padding:12px 14px;border-radius:14px;background:#f4f8fb;border:1px solid #d6e2ea;font-weight:700;word-break:break-word}
-  .mail-attachment-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-
     .inline-suggest-wrap{position:relative; z-index:40}
     .inline-suggest-menu{
       position:absolute;
@@ -703,16 +695,6 @@
       font-size:12px;
       color:var(--muted);
     }
-
-    .mail-workflow-overlay{position:fixed;inset:0;background:rgba(35,48,60,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
-    .mail-workflow-overlay.show{display:flex}
-    .mail-workflow-dialog{width:min(620px,100%);background:#fff;color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:22px}
-    .mail-workflow-dialog h3{margin:0 0 10px 0;font-size:24px;color:var(--brand-dark)}
-    .mail-workflow-dialog p{margin:0 0 10px 0;line-height:1.5}
-    .mail-workflow-file{margin:12px 0;padding:12px 14px;border-radius:14px;background:#f4f8fb;border:1px solid #d6e2ea;font-weight:700;word-break:break-word}
-    .mail-workflow-steps{margin:14px 0 8px 0;padding-left:18px}
-    .mail-workflow-steps li{margin:0 0 8px 0;line-height:1.45}
-    .mail-workflow-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 </style>
 </head>
 <body>
@@ -806,18 +788,25 @@
 
     <section class="card">
      <h2>Export & Versand</h2>
-     <div class="muted">So funktioniert der Versand am einfachsten:</div>
+     <div class="muted">Bitte gehe die folgenden Schritte nacheinander durch:</div>
      <div class="footer-note" style="margin-top:8px;">
-      <strong>1.</strong> Klicke auf <strong>„E-Mail vorbereiten“</strong>.<br>
-      <strong>2.</strong> Die CSV-Datei wird automatisch heruntergeladen und Dein Mailprogramm wird vorbereitet.<br>
-      <strong>3.</strong> Füge die heruntergeladene CSV-Datei noch an die E-Mail an und sende sie danach ab.
+      <strong>1. CSV herunterladen</strong><br>
+      Klicke zuerst auf <strong>„1. CSV herunterladen“</strong>. Dadurch wird Deine Datei für den Versand gespeichert.
+     </div>
+     <div class="footer-note" style="margin-top:10px;">
+      <strong>2. E-Mail öffnen</strong><br>
+      Klicke danach auf <strong>„2. E-Mail öffnen“</strong>. Dein Mailprogramm wird mit einer vorbereiteten E-Mail an <strong>gesundmitgruen@gmail.com</strong> geöffnet.
+     </div>
+     <div class="footer-note" style="margin-top:10px;">
+      <strong>3. Datei anhängen und senden</strong><br>
+      Bitte hänge die zuvor heruntergeladene CSV-Datei an die vorbereitete E-Mail an und sende sie danach ab.
      </div>
      <div class="toolbar">
-      <button id="prepareMailBtn" class="warning">E-Mail vorbereiten</button>
-      <button id="exportCsvBtn" class="secondary">CSV exportieren</button>
+      <button id="downloadCsvBtn" class="secondary">1. CSV herunterladen</button>
+      <button id="openMailBtn" class="warning">2. E-Mail öffnen</button>
      </div>
      <div class="footer-note">
-      <strong>Alternative:</strong> Nutze <strong>„CSV exportieren“</strong>, wenn die automatische E-Mail-Erstellung auf Deinem Gerät nicht funktioniert, zum Beispiel weil Du kein lokal verknüpftes Mailprogramm verwendest und stattdessen über Web.de, GMX, Gmail oder andere Anbieter im Browser versendest.
+      <strong>Hinweis:</strong> Wenn sich kein Mailprogramm öffnet, kannst Du die heruntergeladene CSV-Datei auch manuell über Deinen E-Mail-Anbieter versenden, zum Beispiel über Web.de, GMX, Gmail oder andere Dienste.
      </div>
     </section>
    </aside>
@@ -2100,44 +2089,20 @@
    download(fileName, csv, 'text/csv;charset=utf-8');
    setStatus('CSV-Datei exportiert.');
   }
-
-
-  let pendingMailToOpen = null;
-  let pendingCsvFileName = null;
-  let pendingCsvContent = null;
-
-  function showMailWorkflowDialog(csvFileName, csvContent, mailUrl){
-   pendingCsvFileName = csvFileName || 'ernaehrungsprotokoll.csv';
-   pendingCsvContent = csvContent || '';
-   pendingMailToOpen = mailUrl || null;
-
-   const overlay = document.getElementById('mailWorkflowOverlay');
-   const fileNameEl = document.getElementById('mailWorkflowFileName');
-   if (fileNameEl) fileNameEl.textContent = pendingCsvFileName;
-   if (overlay){
-    overlay.classList.add('show');
-    overlay.setAttribute('aria-hidden', 'false');
+  function openPreparedMail(){
+   if (hasInvalidTimeEntries()){
+    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+    return;
    }
-  }
 
-  function hideMailWorkflowDialog(){
-   const overlay = document.getElementById('mailWorkflowOverlay');
-   if (overlay){
-    overlay.classList.remove('show');
-    overlay.setAttribute('aria-hidden', 'true');
-   }
-  }
+   const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
+   const daysWithEntries = countDaysWithEntries();
+   const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
+   const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
+   const body = encodeURIComponent(buildMailBody(csvFileName));
 
-  function downloadPendingCsv(){
-   if (!pendingCsvFileName || !pendingCsvContent) return;
-   download(pendingCsvFileName, pendingCsvContent, 'text/csv;charset=utf-8');
-   setStatus(`CSV-Datei heruntergeladen: ${pendingCsvFileName}`);
-  }
-
-  function openPendingMail(){
-   if (!pendingMailToOpen) return;
-   window.location.href = pendingMailToOpen;
-   setStatus('E-Mail geöffnet. Bitte hänge jetzt noch die heruntergeladene CSV-Datei an.');
+   window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+   setStatus('E-Mail geöffnet. Bitte hänge jetzt noch die zuvor heruntergeladene CSV-Datei an.');
   }
 
   function buildMailBody(csvFileName){
@@ -2173,15 +2138,18 @@
 
    const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
    const csv = buildCsvPayload();
+   download(csvFileName, csv, 'text/csv;charset=utf-8');
 
    const daysWithEntries = countDaysWithEntries();
    const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
    const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
    const body = encodeURIComponent(buildMailBody(csvFileName));
-   const mailUrl = `mailto:${to}?subject=${subject}&body=${body}`;
 
-   showMailWorkflowDialog(csvFileName, csv, mailUrl);
-   setStatus('Bitte führe jetzt Schritt 1 und Schritt 2 nacheinander aus.');
+   setTimeout(() => {
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+   }, 250);
+
+   setStatus(`CSV-Datei heruntergeladen: ${csvFileName}. Bitte füge die Datei jetzt noch an.`);
   }
 
   function importJson(file){
@@ -2218,8 +2186,16 @@
   document.getElementById('addDayBtn').onclick = addDay;
   document.getElementById('saveDraftBtn').onclick = saveDraft;
   document.getElementById('resetAllBtn').onclick = resetAll;
-  document.getElementById('exportCsvBtn').onclick = exportCsv;
-  document.getElementById('prepareMailBtn').onclick = prepareMail;
+
+  const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+  if (downloadCsvBtn){
+   downloadCsvBtn.onclick = exportCsv;
+  }
+
+  const openMailBtn = document.getElementById('openMailBtn');
+  if (openMailBtn){
+   openMailBtn.onclick = openPreparedMail;
+  }
 
   window.addDay = addDay;
   window.removeDay = removeDay;
@@ -2291,37 +2267,6 @@
    }, 120);
   });
 
-
-
-
-  document.addEventListener('click', (event) => {
-    const target = event.target;
-    if (!target || typeof target.closest !== 'function') return;
-
-    if (target.closest('#mailWorkflowCloseBtn')){
-      event.preventDefault();
-      hideMailWorkflowDialog();
-      return;
-    }
-
-    if (target.closest('#mailWorkflowDownloadBtn')){
-      event.preventDefault();
-      downloadPendingCsv();
-      return;
-    }
-
-    if (target.closest('#mailWorkflowOpenMailBtn')){
-      event.preventDefault();
-      openPendingMail();
-      return;
-    }
-
-    const overlay = target.closest('#mailWorkflowOverlay');
-    if (overlay && event.target === overlay){
-      hideMailWorkflowDialog();
-    }
-  });
-
   if (!loadDraft()){
    state.days = [createEmptyDay()];
   }
@@ -2329,22 +2274,5 @@
   activeDayId = state.days[0]?.id || null;
   renderAll();
  </script>
-  <div id="mailWorkflowOverlay" class="mail-workflow-overlay" aria-hidden="true">
-    <div class="mail-workflow-dialog" role="dialog" aria-modal="true" aria-labelledby="mailWorkflowTitle">
-      <h3 id="mailWorkflowTitle">E-Mail-Versand vorbereiten</h3>
-      <p>Bitte gehe die folgenden zwei Schritte nacheinander durch.</p>
-      <ol class="mail-workflow-steps">
-        <li><strong>CSV-Datei herunterladen</strong></li>
-        <li><strong>E-Mail öffnen</strong> und die heruntergeladene Datei an die vorbereitete Nachricht anhängen</li>
-      </ol>
-      <div class="mail-workflow-file" id="mailWorkflowFileName">ernaehrungsprotokoll.csv</div>
-      <p>Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.</p>
-      <div class="mail-workflow-actions">
-        <button type="button" id="mailWorkflowDownloadBtn" class="secondary">1. CSV herunterladen</button>
-        <button type="button" id="mailWorkflowOpenMailBtn" class="warning">2. E-Mail öffnen</button>
-        <button type="button" id="mailWorkflowCloseBtn">Schließen</button>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
