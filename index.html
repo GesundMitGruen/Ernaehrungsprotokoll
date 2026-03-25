@@ -1,2155 +1,2288 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ernährungsprotokoll | Dieter Grün Ernährungsberatung</title>
-  <style>
-    :root{
-      --bg:#f3f5f6;
-      --bg-soft:#edf2f4;
-      --card:#ffffff;
-      --line:#dbe4e8;
-      --line-strong:#c7d2d8;
-      --text:#303A44;
-      --muted:#66727c;
-      --brand:#51BCD5;
-      --brand-strong:#37ABC7;
-      --brand-dark:#303A44;
-      --brand-soft:#e7f6fa;
-      --secondary:#77848e;
-      --secondary-soft:#f1f4f6;
-      --hero-dark:#303A44;
-      --hero-dark-soft:#42505d;
-      --hero-accent:#8dd9e7;
-      --shadow:0 14px 34px rgba(48,58,68,0.09);
-      --radius:20px;
-      --radius-sm:14px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(81,188,213,0.16), transparent 26%),
-        linear-gradient(180deg, #f7f9fa 0%, #eef2f4 100%);
-      color:var(--text);
-    }
-    .container{
-      max-width:1220px;
-      margin:0 auto;
-      padding:16px;
-    }
-    .hero{
-      background:linear-gradient(135deg, var(--hero-dark) 0%, #374451 58%, var(--hero-dark-soft) 100%);
-      color:#fff;
-      padding:18px 22px;
-      border-radius:24px;
-      box-shadow:var(--shadow);
-      margin-bottom:18px;
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(81,188,213,0.18);
-    }
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:auto auto 0 0;
-      width:100%;
-      height:5px;
-      background:linear-gradient(90deg, var(--brand) 0%, var(--hero-accent) 100%);
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      right:-80px;
-      top:-70px;
-      width:240px;
-      height:240px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(141,217,231,0.28), rgba(141,217,231,0));
-    }
-    .hero h1{
-      margin:0 0 8px 0;
-      font-size:30px;
-      line-height:1.12;
-      position:relative;
-      z-index:1;
-    }
-    .hero p{
-      margin:0;
-      max-width:900px;
-      line-height:1.48;
-      font-size:14px;
-      color:rgba(255,255,255,0.95);
-      position:relative;
-      z-index:1;
-    }
-    .brand-lockup{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      position:relative;
-      z-index:1;
-    }
-    .brand-mark{
-      flex:0 0 auto;
-      width:min(24vw, 210px);
-      max-width:210px;
-      min-width:120px;
-      border-radius:20px;
-      padding:0;
-      background:transparent;
-      border:none;
-      box-shadow:none;
-    }
-    .brand-mark img{
-      display:block;
-      width:100%;
-      height:auto;
-    }
-    .hero-text{
-      min-width:0;
-    }
-    .brand-line{
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:0.08em;
-      margin-bottom:8px;
-      color:var(--hero-accent);
-      font-weight:700;
-    }
-    .hero-help{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0,1fr));
-      gap:8px;
-      margin-top:14px;
-      position:relative;
-      z-index:1;
-    }
-    .help-chip{
-      display:flex;
-      gap:9px;
-      align-items:flex-start;
-      padding:9px 11px;
-      border-radius:16px;
-      background:rgba(255,255,255,0.10);
-      border:1px solid rgba(141,217,231,0.20);
-      line-height:1.35;
-      font-size:12px;
-    }
-    .help-chip strong{
-      font-size:15px;
-      line-height:1;
-      margin-top:1px;
-      color:var(--hero-accent);
-    }
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Ernährungsprotokoll | Dieter Grün Ernährungsberatung</title>
+ <style>
+  :root{
+   --bg:#f3f5f6;
+   --bg-soft:#edf2f4;
+   --card:#ffffff;
+   --line:#dbe4e8;
+   --line-strong:#c7d2d8;
+   --text:#303A44;
+   --muted:#66727c;
+   --brand:#51BCD5;
+   --brand-strong:#37ABC7;
+   --brand-dark:#303A44;
+   --brand-soft:#e7f6fa;
+   --secondary:#77848e;
+   --secondary-soft:#f1f4f6;
+   --hero-dark:#303A44;
+   --hero-dark-soft:#42505d;
+   --hero-accent:#8dd9e7;
+   --shadow:0 14px 34px rgba(48,58,68,0.09);
+   --radius:20px;
+   --radius-sm:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+   margin:0;
+   font-family:Arial, Helvetica, sans-serif;
+   background:
+    radial-gradient(circle at top right, rgba(81,188,213,0.16), transparent 26%),
+    linear-gradient(180deg, #f7f9fa 0%, #eef2f4 100%);
+   color:var(--text);
+  }
+  .container{
+   max-width:1220px;
+   margin:0 auto;
+   padding:16px;
+  }
+  .hero{
+   background:linear-gradient(135deg, var(--hero-dark) 0%, #374451 58%, var(--hero-dark-soft) 100%);
+   color:#fff;
+   padding:18px 22px;
+   border-radius:24px;
+   box-shadow:var(--shadow);
+   margin-bottom:18px;
+   position:relative;
+   overflow:hidden;
+   border:1px solid rgba(81,188,213,0.18);
+  }
+  .hero::before{
+   content:"";
+   position:absolute;
+   inset:auto auto 0 0;
+   width:100%;
+   height:5px;
+   background:linear-gradient(90deg, var(--brand) 0%, var(--hero-accent) 100%);
+  }
+  .hero::after{
+   content:"";
+   position:absolute;
+   right:-80px;
+   top:-70px;
+   width:240px;
+   height:240px;
+   border-radius:50%;
+   background:radial-gradient(circle, rgba(141,217,231,0.28), rgba(141,217,231,0));
+  }
+  .hero h1{
+   margin:0 0 8px 0;
+   font-size:30px;
+   line-height:1.12;
+   position:relative;
+   z-index:1;
+  }
+  .hero p{
+   margin:0;
+   max-width:900px;
+   line-height:1.48;
+   font-size:12px;
+   color:rgba(255,255,255,0.95);
+   position:relative;
+   z-index:1;
+  }
+  .brand-lockup{
+   display:flex;
+   gap:14px;
+   align-items:flex-start;
+   position:relative;
+   z-index:1;
+  }
+  .brand-mark{
+   flex:0 0 auto;
+   width:min(24vw, 210px);
+   max-width:210px;
+   min-width:120px;
+   border-radius:20px;
+   padding:0;
+   background:transparent;
+   border:none;
+   box-shadow:none;
+  }
+  .brand-mark img{
+   display:block;
+   width:100%;
+   height:auto;
+  }
+  .hero-text{
+   min-width:0;
+  }
+  .brand-line{
+   font-size:11px;
+   text-transform:uppercase;
+   letter-spacing:0.08em;
+   margin-bottom:8px;
+   color:var(--hero-accent);
+   font-weight:700;
+  }
+  .hero-help{
+   display:grid;
+   grid-template-columns:repeat(4, minmax(0,1fr));
+   gap:8px;
+   margin-top:14px;
+   position:relative;
+   z-index:1;
+  }
+  .help-chip{
+   display:flex;
+   gap:9px;
+   align-items:flex-start;
+   padding:9px 11px;
+   border-radius:14px;
+   background:rgba(255,255,255,0.10);
+   border:1px solid rgba(141,217,231,0.20);
+   line-height:1.35;
+   font-size:12px;
+  }
+  .help-chip strong{
+   font-size:15px;
+   line-height:1;
+   margin-top:1px;
+   color:var(--hero-accent);
+  }
 
-    .grid{
-      display:grid;
-      grid-template-columns:1.2fr 0.8fr;
-      gap:16px;
-    }
-    @media (max-width:1020px){
-      .grid{grid-template-columns:1fr}
-    }
-    @media (max-width:760px){
-      .brand-mark{
-        width:min(42vw, 170px);
-        min-width:96px;
-      }
-      .hero h1{font-size:26px}
-    }
-    .card{
-      background:rgba(255,255,255,0.96);
-      border:1px solid var(--line);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:14px;
-      margin-bottom:14px;
-      backdrop-filter:blur(4px);
-    }
-    aside .card{
-      padding:12px;
-    }
-    h2,h3,h4{
-      margin:0 0 12px 0;
-      line-height:1.2;
-    }
-    h2{font-size:21px; color:var(--brand-dark)}
-    h3{font-size:17px}
-    h4{font-size:14px; color:var(--secondary); text-transform:uppercase; letter-spacing:0.04em;}
-    .muted{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
-    }
-    .toolbar{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-    button, .button-like, label.file-label{
-      border:none;
-      border-radius:11px;
-      padding:9px 12px;
-      background:linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
-      color:#fff;
-      cursor:pointer;
-      font-weight:700;
-      font-size:13px;
-      transition:transform .08s ease, opacity .2s ease, box-shadow .2s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      box-shadow:0 6px 18px rgba(81,188,213,0.18);
-    }
-    button:hover, .button-like:hover, label.file-label:hover{
-      opacity:.96;
-      box-shadow:0 10px 20px rgba(81,188,213,0.22);
-    }
-    button:active, .button-like:active{transform:translateY(1px)}
-    .secondary{
-      background:linear-gradient(135deg, var(--secondary-soft) 0%, #f8fafb 100%);
-      color:var(--brand-dark);
-      border:1px solid #d6dde2;
-      box-shadow:none;
-    }
-    .warning{
-      background:linear-gradient(135deg, #687784 0%, #4e5b67 100%);
-      box-shadow:0 6px 18px rgba(48,58,68,0.18);
-    }
-    .danger{
-      background:linear-gradient(135deg, #56626e 0%, #3f4a55 100%);
-      box-shadow:0 6px 18px rgba(48,58,68,0.20);
-    }
-    .ghost{
-      background:#fff;
-      color:var(--brand-dark);
-      border:1px dashed #cfd7dc;
-      box-shadow:none;
-    }
-    .row{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .col-12{grid-column:span 12}
-    .col-9{grid-column:span 9}
-    .col-8{grid-column:span 8}
-    .col-6{grid-column:span 6}
-    .col-4{grid-column:span 4}
-    .col-3{grid-column:span 3}
-    @media (max-width:760px){
-      .col-9,.col-8,.col-6,.col-4,.col-3{grid-column:span 12}
-      .hero-help{grid-template-columns:1fr}
-      .brand-lockup{flex-direction:column}
-    }
-    label{
-      display:block;
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:6px;
-      color:var(--brand-dark);
-    }
-    input, select, textarea{
-      width:100%;
-      padding:9px 11px;
-      border-radius:11px;
-      border:1px solid #cfd8dd;
-      background:#fff;
-      color:var(--text);
-      font-size:13px;
-      font-family:inherit;
-      transition:border-color .15s ease, box-shadow .15s ease;
-    }
-    input[readonly]{
-      background:#f4f7f9;
-      color:#5f6c75;
-      cursor:not-allowed;
-    }
-    input:focus, select:focus, textarea:focus{
-      outline:none;
-      border-color:var(--brand);
-      box-shadow:0 0 0 4px rgba(81,188,213,0.14);
-    }
-    textarea{
-      min-height:82px;
-      resize:vertical;
-      line-height:1.45;
-    }
-    .chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
-    .chip{
-      background:linear-gradient(135deg, #f5f8f9 0%, var(--brand-soft) 100%);
-      color:var(--brand-dark);
-      border:1px solid #d2e6ec;
-      border-radius:999px;
-      padding:7px 11px;
-      font-size:12px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .summary-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:8px;
-    }
-    .stat{
-      background:linear-gradient(180deg, #ffffff 0%, #f5f8f9 100%);
-      border:1px solid #d9e4e8;
-      border-radius:14px;
-      padding:10px 11px;
-    }
+  .grid{
+   display:grid;
+   grid-template-columns:1.35fr 0.65fr;
+   gap:14px;
+  }
+  @media (max-width:1020px){
+   .grid{grid-template-columns:1fr}
+  }
+  @media (max-width:760px){
+   .brand-mark{
+    width:min(42vw, 170px);
+    min-width:96px;
+   }
+   .hero h1{font-size:26px}
+  }
+  .card{
+   background:rgba(255,255,255,0.96);
+   border:1px solid var(--line);
+   border-radius:18px;
+   box-shadow:var(--shadow);
+   padding:10px;
+   margin-bottom:14px;
+   backdrop-filter:blur(4px);
+  }
+  aside .card{
+   padding:10px;
+  }
+  aside table{
+   font-size:12px;
+  }
+  aside th, aside td{
+   padding:6px 5px;
+  }
+  h2,h3,h4{
+   margin:0 0 12px 0;
+   line-height:1.2;
+  }
+  h2{font-size:21px; color:var(--brand-dark)}
+  h3{font-size:17px}
+  h4{font-size:14px; color:var(--secondary); text-transform:uppercase; letter-spacing:0.04em;}
+  .muted{
+   color:var(--muted);
+   font-size:14px;
+   line-height:1.55;
+  }
+  .toolbar{
+   display:flex;
+   gap:8px;
+   flex-wrap:wrap;
+   margin-top:12px;
+  }
+  button, .button-like, label.file-label{
+   border:none;
+   border-radius:11px;
+   padding:9px 12px;
+   background:linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+   color:#fff;
+   cursor:pointer;
+   font-weight:700;
+   font-size:12px;
+   transition:transform .08s ease, opacity .2s ease, box-shadow .2s ease;
+   text-decoration:none;
+   display:inline-flex;
+   align-items:center;
+   gap:7px;
+   box-shadow:0 6px 18px rgba(81,188,213,0.18);
+  }
+  button:hover, .button-like:hover, label.file-label:hover{
+   opacity:.96;
+   box-shadow:0 10px 20px rgba(81,188,213,0.22);
+  }
+  button:active, .button-like:active{transform:translateY(1px)}
+  .secondary{
+   background:linear-gradient(135deg, var(--secondary-soft) 0%, #f8fafb 100%);
+   color:var(--brand-dark);
+   border:1px solid #d6dde2;
+   box-shadow:none;
+  }
+  .warning{
+   background:linear-gradient(135deg, #687784 0%, #4e5b67 100%);
+   box-shadow:0 6px 18px rgba(48,58,68,0.18);
+  }
+  .danger{
+   background:linear-gradient(135deg, #56626e 0%, #3f4a55 100%);
+   box-shadow:0 6px 18px rgba(48,58,68,0.20);
+  }
+  .ghost{
+   background:#fff;
+   color:var(--brand-dark);
+   border:1px dashed #cfd7dc;
+   box-shadow:none;
+  }
+  .row{
+   display:grid;
+   grid-template-columns:repeat(12,1fr);
+   gap:10px;
+   margin-bottom:10px;
+  }
+  .col-12{grid-column:span 12}
+  .col-9{grid-column:span 9}
+  .col-8{grid-column:span 8}
+  .col-6{grid-column:span 6}
+  .col-4{grid-column:span 4}
+  .col-3{grid-column:span 3}
+  @media (max-width:760px){
+   .col-9,.col-8,.col-6,.col-4,.col-3{grid-column:span 12}
+   .hero-help{grid-template-columns:1fr}
+   .brand-lockup{flex-direction:column}
+  }
+  label{
+   display:block;
+   font-size:12px;
+   font-weight:700;
+   margin-bottom:6px;
+   color:var(--brand-dark);
+  }
+  input, select, textarea{
+   width:100%;
+   padding:9px 11px;
+   border-radius:11px;
+   border:1px solid #cfd8dd;
+   background:#fff;
+   color:var(--text);
+   font-size:12px;
+   font-family:inherit;
+   transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input[readonly]{
+   background:#f4f7f9;
+   color:#5f6c75;
+   cursor:not-allowed;
+  }
+  input:focus, select:focus, textarea:focus{
+   outline:none;
+   border-color:var(--brand);
+   box-shadow:0 0 0 4px rgba(81,188,213,0.14);
+  }
+  textarea{
+   min-height:82px;
+   resize:vertical;
+   line-height:1.45;
+  }
+  .chips{
+   display:flex;
+   flex-wrap:wrap;
+   gap:8px;
+   margin-top:8px;
+  }
+  .chip{
+   background:linear-gradient(135deg, #f5f8f9 0%, var(--brand-soft) 100%);
+   color:var(--brand-dark);
+   border:1px solid #d2e6ec;
+   border-radius:999px;
+   padding:7px 11px;
+   font-size:12px;
+   cursor:pointer;
+   user-select:none;
+  }
+  .summary-grid{
+   display:grid;
+   grid-template-columns:repeat(2,1fr);
+   gap:6px;
+  }
+  .stat{
+   background:linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+   border:1px solid #dfe8ec;
+   border-radius:12px;
+   padding:8px 9px;
+  }
+  .stat-label{font-size:10px; line-height:1.15; color:var(--text);}
     .stat strong{
-      display:block;
-      font-size:22px;
-      line-height:1;
-      margin-bottom:6px;
-      color:var(--brand-dark);
-    }
-    .day-card{
-      border:1px solid #d7e3e8;
-      border-radius:18px;
-      padding:14px;
-      background:linear-gradient(180deg, #ffffff 0%, #f8fafb 100%);
-      margin-top:14px;
-    }
-    .day-head, .entry-head, .split, .subsection-head{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-    .entry-head > div{
-      min-width:0;
-      flex:1 1 auto;
-    }
-    .entry-remove-btn{
-      margin-left:auto;
-      flex:0 0 auto;
-      align-self:flex-start;
-    }
-    .entry{
-      border:1px solid #dde5e9;
-      background:#fff;
-      border-radius:16px;
-      padding:12px;
-      margin-top:12px;
-    }
-    .entry-title{
-      font-weight:700;
-      color:var(--brand-dark);
-    }
-    .small{
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-    }
-    .subsection{
-      border:1px solid #e2e8eb;
-      border-radius:14px;
-      padding:12px;
-      margin-top:12px;
-      background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
-    }
-    .item-row{
-      border:1px solid #e3e8eb;
-      border-radius:13px;
-      padding:10px;
-      margin-top:10px;
-      background:#fff;
-    }
+   display:block;
+   font-size:18px;
+   line-height:1;
+   margin-bottom:4px;
+   color:var(--brand-dark);
+  }
+  .day-card{
+   border:1px solid #d7e3e8;
+   border-radius:18px;
+   padding:10px;
+   background:linear-gradient(180deg, #ffffff 0%, #f8fafb 100%);
+   margin-top:14px;
+  }
+  .day-head, .entry-head, .split, .subsection-head{
+   display:flex;
+   justify-content:space-between;
+   gap:10px;
+   align-items:flex-start;
+   flex-wrap:wrap;
+  }
+  .entry-head > div{
+   min-width:0;
+   flex:1 1 auto;
+  }
+  .entry-remove-btn{
+   margin-left:auto;
+   flex:0 0 auto;
+   align-self:flex-start;
+  }
+  .entry{
+   border:1px solid #dde5e9;
+   background:#fff;
+   border-radius:14px;
+   padding:12px;
+   margin-top:12px;
+  }
+  .entry-title{
+   font-weight:700;
+   color:var(--brand-dark);
+  }
+  .small{
+   font-size:12px;
+   color:var(--muted);
+   line-height:1.45;
+  }
+  .subsection{
+   border:1px solid #e2e8eb;
+   border-radius:14px;
+   padding:12px;
+   margin-top:12px;
+   background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
+  }
+  .item-row{
+   border:1px solid #e3e8eb;
+   border-radius:13px;
+   padding:10px;
+   margin-top:10px;
+   background:#fff;
+  }
 
-    .day-layout{
-      display:grid;
-      grid-template-columns:minmax(0,1fr);
-      gap:16px;
-      margin-top:14px;
-      align-items:start;
-    }
-    .day-nav{
-      position:sticky;
-      top:10px;
-      z-index:5;
-      align-self:start;
-      background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(245,248,249,0.98) 100%);
-      border:1px solid #d7e2e7;
-      border-radius:18px;
-      padding:12px;
-      backdrop-filter:blur(6px);
-    }
-    .day-nav-list{
-      display:flex;
-      gap:10px;
-      overflow-x:auto;
-      overflow-y:hidden;
-      padding-bottom:4px;
-      scrollbar-width:thin;
-    }
-    .day-nav-item{
-      min-width:176px;
-      flex:0 0 auto;
-      text-align:left;
-      padding:14px 14px 13px;
-      border-radius:16px;
-      border:1px solid #d7e2e7;
-      background:linear-gradient(180deg, #ffffff 0%, #f5f8f9 100%);
-      color:var(--brand-dark);
-      box-shadow:none;
-      display:block;
-    }
-    .day-nav-item:hover{
-      box-shadow:none;
-      opacity:1;
-      border-color:#c0d9e0;
-      transform:none;
-    }
-    .day-nav-item.active{
-      background:linear-gradient(135deg, var(--hero-dark) 0%, #3b4854 100%);
-      color:#fff;
-      border-color:transparent;
-      box-shadow:0 10px 22px rgba(48,58,68,0.22);
-    }
-    .day-nav-item .nav-title{
-      display:block;
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:4px;
-    }
-    .day-nav-item .nav-meta{
-      display:block;
-      font-size:11px;
-      line-height:1.45;
-      color:inherit;
-      opacity:0.9;
-    }
-    .day-detail{
-      min-width:0;
-    }
-    .day-overview{
-      border:1px solid #d7e2e7;
-      border-radius:16px;
-      padding:12px;
-      background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
-      margin:14px 0 0;
-      min-width:0;
-    }
-    .day-overview-scroll{
-      width:100%;
-      overflow-x:auto;
-      overflow-y:hidden;
-      margin-top:10px;
-    }
-    .day-overview-table{
-      width:100%;
-      min-width:720px;
-      border-collapse:collapse;
-      table-layout:fixed;
-      margin-top:0;
-    }
-    .day-overview-table th,
-    .day-overview-table td{
-      padding:7px 7px;
-      border-bottom:1px solid #e4eaed;
-      font-size:12px;
-      vertical-align:top;
-      white-space:normal;
-      overflow-wrap:anywhere;
-      word-break:break-word;
-    }
-    .day-overview-table th{
-      color:var(--muted);
-      font-weight:700;
-    }
-    .day-overview-table tr:last-child td{
-      border-bottom:none;
-    }
-    .day-overview-table th:nth-child(1),
-    .day-overview-table td:nth-child(1){
-      width:44px;
-    }
-    .day-overview-table th:nth-child(2),
-    .day-overview-table td:nth-child(2){
-      width:92px;
-    }
-    .overview-empty{
-      margin-top:10px;
-      font-size:13px;
-      color:var(--muted);
-    }
-    @media (max-width:980px){
-      .hero-help{
-        grid-template-columns:repeat(2, minmax(0,1fr));
-      }
-      .brand-lockup{
-        gap:12px;
-      }
-      .brand-mark{
-        width:min(44vw, 220px);
-        max-width:220px;
-        min-width:150px;
-        height:auto;
-        border-radius:0;
-      }
-      .day-nav{
-        top:10px;
-        padding:10px;
-      }
-      .day-nav-item{
-        min-width:185px;
-      }
-      .day-overview-table{
-        min-width:760px;
-      }
-    }
+  .day-layout{
+   display:grid;
+   grid-template-columns:minmax(0,1fr);
+   gap:16px;
+   margin-top:14px;
+   align-items:start;
+  }
+  .day-nav{
+   position:sticky;
+   top:10px;
+   z-index:5;
+   align-self:start;
+   background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(245,248,249,0.98) 100%);
+   border:1px solid #d7e2e7;
+   border-radius:18px;
+   padding:12px;
+   backdrop-filter:blur(6px);
+  }
+  .day-nav-list{
+   display:flex;
+   gap:10px;
+   overflow-x:auto;
+   overflow-y:hidden;
+   padding-bottom:4px;
+   scrollbar-width:thin;
+  }
+  .day-nav-item{
+   min-width:176px;
+   flex:0 0 auto;
+   text-align:left;
+   padding:14px 14px 13px;
+   border-radius:14px;
+   border:1px solid #d7e2e7;
+   background:linear-gradient(180deg, #ffffff 0%, #f5f8f9 100%);
+   color:var(--brand-dark);
+   box-shadow:none;
+   display:block;
+  }
+  .day-nav-item:hover{
+   box-shadow:none;
+   opacity:1;
+   border-color:#c0d9e0;
+   transform:none;
+  }
+  .day-nav-item.active{
+   background:linear-gradient(135deg, var(--hero-dark) 0%, #3b4854 100%);
+   color:#fff;
+   border-color:transparent;
+   box-shadow:0 10px 22px rgba(48,58,68,0.22);
+  }
+  .day-nav-item .nav-title{
+   display:block;
+   font-size:12px;
+   font-weight:700;
+   margin-bottom:4px;
+  }
+  .day-nav-item .nav-meta{
+   display:block;
+   font-size:11px;
+   line-height:1.45;
+   color:inherit;
+   opacity:0.9;
+  }
+  .day-detail{
+   min-width:0;
+  }
+  .day-overview{
+   border:1px solid #d7e2e7;
+   border-radius:14px;
+   padding:12px;
+   background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
+   margin:14px 0 0;
+   min-width:0;
+  }
+  .day-overview-scroll{
+   width:100%;
+   overflow-x:auto;
+   overflow-y:hidden;
+   margin-top:10px;
+  }
+  .day-overview-table{
+   width:100%;
+   min-width:720px;
+   border-collapse:collapse;
+   table-layout:fixed;
+   margin-top:0;
+  }
+  .day-overview-table th,
+  .day-overview-table td{
+   padding:7px 7px;
+   border-bottom:1px solid #e4eaed;
+   font-size:12px;
+   vertical-align:top;
+   white-space:normal;
+   overflow-wrap:anywhere;
+   word-break:break-word;
+  }
+  .day-overview-table th{
+   color:var(--muted);
+   font-weight:700;
+  }
+  .day-overview-table tr:last-child td{
+   border-bottom:none;
+  }
+  .day-overview-table th:nth-child(1),
+  .day-overview-table td:nth-child(1){
+   width:44px;
+  }
+  .day-overview-table th:nth-child(2),
+  .day-overview-table td:nth-child(2){
+   width:92px;
+  }
+  .overview-empty{
+   margin-top:10px;
+   font-size:12px;
+   color:var(--muted);
+  }
+  @media (max-width:980px){
+   .hero-help{
+    grid-template-columns:repeat(2, minmax(0,1fr));
+   }
+   .brand-lockup{
+    gap:12px;
+   }
+   .brand-mark{
+    width:min(44vw, 220px);
+    max-width:220px;
+    min-width:150px;
+    height:auto;
+    border-radius:0;
+   }
+   .day-nav{
+    top:10px;
+    padding:10px;
+   }
+   .day-nav-item{
+    min-width:185px;
+   }
+   .day-overview-table{
+    min-width:760px;
+   }
+  }
 
-    .portal-list{
-      display:grid;
-      gap:10px;
-      margin-top:14px;
-    }
-    .portal-item{
-      border:1px solid #d9e2e6;
-      border-radius:15px;
-      padding:12px;
-      background:#f9fbfc;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-    .footer-note{
-      margin-top:12px;
-      font-size:11px;
-      color:var(--muted);
-      line-height:1.55;
-    }
-    .hidden{display:none !important}
-    .status{
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:14px;
-      background:linear-gradient(135deg, #edf8fb 0%, #f5f8f9 100%);
-      border:1px solid #d6e9ef;
-      color:var(--brand-dark);
-      font-size:14px;
+  .portal-list{
+   display:grid;
+   gap:10px;
+   margin-top:14px;
+  }
+  .portal-item{
+   border:1px solid #d9e2e6;
+   border-radius:15px;
+   padding:12px;
+   background:#f9fbfc;
+   display:flex;
+   justify-content:space-between;
+   gap:10px;
+   align-items:flex-start;
+   flex-wrap:wrap;
+  }
+  .footer-note{
+   margin-top:12px;
+   font-size:11px;
+   color:var(--muted);
+   line-height:1.55;
+  }
+  .hidden{display:none !important}
+  .status{
+   margin-top:12px;
+   padding:12px 14px;
+   border-radius:14px;
+   background:linear-gradient(135deg, #edf8fb 0%, #f5f8f9 100%);
+   border:1px solid #d6e9ef;
+   color:var(--brand-dark);
+   font-size:14px;
+   display:none;
+  }
+  .status.show{display:block}
+  table{
+   width:100%;
+   border-collapse:collapse;
+   margin-top:10px;
+   font-size:12px;
+  }
+  th, td{
+   border-bottom:1px solid #e8edef;
+   padding:6px 5px;
+   text-align:left;
+   vertical-align:top;
+  }
+  th{
+   color:var(--muted);
+   font-weight:700;
+  }
+  input::placeholder, textarea::placeholder{
+   color:#98a3ad;
+   opacity:1;
+  }
+  .actions-card{
+   padding:12px 14px;
+  }
+  .actions-card .toolbar{
+   margin-top:0;
+  }
+  .helper-group{
+   margin-top:12px;
+  }
+  .helper-title{
+   font-size:12px;
+   font-weight:700;
+   margin-bottom:6px;
+   color:var(--text);
+  }
+  .inline-help{
+   font-size:12px;
+   color:var(--muted);
+   margin-top:4px;
+   line-height:1.45;
+  }
+ 
+  .hero{
+   display:flex;
+   align-items:center;
+   justify-content:space-between;
+   gap:24px;
+   flex-wrap:nowrap;
+  }
+  .hero-content{
+   flex:1 1 auto;
+   min-width:0;
+  }
+  .hero-brand{
+   flex:0 0 auto;
+   display:flex;
+   justify-content:flex-end;
+   align-items:center;
+   margin-left:24px;
+  }
+  .hero-brand img{
+   width:clamp(120px, 11vw, 180px);
+   max-width:180px;
+   height:auto;
+   display:block;
+   opacity:0.98;
+  }
+  .hero h1,
+  .hero p,
+  .hero
+  @media (max-width: 900px){
+   .hero{
+    flex-wrap:wrap;
+    gap:14px;
+   }
+   .hero-content{
+    flex:1 1 100%;
+   }
+   .hero-brand{
+    width:100%;
+    margin-left:0;
+    justify-content:center;
+   }
+   .hero-brand img{
+    width:160px;
+    max-width:160px;
+   }
+  }
+
+
+  .input-invalid{
+   border-color:#d96b6b !important;
+   box-shadow:0 0 0 2px rgba(217,107,107,0.12);
+   background:#fff8f8;
+  }
+  .field-error{
+   margin-top:4px;
+   font-size:12px;
+   color:#b94a48;
+   line-height:1.35;
+   display:none;
+  }
+  .field-error.show{
+   display:block;
+  }
+
+  .mail-attachment-overlay{position:fixed;inset:0;background:rgba(35,48,60,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+  .mail-attachment-overlay.show{display:flex}
+  .mail-attachment-dialog{width:min(560px,100%);background:#fff;color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:22px}
+  .mail-attachment-dialog h3{margin:0 0 10px 0;font-size:20px;color:var(--brand-dark)}
+  .mail-attachment-dialog p{margin:0 0 10px 0;line-height:1.5}
+  .mail-attachment-file{margin:12px 0;padding:12px 14px;border-radius:14px;background:#f4f8fb;border:1px solid #d6e2ea;font-weight:700;word-break:break-word}
+  .mail-attachment-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+    .inline-suggest-wrap{position:relative; z-index:40}
+    .inline-suggest-menu{
+      position:absolute;
+      left:0;
+      right:0;
+      top:calc(100% + 4px);
+      z-index:30;
+      background:#fff;
+      border:1px solid #dbe3ea;
+      border-radius:12px;
+      box-shadow:0 10px 24px rgba(0,0,0,0.08);
+      max-height:180px;
+      overflow:auto;
+      padding:6px;
       display:none;
     }
-    .status.show{display:block}
-    table{
+    .inline-suggest-menu.show{display:block}
+    .inline-suggest-option{
+      display:block;
       width:100%;
-      border-collapse:collapse;
-      margin-top:10px;
-      font-size:12px;
-    }
-    th, td{
-      border-bottom:1px solid #e8edef;
-      padding:6px 5px;
       text-align:left;
-      vertical-align:top;
-    }
-    th{
-      color:var(--muted);
-      font-weight:700;
-    }
-    input::placeholder, textarea::placeholder{
-      color:#98a3ad;
-      opacity:1;
-    }
-    .actions-card{
-      padding:12px 14px;
-    }
-    .actions-card .toolbar{
-      margin-top:0;
-    }
-    .helper-group{
-      margin-top:12px;
-    }
-    .helper-title{
-      font-size:13px;
-      font-weight:700;
-      margin-bottom:6px;
+      background:transparent;
       color:var(--text);
+      border:none;
+      border-radius:8px;
+      padding:8px 10px;
+      font-size:13px;
+      cursor:pointer;
     }
-    .inline-help{
+    .inline-suggest-option:hover{background:#f1f6f8}
+    .inline-suggest-empty{
+      padding:8px 10px;
       font-size:12px;
       color:var(--muted);
-      margin-top:4px;
-      line-height:1.45;
     }
-  
-    .hero{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:24px;
-      flex-wrap:nowrap;
-    }
-    .hero-content{
-      flex:1 1 auto;
-      min-width:0;
-    }
-    .hero-brand{
-      flex:0 0 auto;
-      display:flex;
-      justify-content:flex-end;
-      align-items:center;
-      margin-left:24px;
-    }
-    .hero-brand img{
-      width:clamp(120px, 11vw, 180px);
-      max-width:180px;
-      height:auto;
-      display:block;
-      opacity:0.98;
-    }
-    .hero h1,
-    .hero p,
-    .hero
-    @media (max-width: 900px){
-      .hero{
-        flex-wrap:wrap;
-        gap:14px;
-      }
-      .hero-content{
-        flex:1 1 100%;
-      }
-      .hero-brand{
-        width:100%;
-        margin-left:0;
-        justify-content:center;
-      }
-      .hero-brand img{
-        width:160px;
-        max-width:160px;
-      }
-    }
-
-
-    .input-invalid{
-      border-color:#d96b6b !important;
-      box-shadow:0 0 0 2px rgba(217,107,107,0.12);
-      background:#fff8f8;
-    }
-    .field-error{
-      margin-top:4px;
-      font-size:12px;
-      color:#b94a48;
-      line-height:1.35;
-      display:none;
-    }
-    .field-error.show{
-      display:block;
-    }
-
-    .mail-attachment-overlay{position:fixed;inset:0;background:rgba(35,48,60,0.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
-    .mail-attachment-overlay.show{display:flex}
-    .mail-attachment-dialog{width:min(560px,100%);background:#fff;color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:22px}
-    .mail-attachment-dialog h3{margin:0 0 10px 0;font-size:24px;color:var(--brand-dark)}
-    .mail-attachment-dialog p{margin:0 0 10px 0;line-height:1.5}
-    .mail-attachment-file{margin:12px 0;padding:12px 14px;border-radius:14px;background:#f4f8fb;border:1px solid #d6e2ea;font-weight:700;word-break:break-word}
-    .mail-attachment-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 </style>
 </head>
 <body>
-  <div class="container">
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Dein digitales Ernährungsprotokoll</h1>
-        <p>Bitte trage Deine Mahlzeiten, Getränke und Aktivitäten möglichst vollständig und genau ein. So lassen sich Deine Angaben später besser nachvollziehen und fundierter auswerten. Am hilfreichsten ist es, wenn Du Deine Einträge möglichst zeitnah nach dem Essen, Trinken oder einer Aktivität festhältst.</p>
+ <div class="container">
+  <section class="hero">
+   <div class="hero-content">
+    <h1>Dein digitales Ernährungsprotokoll</h1>
+    <p>Bitte trage Deine Mahlzeiten, Getränke und Aktivitäten möglichst vollständig und genau ein. So lassen sich Deine Angaben später besser nachvollziehen und fundierter auswerten. Am hilfreichsten ist es, wenn Du Deine Einträge möglichst zeitnah nach dem Essen, Trinken oder einer Aktivität festhältst.</p>
+   </div>
+   <div class="hero-brand">
+    <img src="data:image/png;base64,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" alt="Dieter Grün Ernährungsberatung">
+   </div>
+  </section>
+
+  <div class="grid">
+   <main>
+    <section class="card">
+     <div class="split">
+      <div>
+       <h2>Deine Angaben</h2>
+       <div class="muted">Bitte trage Deinen Namen und Deine Kontaktdaten ein, damit Dein Protokoll korrekt zugeordnet werden kann. Die vorbereitete E-Mail wird immer an gesundmitgruen@gmail.com adressiert.</div>
       </div>
-      <div class="hero-brand">
-        <img src="data:image/png;base64,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" alt="Dieter Grün Ernährungsberatung">
+     </div>
+
+     <div class="row" style="margin-top:14px;">
+      <div class="col-6">
+       <label for="clientName">Name</label>
+       <input id="clientName" placeholder="Vor- und Nachname" />
       </div>
+      <div class="col-6">
+       <label for="clientEmail">E-Mail</label>
+       <input id="clientEmail" type="email" placeholder="kunde@example.de" />
+      </div>
+      <div class="col-12">
+       <label for="consultantEmail">Empfänger-E-Mail</label>
+       <input id="consultantEmail" type="email" value="gesundmitgruen@gmail.com" readonly />
+       <div class="inline-help">Wenn Du auf „E-Mail vorbereiten“ klickst, wird Dein Mailprogramm geöffnet und die Nachricht an gesundmitgruen@gmail.com adressiert.</div>
+      </div>
+     </div>
+
     </section>
 
-    <div class="grid">
-      <main>
-        <section class="card">
-          <div class="split">
-            <div>
-              <h2>Deine Angaben</h2>
-              <div class="muted">Bitte trage Deinen Namen und Deine Kontaktdaten ein, damit Dein Protokoll korrekt zugeordnet werden kann. Die vorbereitete E-Mail wird immer an gesundmitgruen@gmail.com adressiert.</div>
-            </div>
-          </div>
+    <section class="card">
+     <h2>Datenspeicherung</h2>
+     <div class="muted">Deine Eingaben werden lokal im Browser auf diesem Gerät gespeichert. Bitte nutze für die Erfassung möglichst durchgehend dasselbe Gerät – also entweder einen PC oder ein Mobilgerät. Ein geräteübergreifendes Fortsetzen zwischen verschiedenen Geräten ist derzeit nicht möglich.</div>
+    </section>
 
-          <div class="row" style="margin-top:14px;">
-            <div class="col-6">
-              <label for="clientName">Name</label>
-              <input id="clientName" placeholder="Vor- und Nachname" />
-            </div>
-            <div class="col-6">
-              <label for="clientEmail">E-Mail</label>
-              <input id="clientEmail" type="email" placeholder="kunde@example.de" />
-            </div>
-            <div class="col-12">
-              <label for="consultantEmail">Empfänger-E-Mail</label>
-              <input id="consultantEmail" type="email" value="gesundmitgruen@gmail.com" readonly />
-              <div class="inline-help">Wenn Du auf „E-Mail vorbereiten“ klickst, wird Dein Mailprogramm geöffnet und die Nachricht an gesundmitgruen@gmail.com adressiert.</div>
-            </div>
-          </div>
+    <section class="card actions-card">
+     <div class="toolbar">
+      <button id="addDayBtn">+ Neuen Tag hinzufügen</button>
+      <button id="saveDraftBtn" class="secondary">Zwischenstand speichern</button>
+      <button id="resetAllBtn" class="danger">Alles zurücksetzen</button>
+     </div>
+     <div id="status" class="status"></div>
+    </section>
 
-        </section>
+    <section class="card">
+     <div class="split">
+      <div>
+       <h2>Tagesnavigation & Details</h2>
+       <div class="muted">Unter diesem Text wählst Du den gewünschten Tag aus. Oben über „Neuen Tag hinzufügen“ legst Du weitere Tage an, die danach ebenfalls hier auswählbar sind. Sichtbar ist immer nur der aktuell ausgewählte Tag.</div>
+      </div>
+     </div>
+     <div id="daysContainer"></div>
+    </section>
+   </main>
 
-        <section class="card actions-card">
-          <div class="toolbar">
-            <button id="addDayBtn">+ Neuen Tag hinzufügen</button>
-            <button id="saveDraftBtn" class="secondary">Zwischenstand speichern</button>
-            <button id="resetAllBtn" class="danger">Alles zurücksetzen</button>
-          </div>
-          <div id="status" class="status"></div>
-        </section>
+   <aside>
+    <section class="card">
+     <h2>Kurzübersicht</h2>
+     <div class="summary-grid">
+      <div class="stat"><strong id="sumDays">0</strong><div class="stat-label">Tage</div></div>
+      <div class="stat"><strong id="sumEntries">0</strong><div class="stat-label">Einträge</div></div>
+      <div class="stat"><strong id="sumFoods">0</strong><div class="stat-label">Speisen-Positionen</div></div>
+      <div class="stat"><strong id="sumDrinks">0</strong><div class="stat-label">Getränke-Positionen</div></div>
+      <div class="stat"><strong id="sumSports">0</strong><div class="stat-label">Sport-Positionen</div></div>
+      <div class="stat"><strong id="sumNotes">0</strong><div class="stat-label">Speisen / Getränke mit Motivation oder Anmerkung</div></div>
+     </div>
 
-        <section class="card">
-          <div class="split">
-            <div>
-              <h2>Tagesnavigation & Details</h2>
-              <div class="muted">Unter diesem Text wählst Du den gewünschten Tag aus. Oben über „Neuen Tag hinzufügen“ legst Du weitere Tage an, die danach ebenfalls hier auswählbar sind. Sichtbar ist immer nur der aktuell ausgewählte Tag.</div>
-            </div>
-          </div>
-          <div id="daysContainer"></div>
-        </section>
-      </main>
+     <table>
+      <thead>
+       <tr>
+        <th>Datum</th>
+        <th>Tagesart</th>
+        <th>Einträge</th>
+       </tr>
+      </thead>
+      <tbody id="summaryTableBody"></tbody>
+     </table>
+    </section>
 
-      <aside>
-        <section class="card">
-          <h2>Auswertung</h2>
-          <div class="summary-grid">
-            <div class="stat"><strong id="sumDays">0</strong>Tage</div>
-            <div class="stat"><strong id="sumEntries">0</strong>Einträge</div>
-            <div class="stat"><strong id="sumFoods">0</strong>Speisen-Positionen</div>
-            <div class="stat"><strong id="sumDrinks">0</strong>Getränke-Positionen</div>
-            <div class="stat"><strong id="sumSports">0</strong>Sport-Positionen</div>
-            <div class="stat"><strong id="sumNotes">0</strong>Speisen / Getränke mit Motivation oder Anmerkung</div>
-          </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Tagesart</th>
-                <th>Einträge</th>
-              </tr>
-            </thead>
-            <tbody id="summaryTableBody"></tbody>
-          </table>
-        </section>
-
-        <section class="card">
-          <h2>Export & Versand</h2>
-          <div class="muted">So funktioniert der Versand am einfachsten:</div>
-          <div class="footer-note" style="margin-top:8px;">
-            <strong>1.</strong> Klicke auf <strong>„E-Mail vorbereiten“</strong>.<br>
-            <strong>2.</strong> Die CSV-Datei wird automatisch heruntergeladen und Dein Mailprogramm wird vorbereitet.<br>
-            <strong>3.</strong> Füge die heruntergeladene CSV-Datei noch an die E-Mail an und sende sie danach ab.
-          </div>
-          <div class="toolbar">
-            <button id="prepareMailBtn" class="warning">E-Mail vorbereiten</button>
-            <button id="exportCsvBtn" class="secondary">CSV exportieren</button>
-          </div>
-          <div class="footer-note">
-            <strong>Alternative:</strong> Nutze <strong>„CSV exportieren“</strong>, wenn die automatische E-Mail-Erstellung auf Deinem Gerät nicht funktioniert, zum Beispiel weil Du kein lokal verknüpftes Mailprogramm verwendest und stattdessen über Web.de, GMX, Gmail oder andere Anbieter im Browser versendest.
-          </div>
-        </section>
-        <section class="card">
-          <h2>Schnellhilfen</h2>
-          <div class="muted">Tippe zuerst in das gewünschte Feld bei einer Speise oder einem Getränk. Danach kannst Du hier per Klick passende Begriffe einfügen.</div>
-
-          <div class="helper-group">
-            <div class="helper-title">Motivation</div>
-            <div class="chips" id="motivationChips"></div>
-          </div>
-
-          <div class="helper-group">
-            <div class="helper-title">Wie gefühlt / Beschwerden?</div>
-            <div class="chips" id="feelingChips"></div>
-          </div>
-        </section>
-      </aside>
-    </div>
+    <section class="card">
+     <h2>Export & Versand</h2>
+     <div class="muted">So funktioniert der Versand am einfachsten:</div>
+     <div class="footer-note" style="margin-top:8px;">
+      <strong>1.</strong> Klicke auf <strong>„E-Mail vorbereiten“</strong>.<br>
+      <strong>2.</strong> Die CSV-Datei wird automatisch heruntergeladen und Dein Mailprogramm wird vorbereitet.<br>
+      <strong>3.</strong> Füge die heruntergeladene CSV-Datei noch an die E-Mail an und sende sie danach ab.
+     </div>
+     <div class="toolbar">
+      <button id="prepareMailBtn" class="warning">E-Mail vorbereiten</button>
+      <button id="exportCsvBtn" class="secondary">CSV exportieren</button>
+     </div>
+     <div class="footer-note">
+      <strong>Alternative:</strong> Nutze <strong>„CSV exportieren“</strong>, wenn die automatische E-Mail-Erstellung auf Deinem Gerät nicht funktioniert, zum Beispiel weil Du kein lokal verknüpftes Mailprogramm verwendest und stattdessen über Web.de, GMX, Gmail oder andere Anbieter im Browser versendest.
+     </div>
+    </section>
+   </aside>
   </div>
+ </div>
 
-  <script>
-    const STORAGE_KEY_V2 = 'ebdg_ernaehrungsprotokoll_draft_v2';
-    const STORAGE_KEY_V1 = 'ebdg_ernaehrungsprotokoll_draft_v1';
-    const PORTAL_KEY_V2 = 'ebdg_ernaehrungsprotokoll_portal_v2';
-    const PORTAL_KEY_V1 = 'ebdg_ernaehrungsprotokoll_portal_v1';
+ <script>
+  const STORAGE_KEY_V2 = 'ebdg_ernaehrungsprotokoll_draft_v2';
+  const STORAGE_KEY_V1 = 'ebdg_ernaehrungsprotokoll_draft_v1';
+  const PORTAL_KEY_V2 = 'ebdg_ernaehrungsprotokoll_portal_v2';
+  const PORTAL_KEY_V1 = 'ebdg_ernaehrungsprotokoll_portal_v1';
 
-    const FOOD_DRINK_UNITS = ['g', 'kg', 'ml', 'l', 'Stück', 'Portion', 'EL', 'TL', 'Glas', 'Tasse', 'Becher', 'Scheibe', 'Handvoll', 'Packung', 'Flasche', 'Dose'];
-    const SPORT_UNITS = ['Min', 'Std'];
-    const DEFAULT_CONSULTANT_EMAIL = 'gesundmitgruen@gmail.com';
-    const TIME_PATTERN = /^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$/;
+  const FOOD_DRINK_UNITS = ['g', 'kg', 'ml', 'l', 'Stück', 'Portion', 'EL', 'TL', 'Glas', 'Tasse', 'Becher', 'Scheibe', 'Handvoll', 'Packung', 'Flasche', 'Dose'];
+  const SPORT_UNITS = ['Min', 'Std'];
+  const DEFAULT_CONSULTANT_EMAIL = 'gesundmitgruen@gmail.com';
+  const TIME_PATTERN = /^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$/;
 
-    const motivationPresets = ['Hunger', 'Appetit', 'Gewohnheit', 'Langeweile', 'Stress', 'Ärger', 'Belohnung', 'Geselligkeit'];
-    const feelingPresets = ['Zufrieden', 'Sehr gut', 'Erfrischt', 'Müde', 'Völlegefühl', 'Übel', 'Blähungen', 'Schlechtes Gewissen'];
+  const motivationPresets = ['Hunger', 'Appetit', 'Gewohnheit', 'Langeweile', 'Stress', 'Ärger', 'Belohnung', 'Geselligkeit'];
+  const feelingPresets = ['Zufrieden', 'Sehr gut', 'Erfrischt', 'Müde', 'Völlegefühl', 'Übel', 'Blähungen', 'Schlechtes Gewissen'];
 
-    let activeTextTarget = null;
-    let activeTextTargetKind = null;
-    let activeDayId = null;
+  let activeTextTarget = null;
+  let activeTextTargetKind = null;
+  let activeDayId = null;
 
-    let state = {
-      clientName: '',
-      clientEmail: '',
-      consultantEmail: DEFAULT_CONSULTANT_EMAIL,
-      days: []
+  let state = {
+   clientName: '',
+   clientEmail: '',
+   consultantEmail: DEFAULT_CONSULTANT_EMAIL,
+   days: []
+  };
+
+  function uid(){
+   return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `id_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+  }
+
+  function createFoodItem(){
+   return { id: uid(), name: '', amount: '', unit: 'g', motivation: '', notes: '' };
+  }
+
+  function createDrinkItem(){
+   return { id: uid(), name: '', amount: '', unit: 'ml', motivation: '', notes: '' };
+  }
+
+  function createSportItem(){
+   return { id: uid(), type: '', duration: '', unit: 'Min' };
+  }
+
+  function createEmptyEntry(){
+   return {
+    id: uid(),
+    time: '',
+    foods: [createFoodItem()],
+    drinks: [createDrinkItem()],
+    sports: []
+   };
+  }
+
+  function sanitizeTimeValue(value){
+   return String(value || '')
+    .replace(/[^\d:\-\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  }
+
+  function isStrictValidTimeValue(value){
+   const raw = sanitizeTimeValue(value);
+   if (!raw) return true;
+
+   let match = raw.match(/^(\d{1,2}):(\d{2})(?:\s*-\s*(\d{1,2}):(\d{2}))?$/);
+   if (match){
+    const h1 = parseInt(match[1], 10);
+    const m1 = parseInt(match[2], 10);
+    if (h1 > 23 || m1 > 59) return false;
+    if (match[3] && match[4]){
+     const h2 = parseInt(match[3], 10);
+     const m2 = parseInt(match[4], 10);
+     if (h2 > 23 || m2 > 59) return false;
+    }
+    return true;
+   }
+
+   match = raw.match(/^(\d{1,2})(?:\s*-\s*(\d{1,2}))?$/);
+   if (match){
+    const h1 = parseInt(match[1], 10);
+    if (h1 > 23) return false;
+    if (match[2]){
+     const h2 = parseInt(match[2], 10);
+     if (h2 > 23) return false;
+    }
+    return true;
+   }
+
+   return false;
+  }
+
+  function validateTimeInput(el){
+   const value = sanitizeTimeValue(el.value);
+   el.value = value;
+   const valid = !value || (TIME_PATTERN.test(value) && isStrictValidTimeValue(value));
+
+   if (valid){
+    el.setCustomValidity('');
+    el.classList.remove('input-invalid');
+   } else {
+    el.setCustomValidity('Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.');
+    el.classList.add('input-invalid');
+   }
+
+   const errorEl = el.parentElement ? el.parentElement.querySelector('.field-error') : null;
+   if (errorEl){
+    errorEl.classList.toggle('show', !valid);
+   }
+
+   return valid;
+  }
+
+  function createEmptyDay(dateStr = null){
+   const today = new Date().toISOString().slice(0,10);
+   return {
+    id: uid(),
+    date: dateStr || today,
+    dayType: 'Arbeitstag',
+    entries: [createEmptyEntry()]
+   };
+  }
+
+  function normalizeDateKey(dateStr){
+   return String(dateStr || '').trim();
+  }
+
+  function parseDateToLocalMidnight(dateStr){
+   const raw = normalizeDateKey(dateStr);
+   if (!raw) return null;
+
+   const isoMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+   if (isoMatch){
+    const [, y, m, d] = isoMatch;
+    const parsed = new Date(Number(y), Number(m) - 1, Number(d));
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+   }
+
+   const deMatch = raw.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+   if (deMatch){
+    const [, d, m, y] = deMatch;
+    const parsed = new Date(Number(y), Number(m) - 1, Number(d));
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+   }
+
+   const fallback = new Date(raw);
+   if (Number.isNaN(fallback.getTime())) return null;
+   return new Date(fallback.getFullYear(), fallback.getMonth(), fallback.getDate());
+  }
+
+  function formatDateForInput(dateObj){
+   const year = dateObj.getFullYear();
+   const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+   const day = String(dateObj.getDate()).padStart(2, '0');
+   return `${year}-${month}-${day}`;
+  }
+
+  function compareDates(a, b){
+   const aDate = parseDateToLocalMidnight(a);
+   const bDate = parseDateToLocalMidnight(b);
+
+   if (!aDate && !bDate) return 0;
+   if (!aDate) return 1;
+   if (!bDate) return -1;
+   return aDate.getTime() - bDate.getTime();
+  }
+  function sortDaysByDate(){
+   state.days = [...(state.days || [])].sort((a, b) => {
+    const dateDiff = compareDates(a.date, b.date);
+    if (dateDiff !== 0) return dateDiff;
+    return String(a.dayType || '').localeCompare(String(b.dayType || ''), 'de');
+   });
+  }
+
+  function getSuggestedNewDayDate(){
+   const parsedDates = (state.days || [])
+    .map(day => parseDateToLocalMidnight(day.date))
+    .filter(Boolean)
+    .sort((a, b) => a.getTime() - b.getTime());
+
+   if (!parsedDates.length){
+    return formatDateForInput(new Date());
+   }
+
+   const usedDates = new Set((state.days || []).map(day => normalizeDateKey(day.date)).filter(Boolean));
+   const dt = new Date(parsedDates[parsedDates.length - 1].getTime());
+   dt.setDate(dt.getDate() + 1);
+
+   while (usedDates.has(formatDateForInput(dt))){
+    dt.setDate(dt.getDate() + 1);
+   }
+
+   return formatDateForInput(dt);
+  }
+
+  function mergeDuplicateDaysByDate(preferredDayId = null){
+   const mergedDays = [];
+   const byDate = new Map();
+   let mergedCount = 0;
+   let resolvedPreferredDayId = preferredDayId;
+
+   (state.days || []).forEach(day => {
+    const key = normalizeDateKey(day.date);
+
+    if (!key){
+     mergedDays.push(day);
+     return;
+    }
+
+    if (!byDate.has(key)){
+     byDate.set(key, day);
+     mergedDays.push(day);
+     return;
+    }
+
+    const targetDay = byDate.get(key);
+    targetDay.entries = [...(targetDay.entries || []), ...(day.entries || [])];
+
+    if ((!targetDay.dayType || targetDay.dayType === 'Arbeitstag') && day.dayType && day.dayType !== targetDay.dayType){
+     targetDay.dayType = day.dayType;
+    }
+
+    if (preferredDayId === day.id || activeDayId === day.id){
+     resolvedPreferredDayId = targetDay.id;
+    }
+
+    mergedCount += 1;
+   });
+
+   state.days = mergedDays;
+   if (resolvedPreferredDayId){
+    activeDayId = resolvedPreferredDayId;
+   }
+   return mergedCount;
+  }
+
+  function ensureAtLeastOneDay(){
+   if (!state.days.length) state.days.push(createEmptyDay());
+  }
+
+  function ensureActiveDay(){
+   ensureAtLeastOneDay();
+   if (!state.days.some(d => d.id === activeDayId)){
+    activeDayId = state.days[0]?.id || null;
+   }
+  }
+
+  function selectDay(dayId){
+   activeDayId = dayId;
+   renderAll();
+  }
+
+  function formatDateDisplay(dateStr){
+   if (!dateStr) return 'ohne Datum';
+   const date = parseDateToLocalMidnight(dateStr);
+   if (!date) return dateStr;
+   return date.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' });
+  }
+
+  function setStatus(message){
+   const el = document.getElementById('status');
+   el.textContent = message;
+   el.classList.add('show');
+   clearTimeout(setStatus._t);
+   setStatus._t = setTimeout(() => el.classList.remove('show'), 2600);
+  }
+
+  function escapeHtml(str=''){
+   return String(str ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;');
+  }
+
+  function unitOptions(options, selected){
+   return options.map(opt => `<option ${opt === selected ? 'selected' : ''}>${opt}</option>`).join('');
+  }
+
+  function bindTopFields(){
+   ['clientName','clientEmail'].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = state[id] || '';
+    el.oninput = () => {
+     state[id] = el.value;
+     renderSummary();
     };
+    el.onfocus = () => activeTextTarget = el;
+   });
 
-    function uid(){
-      return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `id_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+   const consultantEl = document.getElementById('consultantEmail');
+   if (consultantEl){
+    state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
+    consultantEl.value = DEFAULT_CONSULTANT_EMAIL;
+   }
+  }
+
+  function addDay(){
+   const newDay = createEmptyDay(getSuggestedNewDayDate());
+   state.days.push(newDay);
+   mergeDuplicateDaysByDate(newDay.id);
+   activeDayId = state.days.some(day => day.id === newDay.id)
+    ? newDay.id
+    : (state.days[state.days.length - 1]?.id || state.days[0]?.id || null);
+   renderAll();
+   setStatus(`Neuer Tag hinzugefügt: ${formatDateDisplay(newDay.date)}`);
+  }
+
+  function removeDay(dayId){
+   state.days = state.days.filter(d => d.id !== dayId);
+   ensureAtLeastOneDay();
+   ensureActiveDay();
+   renderAll();
+  }
+
+  function addEntry(dayId){
+   const day = state.days.find(d => d.id === dayId);
+   if (!day) return;
+   day.entries.push(createEmptyEntry());
+   renderAll();
+  }
+
+  function removeEntry(dayId, entryId){
+   const day = state.days.find(d => d.id === dayId);
+   if (!day) return;
+   day.entries = day.entries.filter(e => e.id !== entryId);
+   if (!day.entries.length) day.entries.push(createEmptyEntry());
+   renderAll();
+  }
+
+  function updateDay(dayId, key, value){
+   const day = state.days.find(d => d.id === dayId);
+   if (!day) return;
+   day[key] = value;
+
+   if (key === 'date'){
+    const mergedCount = mergeDuplicateDaysByDate(dayId);
+    if (mergedCount){
+     setStatus('Gleiche Datumsangaben wurden automatisch zu einem Tag zusammengeführt.');
     }
+   }
 
-    function createFoodItem(){
-      return { id: uid(), name: '', amount: '', unit: 'g', motivation: '', notes: '' };
-    }
+   renderAll();
+  }
 
-    function createDrinkItem(){
-      return { id: uid(), name: '', amount: '', unit: 'ml', motivation: '', notes: '' };
-    }
+  function updateEntry(dayId, entryId, key, value){
+   const day = state.days.find(d => d.id === dayId);
+   if (!day) return;
+   const entry = day.entries.find(e => e.id === entryId);
+   if (!entry) return;
+   entry[key] = key === 'time' ? sanitizeTimeValue(value) : value;
+   renderSummary();
+   refreshLiveDayViews();
+  }
 
-    function createSportItem(){
-      return { id: uid(), type: '', duration: '', unit: 'Min' };
-    }
+  function updateItem(dayId, entryId, listKey, itemId, key, value){
+   const day = state.days.find(d => d.id === dayId);
+   if (!day) return;
+   const entry = day.entries.find(e => e.id === entryId);
+   if (!entry) return;
+   const item = (entry[listKey] || []).find(i => i.id === itemId);
+   if (!item) return;
+   item[key] = value;
+   renderSummary();
+   refreshLiveDayViews();
+  }
 
-    function createEmptyEntry(){
-      return {
-        id: uid(),
-        time: '',
-        foods: [createFoodItem()],
-        drinks: [createDrinkItem()],
-        sports: []
-      };
-    }
+  function addItem(dayId, entryId, listKey){
+   const day = state.days.find(d => d.id === dayId);
+   if (!day) return;
+   const entry = day.entries.find(e => e.id === entryId);
+   if (!entry) return;
+   if (listKey === 'foods') entry.foods.push(createFoodItem());
+   if (listKey === 'drinks') entry.drinks.push(createDrinkItem());
+   if (listKey === 'sports') entry.sports.push(createSportItem());
+   renderAll();
+  }
 
-    function sanitizeTimeValue(value){
-      return String(value || '')
-        .replace(/[^\d:\-\s]/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
-    }
+  function removeItem(dayId, entryId, listKey, itemId){
+   const day = state.days.find(d => d.id === dayId);
+   if (!day) return;
+   const entry = day.entries.find(e => e.id === entryId);
+   if (!entry) return;
+   entry[listKey] = (entry[listKey] || []).filter(i => i.id !== itemId);
+   if ((listKey === 'foods' || listKey === 'drinks') && !(entry[listKey] || []).length){
+    entry[listKey].push(listKey === 'foods' ? createFoodItem() : createDrinkItem());
+   }
+   renderAll();
+  }
 
-    function isStrictValidTimeValue(value){
-      const raw = sanitizeTimeValue(value);
-      if (!raw) return true;
+  function renderFoodRows(dayId, entryId, items){
+   return items.map((item, idx) => `
+    <div class="item-row">
+     <div class="subsection-head">
+      <div class="small"><strong>Speise ${idx + 1}</strong></div>
+      <button class="secondary" onclick="removeItem('${dayId}','${entryId}','foods','${item.id}')">Entfernen</button>
+     </div>
+     <div class="row" style="margin-top:10px;">
+      <div class="col-6">
+       <label>Art</label>
+       <input value="${escapeHtml(item.name)}" placeholder="z. B. Haferflocken" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','name',this.value)" onfocus="activeTextTarget=this" />
+      </div>
+      <div class="col-3">
+       <label>Menge</label>
+       <input type="number" step="0.1" value="${escapeHtml(item.amount)}" placeholder="z. B. 80" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','amount',this.value)" onfocus="activeTextTarget=this" />
+      </div>
+      <div class="col-3">
+       <label>Einheit</label>
+       <select onchange="updateItem('${dayId}','${entryId}','foods','${item.id}','unit',this.value)">
+        ${unitOptions(FOOD_DRINK_UNITS, item.unit)}
+       </select>
+      </div>
+      <div class="col-6">
+       <label>Motivation</label>
+       <div class="inline-suggest-wrap">
+        <input value="${escapeHtml(item.motivation || '')}" data-suggestion-type="motivation" data-menu-id="foods-motivation-${item.id}" placeholder="z. B. Hunger, Appetit" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','motivation',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'; showInlineSuggestions(this)" />
+        <div class="inline-suggest-menu" id="foods-motivation-${item.id}"></div>
+       </div>
+      </div>
+      <div class="col-6">
+       <label>Anmerkungen</label>
+       <div class="inline-suggest-wrap">
+        <input value="${escapeHtml(item.notes || '')}" data-suggestion-type="notes" data-menu-id="foods-notes-${item.id}" placeholder="z. B. gut vertragen, Völlegefühl" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','notes',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'; showInlineSuggestions(this)" />
+        <div class="inline-suggest-menu" id="foods-notes-${item.id}"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   `).join('');
+  }
 
-      let match = raw.match(/^(\d{1,2}):(\d{2})(?:\s*-\s*(\d{1,2}):(\d{2}))?$/);
-      if (match){
-        const h1 = parseInt(match[1], 10);
-        const m1 = parseInt(match[2], 10);
-        if (h1 > 23 || m1 > 59) return false;
-        if (match[3] && match[4]){
-          const h2 = parseInt(match[3], 10);
-          const m2 = parseInt(match[4], 10);
-          if (h2 > 23 || m2 > 59) return false;
-        }
-        return true;
-      }
+  function renderDrinkRows(dayId, entryId, items){
+   return items.map((item, idx) => `
+    <div class="item-row">
+     <div class="subsection-head">
+      <div class="small"><strong>Getränk ${idx + 1}</strong></div>
+      <button class="secondary" onclick="removeItem('${dayId}','${entryId}','drinks','${item.id}')">Entfernen</button>
+     </div>
+     <div class="row" style="margin-top:10px;">
+      <div class="col-6">
+       <label>Art</label>
+       <input value="${escapeHtml(item.name)}" placeholder="z. B. Wasser still" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','name',this.value)" onfocus="activeTextTarget=this" />
+      </div>
+      <div class="col-3">
+       <label>Menge</label>
+       <input type="number" step="0.1" value="${escapeHtml(item.amount)}" placeholder="z. B. 500" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','amount',this.value)" onfocus="activeTextTarget=this" />
+      </div>
+      <div class="col-3">
+       <label>Einheit</label>
+       <select onchange="updateItem('${dayId}','${entryId}','drinks','${item.id}','unit',this.value)">
+        ${unitOptions(FOOD_DRINK_UNITS, item.unit)}
+       </select>
+      </div>
+      <div class="col-6">
+       <label>Motivation</label>
+       <div class="inline-suggest-wrap">
+        <input value="${escapeHtml(item.motivation || '')}" data-suggestion-type="motivation" data-menu-id="drinks-motivation-${item.id}" placeholder="z. B. Durst, Gewohnheit" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','motivation',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'; showInlineSuggestions(this)" />
+        <div class="inline-suggest-menu" id="drinks-motivation-${item.id}"></div>
+       </div>
+      </div>
+      <div class="col-6">
+       <label>Anmerkungen</label>
+       <div class="inline-suggest-wrap">
+        <input value="${escapeHtml(item.notes || '')}" data-suggestion-type="notes" data-menu-id="drinks-notes-${item.id}" placeholder="z. B. gut vertragen, aufgebläht" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','notes',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'; showInlineSuggestions(this)" />
+        <div class="inline-suggest-menu" id="drinks-notes-${item.id}"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   `).join('');
+  }
 
-      match = raw.match(/^(\d{1,2})(?:\s*-\s*(\d{1,2}))?$/);
-      if (match){
-        const h1 = parseInt(match[1], 10);
-        if (h1 > 23) return false;
-        if (match[2]){
-          const h2 = parseInt(match[2], 10);
-          if (h2 > 23) return false;
-        }
-        return true;
-      }
+  function renderSportRows(dayId, entryId, items){
+   if (!items.length){
+    return `<div class="small">Noch keine Sport- oder Bewegungsposition ergänzt.</div>`;
+   }
+   return items.map((item, idx) => `
+    <div class="item-row">
+     <div class="subsection-head">
+      <div class="small"><strong>Sport ${idx + 1}</strong></div>
+      <button class="secondary" onclick="removeItem('${dayId}','${entryId}','sports','${item.id}')">Entfernen</button>
+     </div>
+     <div class="row" style="margin-top:10px;">
+      <div class="col-6">
+       <label>Art</label>
+       <input value="${escapeHtml(item.type)}" placeholder="z. B. Spaziergang" oninput="updateItem('${dayId}','${entryId}','sports','${item.id}','type',this.value)" onfocus="activeTextTarget=this" />
+      </div>
+      <div class="col-3">
+       <label>Dauer</label>
+       <input type="number" step="0.1" value="${escapeHtml(item.duration)}" placeholder="z. B. 45" oninput="updateItem('${dayId}','${entryId}','sports','${item.id}','duration',this.value)" onfocus="activeTextTarget=this" />
+      </div>
+      <div class="col-3">
+       <label>Einheit</label>
+       <select onchange="updateItem('${dayId}','${entryId}','sports','${item.id}','unit',this.value)">
+        ${unitOptions(SPORT_UNITS, item.unit)}
+       </select>
+      </div>
+     </div>
+    </div>
+   `).join('');
+  }
 
-      return false;
-    }
+  function currentActiveDay(){
+   ensureActiveDay();
+   return state.days.find(day => day.id === activeDayId) || state.days[0] || null;
+  }
 
-    function validateTimeInput(el){
-      const value = sanitizeTimeValue(el.value);
-      el.value = value;
-      const valid = !value || (TIME_PATTERN.test(value) && isStrictValidTimeValue(value));
+  function dayNavListTemplate(){
+   const activeDay = currentActiveDay();
+   return state.days.map((day, idx) => {
+    const isActive = day.id === activeDay?.id;
+    return `
+     <button class="day-nav-item ${isActive ? 'active' : ''}" onclick="selectDay('${day.id}')">
+      <span class="nav-title">Tag ${idx + 1}</span>
+      <span class="nav-meta">${escapeHtml(formatDateDisplay(day.date))}</span>
+      <span class="nav-meta">${escapeHtml(day.dayType || 'ohne Tagesart')} · ${(day.entries || []).length} Einträge</span>
+     </button>
+    `;
+   }).join('');
+  }
 
-      if (valid){
-        el.setCustomValidity('');
-        el.classList.remove('input-invalid');
-      } else {
-        el.setCustomValidity('Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.');
-        el.classList.add('input-invalid');
-      }
+  function dayOverviewTable(day){
+   const rows = (day.entries || []).map((entry, idx) => {
+    const foods = compactList(entry.foods, 'foodDrink');
+    const drinks = compactList(entry.drinks, 'foodDrink');
+    const sports = compactList(entry.sports, 'sport');
+    const motivations = compactItemField(entry, 'motivation');
+    const notes = compactItemField(entry, 'notes');
+    return `
+     <tr>
+      <td>${idx + 1}</td>
+      <td>${escapeHtml(entry.time || '–')}</td>
+      <td>${escapeHtml(foods || '–')}</td>
+      <td>${escapeHtml(drinks || '–')}</td>
+      <td>${escapeHtml(sports || '–')}</td>
+      <td>${escapeHtml(motivations || '–')}</td>
+      <td>${escapeHtml(notes || '–')}</td>
+     </tr>
+    `;
+   }).join('');
 
-      const errorEl = el.parentElement ? el.parentElement.querySelector('.field-error') : null;
-      if (errorEl){
-        errorEl.classList.toggle('show', !valid);
-      }
+   return `
+    <div class="day-overview">
+     <div class="split">
+      <div>
+       <h3 style="margin-bottom:6px;">Eingetragene Punkte des Tages</h3>
+       <div class="small">Übersicht aller bisher erfassten Einträge dieses Tages.</div>
+      </div>
+     </div>
+     ${(day.entries || []).length ? `
+      <div class="day-overview-scroll">
+       <table class="day-overview-table">
+        <thead>
+         <tr>
+          <th>#</th>
+          <th>Uhrzeit</th>
+          <th>Speisen</th>
+          <th>Getränke</th>
+          <th>Sport</th>
+          <th>Motivation</th>
+          <th>Anmerkungen</th>
+         </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+       </table>
+      </div>
+     ` : '<div class="overview-empty">Für diesen Tag sind noch keine Einträge vorhanden.</div>'}
+    </div>
+   `;
+  }
 
-      return valid;
-    }
+  function dayCardTemplate(day, dayIndex){
+   return `
+    <div class="day-card">
+     <div class="day-head">
+      <div>
+       <h3>Tag ${dayIndex + 1}</h3>
+       <div class="small">Mehrere Einträge pro Tag sind möglich.</div>
+      </div>
+      <button class="danger" onclick="removeDay('${day.id}')">Tag löschen</button>
+     </div>
 
-    function createEmptyDay(dateStr = null){
-      const today = new Date().toISOString().slice(0,10);
-      return {
-        id: uid(),
-        date: dateStr || today,
-        dayType: 'Arbeitstag',
-        entries: [createEmptyEntry()]
-      };
-    }
+     <div class="row">
+      <div class="col-6">
+       <label>Datum</label>
+       <input type="date" value="${escapeHtml(day.date)}" onchange="updateDay('${day.id}','date',this.value)" />
+      </div>
+      <div class="col-6">
+       <label>Tagesart</label>
+       <select onchange="updateDay('${day.id}','dayType',this.value)">
+        <option ${day.dayType === 'Arbeitstag' ? 'selected' : ''}>Arbeitstag</option>
+        <option ${day.dayType === 'Frei / WE' ? 'selected' : ''}>Frei / WE</option>
+        <option ${day.dayType === 'Urlaub' ? 'selected' : ''}>Urlaub</option>
+       </select>
+      </div>
+     </div>
 
-    function normalizeDateKey(dateStr){
-      return String(dateStr || '').trim();
-    }
+     <div id="activeDayOverview">${dayOverviewTable(day)}</div>
 
-    function parseDateToLocalMidnight(dateStr){
-      const raw = normalizeDateKey(dateStr);
-      if (!raw) return null;
-
-      const isoMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-      if (isoMatch){
-        const [, y, m, d] = isoMatch;
-        const parsed = new Date(Number(y), Number(m) - 1, Number(d));
-        return Number.isNaN(parsed.getTime()) ? null : parsed;
-      }
-
-      const deMatch = raw.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
-      if (deMatch){
-        const [, d, m, y] = deMatch;
-        const parsed = new Date(Number(y), Number(m) - 1, Number(d));
-        return Number.isNaN(parsed.getTime()) ? null : parsed;
-      }
-
-      const fallback = new Date(raw);
-      if (Number.isNaN(fallback.getTime())) return null;
-      return new Date(fallback.getFullYear(), fallback.getMonth(), fallback.getDate());
-    }
-
-    function formatDateForInput(dateObj){
-      const year = dateObj.getFullYear();
-      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-      const day = String(dateObj.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-
-    function compareDates(a, b){
-      const aDate = parseDateToLocalMidnight(a);
-      const bDate = parseDateToLocalMidnight(b);
-
-      if (!aDate && !bDate) return 0;
-      if (!aDate) return 1;
-      if (!bDate) return -1;
-      return aDate.getTime() - bDate.getTime();
-    }
-    function sortDaysByDate(){
-      state.days = [...(state.days || [])].sort((a, b) => {
-        const dateDiff = compareDates(a.date, b.date);
-        if (dateDiff !== 0) return dateDiff;
-        return String(a.dayType || '').localeCompare(String(b.dayType || ''), 'de');
-      });
-    }
-
-    function getSuggestedNewDayDate(){
-      const parsedDates = (state.days || [])
-        .map(day => parseDateToLocalMidnight(day.date))
-        .filter(Boolean)
-        .sort((a, b) => a.getTime() - b.getTime());
-
-      if (!parsedDates.length){
-        return formatDateForInput(new Date());
-      }
-
-      const usedDates = new Set((state.days || []).map(day => normalizeDateKey(day.date)).filter(Boolean));
-      const dt = new Date(parsedDates[parsedDates.length - 1].getTime());
-      dt.setDate(dt.getDate() + 1);
-
-      while (usedDates.has(formatDateForInput(dt))){
-        dt.setDate(dt.getDate() + 1);
-      }
-
-      return formatDateForInput(dt);
-    }
-
-    function mergeDuplicateDaysByDate(preferredDayId = null){
-      const mergedDays = [];
-      const byDate = new Map();
-      let mergedCount = 0;
-      let resolvedPreferredDayId = preferredDayId;
-
-      (state.days || []).forEach(day => {
-        const key = normalizeDateKey(day.date);
-
-        if (!key){
-          mergedDays.push(day);
-          return;
-        }
-
-        if (!byDate.has(key)){
-          byDate.set(key, day);
-          mergedDays.push(day);
-          return;
-        }
-
-        const targetDay = byDate.get(key);
-        targetDay.entries = [...(targetDay.entries || []), ...(day.entries || [])];
-
-        if ((!targetDay.dayType || targetDay.dayType === 'Arbeitstag') && day.dayType && day.dayType !== targetDay.dayType){
-          targetDay.dayType = day.dayType;
-        }
-
-        if (preferredDayId === day.id || activeDayId === day.id){
-          resolvedPreferredDayId = targetDay.id;
-        }
-
-        mergedCount += 1;
-      });
-
-      state.days = mergedDays;
-      if (resolvedPreferredDayId){
-        activeDayId = resolvedPreferredDayId;
-      }
-      return mergedCount;
-    }
-
-    function ensureAtLeastOneDay(){
-      if (!state.days.length) state.days.push(createEmptyDay());
-    }
-
-    function ensureActiveDay(){
-      ensureAtLeastOneDay();
-      if (!state.days.some(d => d.id === activeDayId)){
-        activeDayId = state.days[0]?.id || null;
-      }
-    }
-
-    function selectDay(dayId){
-      activeDayId = dayId;
-      renderAll();
-    }
-
-    function formatDateDisplay(dateStr){
-      if (!dateStr) return 'ohne Datum';
-      const date = parseDateToLocalMidnight(dateStr);
-      if (!date) return dateStr;
-      return date.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' });
-    }
-
-    function setStatus(message){
-      const el = document.getElementById('status');
-      el.textContent = message;
-      el.classList.add('show');
-      clearTimeout(setStatus._t);
-      setStatus._t = setTimeout(() => el.classList.remove('show'), 2600);
-    }
-
-    function escapeHtml(str=''){
-      return String(str ?? '')
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;');
-    }
-
-    function unitOptions(options, selected){
-      return options.map(opt => `<option ${opt === selected ? 'selected' : ''}>${opt}</option>`).join('');
-    }
-
-    function bindTopFields(){
-      ['clientName','clientEmail'].forEach(id => {
-        const el = document.getElementById(id);
-        el.value = state[id] || '';
-        el.oninput = () => {
-          state[id] = el.value;
-          renderSummary();
-        };
-        el.onfocus = () => activeTextTarget = el;
-      });
-
-      const consultantEl = document.getElementById('consultantEmail');
-      if (consultantEl){
-        state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
-        consultantEl.value = DEFAULT_CONSULTANT_EMAIL;
-      }
-    }
-
-    function addDay(){
-      const newDay = createEmptyDay(getSuggestedNewDayDate());
-      state.days.push(newDay);
-      mergeDuplicateDaysByDate(newDay.id);
-      activeDayId = state.days.some(day => day.id === newDay.id)
-        ? newDay.id
-        : (state.days[state.days.length - 1]?.id || state.days[0]?.id || null);
-      renderAll();
-      setStatus(`Neuer Tag hinzugefügt: ${formatDateDisplay(newDay.date)}`);
-    }
-
-    function removeDay(dayId){
-      state.days = state.days.filter(d => d.id !== dayId);
-      ensureAtLeastOneDay();
-      ensureActiveDay();
-      renderAll();
-    }
-
-    function addEntry(dayId){
-      const day = state.days.find(d => d.id === dayId);
-      if (!day) return;
-      day.entries.push(createEmptyEntry());
-      renderAll();
-    }
-
-    function removeEntry(dayId, entryId){
-      const day = state.days.find(d => d.id === dayId);
-      if (!day) return;
-      day.entries = day.entries.filter(e => e.id !== entryId);
-      if (!day.entries.length) day.entries.push(createEmptyEntry());
-      renderAll();
-    }
-
-    function updateDay(dayId, key, value){
-      const day = state.days.find(d => d.id === dayId);
-      if (!day) return;
-      day[key] = value;
-
-      if (key === 'date'){
-        const mergedCount = mergeDuplicateDaysByDate(dayId);
-        if (mergedCount){
-          setStatus('Gleiche Datumsangaben wurden automatisch zu einem Tag zusammengeführt.');
-        }
-      }
-
-      renderAll();
-    }
-
-    function updateEntry(dayId, entryId, key, value){
-      const day = state.days.find(d => d.id === dayId);
-      if (!day) return;
-      const entry = day.entries.find(e => e.id === entryId);
-      if (!entry) return;
-      entry[key] = key === 'time' ? sanitizeTimeValue(value) : value;
-      renderSummary();
-      refreshLiveDayViews();
-    }
-
-    function updateItem(dayId, entryId, listKey, itemId, key, value){
-      const day = state.days.find(d => d.id === dayId);
-      if (!day) return;
-      const entry = day.entries.find(e => e.id === entryId);
-      if (!entry) return;
-      const item = (entry[listKey] || []).find(i => i.id === itemId);
-      if (!item) return;
-      item[key] = value;
-      renderSummary();
-      refreshLiveDayViews();
-    }
-
-    function addItem(dayId, entryId, listKey){
-      const day = state.days.find(d => d.id === dayId);
-      if (!day) return;
-      const entry = day.entries.find(e => e.id === entryId);
-      if (!entry) return;
-      if (listKey === 'foods') entry.foods.push(createFoodItem());
-      if (listKey === 'drinks') entry.drinks.push(createDrinkItem());
-      if (listKey === 'sports') entry.sports.push(createSportItem());
-      renderAll();
-    }
-
-    function removeItem(dayId, entryId, listKey, itemId){
-      const day = state.days.find(d => d.id === dayId);
-      if (!day) return;
-      const entry = day.entries.find(e => e.id === entryId);
-      if (!entry) return;
-      entry[listKey] = (entry[listKey] || []).filter(i => i.id !== itemId);
-      if ((listKey === 'foods' || listKey === 'drinks') && !(entry[listKey] || []).length){
-        entry[listKey].push(listKey === 'foods' ? createFoodItem() : createDrinkItem());
-      }
-      renderAll();
-    }
-
-    function renderFoodRows(dayId, entryId, items){
-      return items.map((item, idx) => `
-        <div class="item-row">
-          <div class="subsection-head">
-            <div class="small"><strong>Speise ${idx + 1}</strong></div>
-            <button class="secondary" onclick="removeItem('${dayId}','${entryId}','foods','${item.id}')">Entfernen</button>
-          </div>
-          <div class="row" style="margin-top:10px;">
-            <div class="col-6">
-              <label>Art</label>
-              <input value="${escapeHtml(item.name)}" placeholder="z. B. Haferflocken" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','name',this.value)" onfocus="activeTextTarget=this" />
-            </div>
-            <div class="col-3">
-              <label>Menge</label>
-              <input type="number" step="0.1" value="${escapeHtml(item.amount)}" placeholder="z. B. 80" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','amount',this.value)" onfocus="activeTextTarget=this" />
-            </div>
-            <div class="col-3">
-              <label>Einheit</label>
-              <select onchange="updateItem('${dayId}','${entryId}','foods','${item.id}','unit',this.value)">
-                ${unitOptions(FOOD_DRINK_UNITS, item.unit)}
-              </select>
-            </div>
-            <div class="col-6">
-              <label>Motivation</label>
-              <input value="${escapeHtml(item.motivation || '')}" placeholder="z. B. Hunger oder Appetit" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','motivation',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'" />
-            </div>
-            <div class="col-6">
-              <label>Anmerkungen</label>
-              <input value="${escapeHtml(item.notes || '')}" placeholder="z. B. gut vertragen oder Völlegefühl" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','notes',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'" />
-            </div>
-          </div>
+     ${day.entries.map((entry, idx) => `
+      <div class="entry">
+       <div class="entry-head">
+        <div>
+         <div class="entry-title">Eintrag ${idx + 1}</div>
+         <div class="small">Ein Eintrag kann eine Mahlzeit, Getränke, Bewegung oder eine Kombination daraus enthalten.</div>
         </div>
-      `).join('');
-    }
+        <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag entfernen</button>
+       </div>
 
-    function renderDrinkRows(dayId, entryId, items){
-      return items.map((item, idx) => `
-        <div class="item-row">
-          <div class="subsection-head">
-            <div class="small"><strong>Getränk ${idx + 1}</strong></div>
-            <button class="secondary" onclick="removeItem('${dayId}','${entryId}','drinks','${item.id}')">Entfernen</button>
-          </div>
-          <div class="row" style="margin-top:10px;">
-            <div class="col-6">
-              <label>Art</label>
-              <input value="${escapeHtml(item.name)}" placeholder="z. B. Wasser still" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','name',this.value)" onfocus="activeTextTarget=this" />
-            </div>
-            <div class="col-3">
-              <label>Menge</label>
-              <input type="number" step="0.1" value="${escapeHtml(item.amount)}" placeholder="z. B. 500" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','amount',this.value)" onfocus="activeTextTarget=this" />
-            </div>
-            <div class="col-3">
-              <label>Einheit</label>
-              <select onchange="updateItem('${dayId}','${entryId}','drinks','${item.id}','unit',this.value)">
-                ${unitOptions(FOOD_DRINK_UNITS, item.unit)}
-              </select>
-            </div>
-            <div class="col-6">
-              <label>Motivation</label>
-              <input value="${escapeHtml(item.motivation || '')}" placeholder="z. B. Durst oder Gewohnheit" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','motivation',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'" />
-            </div>
-            <div class="col-6">
-              <label>Anmerkungen</label>
-              <input value="${escapeHtml(item.notes || '')}" placeholder="z. B. gut vertragen oder aufgebläht" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','notes',this.value)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'" />
-            </div>
-          </div>
+       <div class="row">
+        <div class="col-12">
+         <label>Uhrzeit / Zeitraum</label>
+         <input value="${escapeHtml(entry.time)}" inputmode="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this; activeTextTargetKind='time'" />
+         <div class="inline-help">Erlaubt sind z. B. 08:30, 08:30-09:15 oder 8-9.</div>
+         <div class="field-error">Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.</div>
         </div>
-      `).join('');
-    }
+       </div>
 
-    function renderSportRows(dayId, entryId, items){
-      if (!items.length){
-        return `<div class="small">Noch keine Sport- oder Bewegungsposition ergänzt.</div>`;
-      }
-      return items.map((item, idx) => `
-        <div class="item-row">
-          <div class="subsection-head">
-            <div class="small"><strong>Sport ${idx + 1}</strong></div>
-            <button class="secondary" onclick="removeItem('${dayId}','${entryId}','sports','${item.id}')">Entfernen</button>
-          </div>
-          <div class="row" style="margin-top:10px;">
-            <div class="col-6">
-              <label>Art</label>
-              <input value="${escapeHtml(item.type)}" placeholder="z. B. Spaziergang" oninput="updateItem('${dayId}','${entryId}','sports','${item.id}','type',this.value)" onfocus="activeTextTarget=this" />
-            </div>
-            <div class="col-3">
-              <label>Dauer</label>
-              <input type="number" step="0.1" value="${escapeHtml(item.duration)}" placeholder="z. B. 45" oninput="updateItem('${dayId}','${entryId}','sports','${item.id}','duration',this.value)" onfocus="activeTextTarget=this" />
-            </div>
-            <div class="col-3">
-              <label>Einheit</label>
-              <select onchange="updateItem('${dayId}','${entryId}','sports','${item.id}','unit',this.value)">
-                ${unitOptions(SPORT_UNITS, item.unit)}
-              </select>
-            </div>
-          </div>
+       <div class="subsection">
+        <div class="subsection-head">
+         <div>
+          <h4>Speisen</h4>
+          <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
+         </div>
+         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','foods')">+ Speise</button>
         </div>
-      `).join('');
-    }
+        ${renderFoodRows(day.id, entry.id, entry.foods || [])}
+       </div>
 
-    function currentActiveDay(){
-      ensureActiveDay();
-      return state.days.find(day => day.id === activeDayId) || state.days[0] || null;
-    }
-
-    function dayNavListTemplate(){
-      const activeDay = currentActiveDay();
-      return state.days.map((day, idx) => {
-        const isActive = day.id === activeDay?.id;
-        return `
-          <button class="day-nav-item ${isActive ? 'active' : ''}" onclick="selectDay('${day.id}')">
-            <span class="nav-title">Tag ${idx + 1}</span>
-            <span class="nav-meta">${escapeHtml(formatDateDisplay(day.date))}</span>
-            <span class="nav-meta">${escapeHtml(day.dayType || 'ohne Tagesart')} · ${(day.entries || []).length} Einträge</span>
-          </button>
-        `;
-      }).join('');
-    }
-
-    function dayOverviewTable(day){
-      const rows = (day.entries || []).map((entry, idx) => {
-        const foods = compactList(entry.foods, 'foodDrink');
-        const drinks = compactList(entry.drinks, 'foodDrink');
-        const sports = compactList(entry.sports, 'sport');
-        const motivations = compactItemField(entry, 'motivation');
-        const notes = compactItemField(entry, 'notes');
-        return `
-          <tr>
-            <td>${idx + 1}</td>
-            <td>${escapeHtml(entry.time || '–')}</td>
-            <td>${escapeHtml(foods || '–')}</td>
-            <td>${escapeHtml(drinks || '–')}</td>
-            <td>${escapeHtml(sports || '–')}</td>
-            <td>${escapeHtml(motivations || '–')}</td>
-            <td>${escapeHtml(notes || '–')}</td>
-          </tr>
-        `;
-      }).join('');
-
-      return `
-        <div class="day-overview">
-          <div class="split">
-            <div>
-              <h3 style="margin-bottom:6px;">Eingetragene Punkte des Tages</h3>
-              <div class="small">Übersicht aller bisher erfassten Einträge dieses Tages.</div>
-            </div>
-          </div>
-          ${(day.entries || []).length ? `
-            <div class="day-overview-scroll">
-              <table class="day-overview-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Uhrzeit</th>
-                    <th>Speisen</th>
-                    <th>Getränke</th>
-                    <th>Sport</th>
-                    <th>Motivation</th>
-                    <th>Anmerkungen</th>
-                  </tr>
-                </thead>
-                <tbody>${rows}</tbody>
-              </table>
-            </div>
-          ` : '<div class="overview-empty">Für diesen Tag sind noch keine Einträge vorhanden.</div>'}
+       <div class="subsection">
+        <div class="subsection-head">
+         <div>
+          <h4>Getränke</h4>
+          <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
+         </div>
+         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','drinks')">+ Getränk</button>
         </div>
-      `;
-    }
+        ${renderDrinkRows(day.id, entry.id, entry.drinks || [])}
+       </div>
 
-    function dayCardTemplate(day, dayIndex){
-      return `
-        <div class="day-card">
-          <div class="day-head">
-            <div>
-              <h3>Tag ${dayIndex + 1}</h3>
-              <div class="small">Mehrere Einträge pro Tag sind möglich.</div>
-            </div>
-            <button class="danger" onclick="removeDay('${day.id}')">Tag löschen</button>
-          </div>
-
-          <div class="row">
-            <div class="col-6">
-              <label>Datum</label>
-              <input type="date" value="${escapeHtml(day.date)}" onchange="updateDay('${day.id}','date',this.value)" />
-            </div>
-            <div class="col-6">
-              <label>Tagesart</label>
-              <select onchange="updateDay('${day.id}','dayType',this.value)">
-                <option ${day.dayType === 'Arbeitstag' ? 'selected' : ''}>Arbeitstag</option>
-                <option ${day.dayType === 'Frei / WE' ? 'selected' : ''}>Frei / WE</option>
-                <option ${day.dayType === 'Urlaub' ? 'selected' : ''}>Urlaub</option>
-              </select>
-            </div>
-          </div>
-
-          <div id="activeDayOverview">${dayOverviewTable(day)}</div>
-
-          ${day.entries.map((entry, idx) => `
-            <div class="entry">
-              <div class="entry-head">
-                <div>
-                  <div class="entry-title">Eintrag ${idx + 1}</div>
-                  <div class="small">Ein Eintrag kann eine Mahlzeit, Getränke, Bewegung oder eine Kombination daraus enthalten.</div>
-                </div>
-                <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag entfernen</button>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <label>Uhrzeit / Zeitraum</label>
-                  <input value="${escapeHtml(entry.time)}" inputmode="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this; activeTextTargetKind='time'" />
-                  <div class="inline-help">Erlaubt sind z. B. 08:30, 08:30-09:15 oder 8-9.</div>
-                  <div class="field-error">Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.</div>
-                </div>
-              </div>
-
-              <div class="subsection">
-                <div class="subsection-head">
-                  <div>
-                    <h4>Speisen</h4>
-                    <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
-                  </div>
-                  <button class="ghost" onclick="addItem('${day.id}','${entry.id}','foods')">+ Speise</button>
-                </div>
-                ${renderFoodRows(day.id, entry.id, entry.foods || [])}
-              </div>
-
-              <div class="subsection">
-                <div class="subsection-head">
-                  <div>
-                    <h4>Getränke</h4>
-                    <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
-                  </div>
-                  <button class="ghost" onclick="addItem('${day.id}','${entry.id}','drinks')">+ Getränk</button>
-                </div>
-                ${renderDrinkRows(day.id, entry.id, entry.drinks || [])}
-              </div>
-
-              <div class="subsection">
-                <div class="subsection-head">
-                  <div>
-                    <h4>Bewegung / Sport</h4>
-                    <div class="small">Art und Dauer werden getrennt erfasst.</div>
-                  </div>
-                  <button class="ghost" onclick="addItem('${day.id}','${entry.id}','sports')">+ Sport</button>
-                </div>
-                ${renderSportRows(day.id, entry.id, entry.sports || [])}
-              </div>
-
-            </div>
-          `).join('')}
-
-          <div class="toolbar">
-            <button class="secondary" onclick="addEntry('${day.id}')">+ Eintrag hinzufügen</button>
-          </div>
+       <div class="subsection">
+        <div class="subsection-head">
+         <div>
+          <h4>Bewegung / Sport</h4>
+          <div class="small">Art und Dauer werden getrennt erfasst.</div>
+         </div>
+         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','sports')">+ Sport</button>
         </div>
-      `;
+        ${renderSportRows(day.id, entry.id, entry.sports || [])}
+       </div>
+
+      </div>
+     `).join('')}
+
+     <div class="toolbar">
+      <button class="secondary" onclick="addEntry('${day.id}')">+ Eintrag hinzufügen</button>
+     </div>
+    </div>
+   `;
+  }
+
+  function renderDays(){
+   const container = document.getElementById('daysContainer');
+   ensureActiveDay();
+   const activeDay = state.days.find(day => day.id === activeDayId) || state.days[0];
+   container.innerHTML = `
+    <div class="day-layout">
+     <div class="day-nav">
+      <div class="day-nav-list" id="daysNavList">
+       ${dayNavListTemplate()}
+      </div>
+     </div>
+     <div class="day-detail">
+      ${activeDay ? dayCardTemplate(activeDay, state.days.findIndex(day => day.id === activeDay.id)) : ''}
+     </div>
+    </div>
+   `;
+  }
+
+  function renderDayNavList(){
+   const nav = document.getElementById('daysNavList');
+   if (nav) nav.innerHTML = dayNavListTemplate();
+  }
+
+  function renderActiveDayOverview(){
+   const overview = document.getElementById('activeDayOverview');
+   const activeDay = currentActiveDay();
+   if (overview && activeDay) overview.innerHTML = dayOverviewTable(activeDay);
+  }
+
+  function refreshLiveDayViews(){
+   renderDayNavList();
+   renderActiveDayOverview();
+  }
+
+  function filledCount(items, key){
+
+   return (items || []).filter(i => String(i?.[key] || '').trim()).length;
+  }
+
+  function compactList(items, kind){
+   if (kind === 'foodDrink'){
+    return (items || [])
+     .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
+     .map(item => `${item.name || 'ohne Bezeichnung'}${String(item.amount || '').trim() ? ` ${item.amount} ${item.unit || ''}` : ''}`.trim())
+     .join(' | ');
+   }
+   if (kind === 'sport'){
+    return (items || [])
+     .filter(item => String(item.type || '').trim() || String(item.duration || '').trim())
+     .map(item => `${item.type || 'ohne Bezeichnung'}${String(item.duration || '').trim() ? ` ${item.duration} ${item.unit || ''}` : ''}`.trim())
+     .join(' | ');
+   }
+   return '';
+  }
+
+  function compactItemField(entry, field){
+   return [...(entry.foods || []), ...(entry.drinks || [])]
+    .filter(item => String(item?.[field] || '').trim())
+    .map(item => item[field].trim())
+    .join(' | ');
+  }
+
+  function renderSummary(){
+   const days = [...(state.days || [])].sort((a, b) => compareDates(a.date, b.date));
+   const entries = (state.days || []).flatMap(d => d.entries || []);
+   const foodsCount = entries.reduce((sum, e) => sum + filledCount(e.foods, 'name'), 0);
+   const drinksCount = entries.reduce((sum, e) => sum + filledCount(e.drinks, 'name'), 0);
+   const sportsCount = entries.reduce((sum, e) => sum + filledCount(e.sports, 'type'), 0);
+   const withNotes = entries.reduce((sum, e) => {
+    const relatedItems = [...(e.foods || []), ...(e.drinks || [])];
+    return sum + relatedItems.filter(item => String(item.motivation || '').trim() || String(item.notes || '').trim()).length;
+   }, 0);
+
+   document.getElementById('sumDays').textContent = days.length;
+   document.getElementById('sumEntries').textContent = entries.length;
+   document.getElementById('sumFoods').textContent = foodsCount;
+   document.getElementById('sumDrinks').textContent = drinksCount;
+   document.getElementById('sumSports').textContent = sportsCount;
+   document.getElementById('sumNotes').textContent = withNotes;
+
+   const tbody = document.getElementById('summaryTableBody');
+   tbody.innerHTML = days.map(d => `
+    <tr>
+     <td>${escapeHtml(formatDateDisplay(d.date) || '–')}</td>
+     <td>${escapeHtml(d.dayType || '–')}</td>
+     <td>${(d.entries || []).length}</td>
+    </tr>
+   `).join('') || '<tr><td colspan="3" class="muted">Noch keine Daten vorhanden.</td></tr>';
+  }
+
+  function getPortalItems(){
+   return JSON.parse(localStorage.getItem(PORTAL_KEY_V2) || localStorage.getItem(PORTAL_KEY_V1) || '[]');
+  }
+
+  function renderPortalList(){
+   const portalList = document.getElementById('portalList');
+   if (!portalList) return;
+   const items = getPortalItems();
+   if (!items.length){
+    portalList.innerHTML = '<div class="muted">Noch keine gespeicherten Datensätze vorhanden.</div>';
+    return;
+   }
+
+   portalList.innerHTML = items.map((item, idx) => `
+    <div class="portal-item">
+     <div>
+      <div><strong>${escapeHtml(item.clientName || 'Ohne Namen')}</strong></div>
+      <div class="small">Gespeichert: ${escapeHtml(item.savedAtReadable)} · Tage: ${item.daysCount} · Einträge: ${item.entriesCount}</div>
+     </div>
+     <div class="toolbar" style="margin-top:0;">
+      <button class="secondary" onclick="loadPortalItem(${idx})">Laden</button>
+      <button class="danger" onclick="deletePortalItem(${idx})">Löschen</button>
+     </div>
+    </div>
+   `).join('');
+  }
+
+  function renderChips(){
+   return;
+  }
+
+  function insertPreset(text, presetType){
+   return;
+  }
+
+
+  function parseSuggestionValues(value){
+   return String(value || '')
+    .split(',')
+    .map(v => v.trim())
+    .filter(Boolean);
+  }
+
+  function getSuggestionSourceForInput(inputEl){
+   const type = inputEl.getAttribute('data-suggestion-type');
+   return type === 'motivation' ? motivationPresets : feelingPresets;
+  }
+
+  function getSuggestionMatches(source, query){
+   const raw = String(query || '');
+   const values = parseSuggestionValues(raw);
+   const selected = values.map(v => v.toLowerCase());
+   const trimmed = raw.trim();
+   const endsWithComma = /,\s*$/.test(raw);
+   const lastToken = raw.split(',').pop().trim().toLowerCase();
+
+   const shouldShowAllRemaining =
+    !lastToken ||
+    endsWithComma ||
+    selected.includes(lastToken);
+
+   return source.filter(item => {
+    const lower = item.toLowerCase();
+    if (selected.includes(lower)) return false;
+    if (shouldShowAllRemaining) return true;
+    return lower.includes(lastToken);
+   });
+  }
+
+  function hideAllInlineSuggestions(){
+   document.querySelectorAll('.inline-suggest-menu').forEach(el => el.classList.remove('show'));
+  }
+
+  function showInlineSuggestions(inputEl){
+   const menuId = inputEl.getAttribute('data-menu-id');
+   if (!menuId) return;
+   const menu = document.getElementById(menuId);
+   if (!menu) return;
+
+   const source = getSuggestionSourceForInput(inputEl);
+   const matches = getSuggestionMatches(source, inputEl.value || '');
+
+   menu.innerHTML = matches.length
+    ? matches.map(item => `<div class="inline-suggest-option" tabindex="0" data-value="${escapeHtml(item)}">${escapeHtml(item)}</div>`).join('')
+    : '<div class="inline-suggest-empty">Keine weiteren passenden Vorschläge.</div>';
+
+   menu.classList.add('show');
+  }
+
+  function applyInlineSuggestion(inputEl, value){
+   if (!inputEl) return;
+   const values = parseSuggestionValues(inputEl.value);
+   const normalized = String(value || '').trim();
+   const exists = values.some(v => v.toLowerCase() === normalized.toLowerCase());
+
+   if (!exists){
+    values.push(normalized);
+   }
+
+   inputEl.value = values.join(', ');
+   inputEl.dispatchEvent(new Event('input', { bubbles:true }));
+   inputEl.focus();
+   setTimeout(() => showInlineSuggestions(inputEl), 0);
+  }
+
+  function saveDraft(){
+   localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(state));
+   setStatus('Zwischenstand im Browser gespeichert.');
+  }
+
+  function migrateEntry(entry){
+   const oldMotivation = entry.motivation || '';
+   const oldNotes = entry.notes || '';
+
+   const foods = Array.isArray(entry.foods)
+    ? entry.foods.map((f, idx) => ({
+      id: uid(),
+      name: f.name || '',
+      amount: f.amount || '',
+      unit: f.unit || 'g',
+      motivation: f.motivation || ((idx === 0 && !Array.isArray(entry.drinks)) ? oldMotivation : ''),
+      notes: f.notes || ((idx === 0 && !Array.isArray(entry.drinks)) ? oldNotes : '')
+     }))
+    : [ { id: uid(), name: entry.foods || '', amount: '', unit: 'g', motivation: oldMotivation, notes: oldNotes } ];
+
+   const drinks = Array.isArray(entry.drinks)
+    ? entry.drinks.map((d, idx) => ({
+      id: uid(),
+      name: d.name || '',
+      amount: d.amount || '',
+      unit: d.unit || 'ml',
+      motivation: d.motivation || ((idx === 0 && !foods.some(item => String(item.name || '').trim() || String(item.amount || '').trim())) ? oldMotivation : ''),
+      notes: d.notes || ((idx === 0 && !foods.some(item => String(item.name || '').trim() || String(item.amount || '').trim())) ? oldNotes : '')
+     }))
+    : [ { id: uid(), name: entry.drinks || '', amount: '', unit: 'ml', motivation: !String(entry.foods || '').trim() ? oldMotivation : '', notes: !String(entry.foods || '').trim() ? oldNotes : '' } ];
+
+   const sports = Array.isArray(entry.sports)
+    ? entry.sports.map(s => ({ id: uid(), type: s.type || '', duration: s.duration || '', unit: s.unit || 'Min' }))
+    : (String(entry.activity || '').trim() ? [ { id: uid(), type: entry.activity || '', duration: '', unit: 'Min' } ] : []);
+
+   return {
+    id: uid(),
+    time: sanitizeTimeValue(entry.time || ''),
+    foods: foods.length ? foods : [createFoodItem()],
+    drinks: drinks.length ? drinks : [createDrinkItem()],
+    sports
+   };
+  }
+
+  function migrateState(parsed){
+   return {
+    clientName: parsed.clientName || parsed.client?.name || '',
+    clientEmail: parsed.clientEmail || parsed.client?.email || '',
+    consultantEmail: DEFAULT_CONSULTANT_EMAIL,
+    days: (parsed.days || []).map(day => ({
+     id: uid(),
+     date: day.date || '',
+     dayType: day.dayType || 'Arbeitstag',
+     entries: (day.entries || []).map(migrateEntry)
+    }))
+   };
+  }
+
+  function loadDraft(){
+   const raw = localStorage.getItem(STORAGE_KEY_V2) || localStorage.getItem(STORAGE_KEY_V1);
+   if (!raw) return false;
+   try{
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object'){
+     state = migrateState(parsed);
+     mergeDuplicateDaysByDate();
+     ensureAtLeastOneDay();
+     return true;
     }
+   }catch(e){}
+   return false;
+  }
 
-    function renderDays(){
-      const container = document.getElementById('daysContainer');
-      ensureActiveDay();
-      const activeDay = state.days.find(day => day.id === activeDayId) || state.days[0];
-      container.innerHTML = `
-        <div class="day-layout">
-          <div class="day-nav">
-            <div class="day-nav-list" id="daysNavList">
-              ${dayNavListTemplate()}
-            </div>
-          </div>
-          <div class="day-detail">
-            ${activeDay ? dayCardTemplate(activeDay, state.days.findIndex(day => day.id === activeDay.id)) : ''}
-          </div>
-        </div>
-      `;
+  function savePortalSnapshot(){
+   const items = getPortalItems();
+   const days = state.days || [];
+   const entries = days.flatMap(d => d.entries || []);
+   const now = new Date();
+   items.unshift({
+    id: uid(),
+    savedAt: now.toISOString(),
+    savedAtReadable: now.toLocaleString('de-DE'),
+    clientName: state.clientName || '',
+    daysCount: days.length,
+    entriesCount: entries.length,
+    payload: structuredClone(state)
+   });
+   localStorage.setItem(PORTAL_KEY_V2, JSON.stringify(items.slice(0, 25)));
+   setStatus('Datensatz im Portal-Zwischenspeicher abgelegt.');
+  }
+
+  function loadPortalItem(index){
+   const items = getPortalItems();
+   if (!items[index]) return;
+   state = migrateState(items[index].payload || {});
+   mergeDuplicateDaysByDate();
+   ensureAtLeastOneDay();
+   activeDayId = state.days[0]?.id || null;
+   renderAll();
+   setStatus('Datensatz aus dem Portal-Zwischenspeicher geladen.');
+  }
+
+  function deletePortalItem(index){
+   const items = getPortalItems();
+   items.splice(index, 1);
+   localStorage.setItem(PORTAL_KEY_V2, JSON.stringify(items));
+   setStatus('Gespeicherter Datensatz entfernt.');
+  }
+
+  function resetAll(){
+   if (!confirm('Möchtest Du wirklich alle aktuell erfassten Daten zurücksetzen?')) return;
+   state = {
+    clientName: '',
+    clientEmail: '',
+    consultantEmail: DEFAULT_CONSULTANT_EMAIL,
+    days: [createEmptyDay()]
+   };
+   activeDayId = state.days[0]?.id || null;
+   renderAll();
+   setStatus('Aktuelle Eingaben wurden zurückgesetzt.');
+  }
+
+
+  function normalizeTextValue(value){
+   return String(value ?? '')
+    .normalize('NFC')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .trim();
+  }
+
+  function formatTimeForStructuredExport(timeStr){
+   const raw = String(timeStr || '').trim().replace(/\s+/g, '');
+   if (!raw) return '';
+
+   let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
+   if (match){
+    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
+    const m1 = String(parseInt(match[2], 10)).padStart(2, '0');
+    if (match[3] && match[4]){
+     const h2 = String(parseInt(match[3], 10)).padStart(2, '0');
+     const m2 = String(parseInt(match[4], 10)).padStart(2, '0');
+     return `${h1}:${m1}-${h2}:${m2}`;
     }
+    return `${h1}:${m1}`;
+   }
 
-    function renderDayNavList(){
-      const nav = document.getElementById('daysNavList');
-      if (nav) nav.innerHTML = dayNavListTemplate();
+   match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
+   if (match){
+    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
+    if (match[2]){
+     const h2 = String(parseInt(match[2], 10)).padStart(2, '0');
+     return `${h1}:00-${h2}:00`;
     }
-
-    function renderActiveDayOverview(){
-      const overview = document.getElementById('activeDayOverview');
-      const activeDay = currentActiveDay();
-      if (overview && activeDay) overview.innerHTML = dayOverviewTable(activeDay);
-    }
-
-    function refreshLiveDayViews(){
-      renderDayNavList();
-      renderActiveDayOverview();
-    }
-
-    function filledCount(items, key){
-
-      return (items || []).filter(i => String(i?.[key] || '').trim()).length;
-    }
-
-    function compactList(items, kind){
-      if (kind === 'foodDrink'){
-        return (items || [])
-          .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
-          .map(item => `${item.name || 'ohne Bezeichnung'}${String(item.amount || '').trim() ? ` ${item.amount} ${item.unit || ''}` : ''}`.trim())
-          .join(' | ');
-      }
-      if (kind === 'sport'){
-        return (items || [])
-          .filter(item => String(item.type || '').trim() || String(item.duration || '').trim())
-          .map(item => `${item.type || 'ohne Bezeichnung'}${String(item.duration || '').trim() ? ` ${item.duration} ${item.unit || ''}` : ''}`.trim())
-          .join(' | ');
-      }
-      return '';
-    }
-
-    function compactItemField(entry, field){
-      return [...(entry.foods || []), ...(entry.drinks || [])]
-        .filter(item => String(item?.[field] || '').trim())
-        .map(item => item[field].trim())
-        .join(' | ');
-    }
-
-    function renderSummary(){
-      const days = [...(state.days || [])].sort((a, b) => compareDates(a.date, b.date));
-      const entries = (state.days || []).flatMap(d => d.entries || []);
-      const foodsCount = entries.reduce((sum, e) => sum + filledCount(e.foods, 'name'), 0);
-      const drinksCount = entries.reduce((sum, e) => sum + filledCount(e.drinks, 'name'), 0);
-      const sportsCount = entries.reduce((sum, e) => sum + filledCount(e.sports, 'type'), 0);
-      const withNotes = entries.reduce((sum, e) => {
-        const relatedItems = [...(e.foods || []), ...(e.drinks || [])];
-        return sum + relatedItems.filter(item => String(item.motivation || '').trim() || String(item.notes || '').trim()).length;
-      }, 0);
-
-      document.getElementById('sumDays').textContent = days.length;
-      document.getElementById('sumEntries').textContent = entries.length;
-      document.getElementById('sumFoods').textContent = foodsCount;
-      document.getElementById('sumDrinks').textContent = drinksCount;
-      document.getElementById('sumSports').textContent = sportsCount;
-      document.getElementById('sumNotes').textContent = withNotes;
-
-      const tbody = document.getElementById('summaryTableBody');
-      tbody.innerHTML = days.map(d => `
-        <tr>
-          <td>${escapeHtml(formatDateDisplay(d.date) || '–')}</td>
-          <td>${escapeHtml(d.dayType || '–')}</td>
-          <td>${(d.entries || []).length}</td>
-        </tr>
-      `).join('') || '<tr><td colspan="3" class="muted">Noch keine Daten vorhanden.</td></tr>';
-    }
-
-    function getPortalItems(){
-      return JSON.parse(localStorage.getItem(PORTAL_KEY_V2) || localStorage.getItem(PORTAL_KEY_V1) || '[]');
-    }
-
-    function renderPortalList(){
-      const portalList = document.getElementById('portalList');
-      if (!portalList) return;
-      const items = getPortalItems();
-      if (!items.length){
-        portalList.innerHTML = '<div class="muted">Noch keine gespeicherten Datensätze vorhanden.</div>';
-        return;
-      }
-
-      portalList.innerHTML = items.map((item, idx) => `
-        <div class="portal-item">
-          <div>
-            <div><strong>${escapeHtml(item.clientName || 'Ohne Namen')}</strong></div>
-            <div class="small">Gespeichert: ${escapeHtml(item.savedAtReadable)} · Tage: ${item.daysCount} · Einträge: ${item.entriesCount}</div>
-          </div>
-          <div class="toolbar" style="margin-top:0;">
-            <button class="secondary" onclick="loadPortalItem(${idx})">Laden</button>
-            <button class="danger" onclick="deletePortalItem(${idx})">Löschen</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderChips(){
-      const motivationWrap = document.getElementById('motivationChips');
-      const feelingWrap = document.getElementById('feelingChips');
-
-      motivationWrap.innerHTML = motivationPresets.map(text => `<span class="chip" onclick="insertPreset('${text.replaceAll("'", "\\'")}','motivation')">${text}</span>`).join('');
-      feelingWrap.innerHTML = feelingPresets.map(text => `<span class="chip" onclick="insertPreset('${text.replaceAll("'", "\\'")}','notes')">${text}</span>`).join('');
-    }
-
-    function insertPreset(text, presetType){
-      if (!activeTextTarget || !activeTextTargetKind) {
-        setStatus('Bitte tippe zuerst in ein passendes Feld bei einer Speise oder einem Getränk.');
-        return;
-      }
-      if (activeTextTargetKind !== presetType) {
-        if (presetType === 'motivation'){
-          setStatus('Diese Schnellhilfe passt zum Feld Motivation.');
-        } else if (presetType === 'notes'){
-          setStatus('Diese Schnellhilfe passt zum Feld Anmerkungen.');
-        }
-        return;
-      }
-      const current = activeTextTarget.value.trim();
-      activeTextTarget.value = current ? `${current}, ${text}` : text;
-      activeTextTarget.dispatchEvent(new Event('input', {bubbles:true}));
-      activeTextTarget.focus();
-    }
-
-    function saveDraft(){
-      localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(state));
-      setStatus('Zwischenstand im Browser gespeichert.');
-    }
-
-    function migrateEntry(entry){
-      const oldMotivation = entry.motivation || '';
-      const oldNotes = entry.notes || '';
-
-      const foods = Array.isArray(entry.foods)
-        ? entry.foods.map((f, idx) => ({
-            id: uid(),
-            name: f.name || '',
-            amount: f.amount || '',
-            unit: f.unit || 'g',
-            motivation: f.motivation || ((idx === 0 && !Array.isArray(entry.drinks)) ? oldMotivation : ''),
-            notes: f.notes || ((idx === 0 && !Array.isArray(entry.drinks)) ? oldNotes : '')
-          }))
-        : [ { id: uid(), name: entry.foods || '', amount: '', unit: 'g', motivation: oldMotivation, notes: oldNotes } ];
-
-      const drinks = Array.isArray(entry.drinks)
-        ? entry.drinks.map((d, idx) => ({
-            id: uid(),
-            name: d.name || '',
-            amount: d.amount || '',
-            unit: d.unit || 'ml',
-            motivation: d.motivation || ((idx === 0 && !foods.some(item => String(item.name || '').trim() || String(item.amount || '').trim())) ? oldMotivation : ''),
-            notes: d.notes || ((idx === 0 && !foods.some(item => String(item.name || '').trim() || String(item.amount || '').trim())) ? oldNotes : '')
-          }))
-        : [ { id: uid(), name: entry.drinks || '', amount: '', unit: 'ml', motivation: !String(entry.foods || '').trim() ? oldMotivation : '', notes: !String(entry.foods || '').trim() ? oldNotes : '' } ];
-
-      const sports = Array.isArray(entry.sports)
-        ? entry.sports.map(s => ({ id: uid(), type: s.type || '', duration: s.duration || '', unit: s.unit || 'Min' }))
-        : (String(entry.activity || '').trim() ? [ { id: uid(), type: entry.activity || '', duration: '', unit: 'Min' } ] : []);
-
-      return {
-        id: uid(),
-        time: sanitizeTimeValue(entry.time || ''),
-        foods: foods.length ? foods : [createFoodItem()],
-        drinks: drinks.length ? drinks : [createDrinkItem()],
-        sports
-      };
-    }
-
-    function migrateState(parsed){
-      return {
-        clientName: parsed.clientName || parsed.client?.name || '',
-        clientEmail: parsed.clientEmail || parsed.client?.email || '',
-        consultantEmail: DEFAULT_CONSULTANT_EMAIL,
-        days: (parsed.days || []).map(day => ({
-          id: uid(),
-          date: day.date || '',
-          dayType: day.dayType || 'Arbeitstag',
-          entries: (day.entries || []).map(migrateEntry)
-        }))
-      };
-    }
-
-    function loadDraft(){
-      const raw = localStorage.getItem(STORAGE_KEY_V2) || localStorage.getItem(STORAGE_KEY_V1);
-      if (!raw) return false;
-      try{
-        const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === 'object'){
-          state = migrateState(parsed);
-          mergeDuplicateDaysByDate();
-          ensureAtLeastOneDay();
-          return true;
-        }
-      }catch(e){}
-      return false;
-    }
-
-    function savePortalSnapshot(){
-      const items = getPortalItems();
-      const days = state.days || [];
-      const entries = days.flatMap(d => d.entries || []);
-      const now = new Date();
-      items.unshift({
-        id: uid(),
-        savedAt: now.toISOString(),
-        savedAtReadable: now.toLocaleString('de-DE'),
-        clientName: state.clientName || '',
-        daysCount: days.length,
-        entriesCount: entries.length,
-        payload: structuredClone(state)
-      });
-      localStorage.setItem(PORTAL_KEY_V2, JSON.stringify(items.slice(0, 25)));
-      setStatus('Datensatz im Portal-Zwischenspeicher abgelegt.');
-    }
-
-    function loadPortalItem(index){
-      const items = getPortalItems();
-      if (!items[index]) return;
-      state = migrateState(items[index].payload || {});
-      mergeDuplicateDaysByDate();
-      ensureAtLeastOneDay();
-      activeDayId = state.days[0]?.id || null;
-      renderAll();
-      setStatus('Datensatz aus dem Portal-Zwischenspeicher geladen.');
-    }
-
-    function deletePortalItem(index){
-      const items = getPortalItems();
-      items.splice(index, 1);
-      localStorage.setItem(PORTAL_KEY_V2, JSON.stringify(items));
-      setStatus('Gespeicherter Datensatz entfernt.');
-    }
-
-    function resetAll(){
-      if (!confirm('Möchtest Du wirklich alle aktuell erfassten Daten zurücksetzen?')) return;
-      state = {
-        clientName: '',
-        clientEmail: '',
-        consultantEmail: DEFAULT_CONSULTANT_EMAIL,
-        days: [createEmptyDay()]
-      };
-      activeDayId = state.days[0]?.id || null;
-      renderAll();
-      setStatus('Aktuelle Eingaben wurden zurückgesetzt.');
-    }
-
-
-    function normalizeTextValue(value){
-      return String(value ?? '')
-        .normalize('NFC')
-        .replace(/\r\n/g, '\n')
-        .replace(/\r/g, '\n')
-        .trim();
-    }
-
-    function formatTimeForStructuredExport(timeStr){
-      const raw = String(timeStr || '').trim().replace(/\s+/g, '');
-      if (!raw) return '';
-
-      let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
-      if (match){
-        const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-        const m1 = String(parseInt(match[2], 10)).padStart(2, '0');
-        if (match[3] && match[4]){
-          const h2 = String(parseInt(match[3], 10)).padStart(2, '0');
-          const m2 = String(parseInt(match[4], 10)).padStart(2, '0');
-          return `${h1}:${m1}-${h2}:${m2}`;
-        }
-        return `${h1}:${m1}`;
-      }
-
-      match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
-      if (match){
-        const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-        if (match[2]){
-          const h2 = String(parseInt(match[2], 10)).padStart(2, '0');
-          return `${h1}:00-${h2}:00`;
-        }
-        return `${h1}:00`;
-      }
-
-      return raw.replace(/–/g, '-');
-    }
-
-    function countDaysWithEntries(){
-      return (state.days || []).filter(day => (day.entries || []).some(entry =>
-        String(entry.time || '').trim() ||
-        (entry.foods || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
-        (entry.drinks || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
-        (entry.sports || []).some(item => String(item.type || '').trim() || String(item.duration || '').trim())
-      )).length;
-    }
-
-    function buildCsvPayload(){
-      const rows = [[
-        'Name','Kunden-E-Mail','Datum','Tagesart','Uhrzeit / Zeitraum',
-        'Bereich','Art / Bezeichnung','Menge','Einheit','Dauer','Dauer-Einheit',
-        'Motivation','Anmerkungen'
-      ]];
-
-      function pushItemRow(day, entry, area, item){
-        const isSport = area === 'Sport / Bewegung';
-        rows.push([
-          state.clientName || '',
-          state.clientEmail || '',
-          formatDateForCsv(day.date || ''),
-          day.dayType || '',
-          formatTimeForCsv(entry.time || ''),
-          area,
-          isSport ? (item.type || '') : (item.name || ''),
-          isSport ? '' : (item.amount || ''),
-          isSport ? '' : (item.unit || ''),
-          isSport ? (item.duration || '') : '',
-          isSport ? (item.unit || '') : '',
-          isSport ? '' : (item.motivation || ''),
-          isSport ? '' : (item.notes || '')
-        ]);
-      }
-
-      const sortedDays = [...(state.days || [])].sort((a, b) => {
-        const dateDiff = daySortValue(a.date) - daySortValue(b.date);
-        if (dateDiff !== 0) return dateDiff;
-        return String(a.dayType || '').localeCompare(String(b.dayType || ''), 'de');
-      });
-
-      sortedDays.forEach(day => {
-        const sortedEntries = [...(day.entries || [])].sort((a, b) => {
-          const timeDiff = timeSortValue(a.time) - timeSortValue(b.time);
-          if (timeDiff !== 0) return timeDiff;
-          return String(a.time || '').localeCompare(String(b.time || ''), 'de');
-        });
-
-        sortedEntries.forEach(entry => {
-          const foods = (entry.foods || []).filter(item =>
-            String(item.name || '').trim() ||
-            String(item.amount || '').trim() ||
-            String(item.motivation || '').trim() ||
-            String(item.notes || '').trim()
-          );
-          const drinks = (entry.drinks || []).filter(item =>
-            String(item.name || '').trim() ||
-            String(item.amount || '').trim() ||
-            String(item.motivation || '').trim() ||
-            String(item.notes || '').trim()
-          );
-          const sports = (entry.sports || []).filter(item =>
-            String(item.type || '').trim() ||
-            String(item.duration || '').trim()
-          );
-
-          if (!foods.length && !drinks.length && !sports.length) {
-            rows.push([
-              state.clientName || '',
-              state.clientEmail || '',
-              formatDateForCsv(day.date || ''),
-              day.dayType || '',
-              formatTimeForCsv(entry.time || ''),
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              '',
-              ''
-            ]);
-          }
-
-          foods.forEach(item => pushItemRow(day, entry, 'Speise', item));
-          drinks.forEach(item => pushItemRow(day, entry, 'Getränk', item));
-          sports.forEach(item => pushItemRow(day, entry, 'Sport / Bewegung', item));
-        });
-      });
-
-      return '\ufeff' + rows.map(r => r.map(csvEscape).join(';')).join('\n');
-    }
-
-
-    function normalizedData(){
-      return {
-        meta: {
-          app: 'Ernährungsprotokoll – digitale Erfassung',
-          exportedAt: new Date().toISOString(),
-          version: 4
-        },
-        client: {
-          name: normalizeTextValue(state.clientName || ''),
-          email: normalizeTextValue(state.clientEmail || ''),
-          consultantEmail: DEFAULT_CONSULTANT_EMAIL
-        },
-        days: (state.days || []).map(day => ({
-          date: normalizeTextValue(day.date || ''),
-          dayType: normalizeTextValue(day.dayType || ''),
-          entries: (day.entries || []).map(entry => ({
-            time: formatTimeForStructuredExport(entry.time || ''),
-            foods: (entry.foods || [])
-              .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
-              .map(item => ({
-                name: normalizeTextValue(item.name || ''),
-                amount: normalizeTextValue(item.amount || ''),
-                unit: normalizeTextValue(item.unit || ''),
-                motivation: normalizeTextValue(item.motivation || ''),
-                notes: normalizeTextValue(item.notes || '')
-              })),
-            drinks: (entry.drinks || [])
-              .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
-              .map(item => ({
-                name: normalizeTextValue(item.name || ''),
-                amount: normalizeTextValue(item.amount || ''),
-                unit: normalizeTextValue(item.unit || ''),
-                motivation: normalizeTextValue(item.motivation || ''),
-                notes: normalizeTextValue(item.notes || '')
-              })),
-            sports: (entry.sports || [])
-              .filter(item => String(item.type || '').trim() || String(item.duration || '').trim())
-              .map(item => ({
-                type: normalizeTextValue(item.type || ''),
-                duration: normalizeTextValue(item.duration || ''),
-                unit: normalizeTextValue(item.unit || '')
-              }))
-          }))
-        }))
-      };
-    }
-
-    function download(filename, content, type){
-      const blob = new Blob([content], {type});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function hasInvalidTimeEntries(){
-      return (state.days || []).some(day =>
-        (day.entries || []).some(entry => !isStrictValidTimeValue(entry.time || ''))
-      );
-    }
-
-    function exportJson(){
-      if (hasInvalidTimeEntries()){
-        alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-        return;
-      }
-      const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.json`;
-      download(fileName, JSON.stringify(normalizedData(), null, 2), 'application/json;charset=utf-8');
-      setStatus('JSON-Datei exportiert.');
-    }
-
-
-    function csvEscape(value=''){
-      const normalized = String(value ?? '')
-        .normalize('NFC')
-        .replace(/\r\n/g, ' ')
-        .replace(/[\r\n]+/g, ' ')
-        .replace(/\s{2,}/g, ' ')
-        .trim();
-      const v = normalized.replaceAll('"','""');
-      return `"${v}"`;
-    }
-
-    function parseDateForCsv(dateStr){
-      if (!dateStr) return null;
-      const trimmed = String(dateStr).trim();
-      if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)){
-        const [y,m,d] = trimmed.split('-').map(Number);
-        return new Date(y, m - 1, d);
-      }
-      if (/^\d{2}\.\d{2}\.\d{4}$/.test(trimmed)){
-        const [d,m,y] = trimmed.split('.').map(Number);
-        return new Date(y, m - 1, d);
-      }
-      return null;
-    }
-
-    function formatDateForCsv(dateStr){
-      const d = parseDateForCsv(dateStr);
-      if (!d || Number.isNaN(d.getTime())) return String(dateStr || '').trim();
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      return `${day}.${month}.${year}`;
-    }
-
-    function timeSortValue(timeStr){
-      const raw = String(timeStr || '').trim().replace(/\s+/g, '');
-      if (!raw) return Number.MAX_SAFE_INTEGER;
-
-      let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
-      if (match){
-        return (parseInt(match[1], 10) * 60) + parseInt(match[2], 10);
-      }
-
-      match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
-      if (match){
-        return parseInt(match[1], 10) * 60;
-      }
-
-      return Number.MAX_SAFE_INTEGER - 1;
-    }
-
-    function formatTimeForCsv(timeStr){
-      const raw = String(timeStr || '').trim().replace(/\s+/g, '');
-      if (!raw) return '';
-
-      let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
-      if (match){
-        const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-        const m1 = String(parseInt(match[2], 10)).padStart(2, '0');
-        if (match[3] && match[4]){
-          const h2 = String(parseInt(match[3], 10)).padStart(2, '0');
-          const m2 = String(parseInt(match[4], 10)).padStart(2, '0');
-          return `${h1}:${m1}-${h2}:${m2}`;
-        }
-        return `${h1}:${m1}`;
-      }
-
-      match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
-      if (match){
-        const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-        if (match[2]){
-          const h2 = String(parseInt(match[2], 10)).padStart(2, '0');
-          return `${h1}:00-${h2}:00`;
-        }
-        return `${h1}:00`;
-      }
-
-      return raw.replace(/–/g, '-');
-    }
-
-    function daySortValue(dateStr){
-      const d = parseDateForCsv(dateStr);
-      return d && !Number.isNaN(d.getTime()) ? d.getTime() : Number.MAX_SAFE_INTEGER;
-    }
-
-    function exportCsv(){
-      if (hasInvalidTimeEntries()){
-        alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-        return;
-      }
-      const csv = buildCsvPayload();
-      const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-      download(fileName, csv, 'text/csv;charset=utf-8');
-      setStatus('CSV-Datei exportiert.');
-    }
-
-
-    function showMailAttachmentNotice(csvFileName){
-      const overlay = document.getElementById('mailAttachmentOverlay');
-      const fileNameEl = document.getElementById('mailAttachmentFileName');
-      if (fileNameEl) fileNameEl.textContent = csvFileName || 'ernaehrungsprotokoll.csv';
-      if (overlay){
-        overlay.classList.add('show');
-        overlay.setAttribute('aria-hidden', 'false');
-      }
-    }
-
-    function hideMailAttachmentNotice(){
-      const overlay = document.getElementById('mailAttachmentOverlay');
-      if (overlay){
-        overlay.classList.remove('show');
-        overlay.setAttribute('aria-hidden', 'true');
-      }
-    }
-
-    function buildMailBody(csvFileName){
-      const days = state.days || [];
-      const entriesCount = days.flatMap(d => d.entries || []).length;
-      const daysWithEntries = countDaysWithEntries();
-      const summaryLines = [
-        'WICHTIG: Bitte hänge die heruntergeladene CSV-Datei an diese E-Mail an.',
-        csvFileName ? `Dateiname: ${csvFileName}` : '',
-        'Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.',
-        '',
-        `Name: ${state.clientName || ''}`,
-        `E-Mail: ${state.clientEmail || ''}`,
-        `Tage mit Einträgen: ${daysWithEntries}`,
-        `Anzahl Tage gesamt: ${days.length}`,
-        `Anzahl Einträge: ${entriesCount}`,
-        '',
-        'Kurzübersicht:'
-      ].filter(Boolean);
-
-      days.slice().sort((a, b) => daySortValue(a.date) - daySortValue(b.date)).forEach(day => {
-        summaryLines.push(`${formatDateForCsv(day.date || '') || (day.date || 'ohne Datum')} | ${day.dayType || 'ohne Tagesart'} | ${(day.entries || []).length} Einträge`);
-      });
-
-      return summaryLines.join('\n');
-    }
-
-    function prepareMail(){
-      if (hasInvalidTimeEntries()){
-        alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-        return;
-      }
-
-      const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-      const csv = buildCsvPayload();
-      download(csvFileName, csv, 'text/csv;charset=utf-8');
-      showMailAttachmentNotice(csvFileName);
-
-      const daysWithEntries = countDaysWithEntries();
-      const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
-      const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
-      const body = encodeURIComponent(buildMailBody(csvFileName));
-
-      setTimeout(() => {
-        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-      }, 250);
-
-      setStatus(`CSV-Datei heruntergeladen: ${csvFileName}. Bitte füge die Datei jetzt noch an.`);
-    }
-
-    function importJson(file){
-      const reader = new FileReader();
-      reader.onload = e => {
-        try{
-          const parsed = JSON.parse(e.target.result);
-          if (!parsed || !parsed.days) throw new Error('Ungültige Struktur');
-          state = migrateState(parsed);
-          mergeDuplicateDaysByDate();
-          ensureAtLeastOneDay();
-          activeDayId = state.days[0]?.id || null;
-          renderAll();
-          setStatus('JSON-Datei erfolgreich importiert.');
-        }catch(err){
-          alert('Die Datei konnte nicht importiert werden. Bitte verwende eine gültige JSON-Datei aus dieser Anwendung.');
-        }
-      };
-      reader.readAsText(file, 'utf-8');
-    }
-
-    function renderAll(){
-      mergeDuplicateDaysByDate();
-      sortDaysByDate();
-      ensureAtLeastOneDay();
-      ensureActiveDay();
-      bindTopFields();
-      renderDays();
-      renderSummary();
-      renderChips();
-      saveDraft();
-    }
-
-    document.getElementById('addDayBtn').onclick = addDay;
-    document.getElementById('saveDraftBtn').onclick = saveDraft;
-    document.getElementById('resetAllBtn').onclick = resetAll;
-    document.getElementById('exportCsvBtn').onclick = exportCsv;
-    document.getElementById('prepareMailBtn').onclick = prepareMail;
-
-    window.addDay = addDay;
-    window.removeDay = removeDay;
-    window.addEntry = addEntry;
-    window.removeEntry = removeEntry;
-    window.updateDay = updateDay;
-    window.updateEntry = updateEntry;
-    window.updateItem = updateItem;
-    window.addItem = addItem;
-    window.removeItem = removeItem;
-    window.selectDay = selectDay;
-    window.insertPreset = insertPreset;
-    window.loadPortalItem = loadPortalItem;
-    window.deletePortalItem = deletePortalItem;
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const mailAttachmentCloseBtn = document.getElementById('mailAttachmentCloseBtn');
-      if (mailAttachmentCloseBtn){
-        mailAttachmentCloseBtn.addEventListener('click', (event) => {
-          event.preventDefault();
-          hideMailAttachmentNotice();
-        });
-      }
-
-      const mailAttachmentOverlay = document.getElementById('mailAttachmentOverlay');
-      if (mailAttachmentOverlay){
-        mailAttachmentOverlay.addEventListener('click', (event) => {
-          if (event.target === mailAttachmentOverlay){
-            hideMailAttachmentNotice();
-          }
-        });
-      }
+    return `${h1}:00`;
+   }
+
+   return raw.replace(/–/g, '-');
+  }
+
+  function countDaysWithEntries(){
+   return (state.days || []).filter(day => (day.entries || []).some(entry =>
+    String(entry.time || '').trim() ||
+    (entry.foods || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
+    (entry.drinks || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
+    (entry.sports || []).some(item => String(item.type || '').trim() || String(item.duration || '').trim())
+   )).length;
+  }
+
+  function buildCsvPayload(){
+   const rows = [[
+    'Name','Kunden-E-Mail','Datum','Tagesart','Uhrzeit / Zeitraum',
+    'Bereich','Art / Bezeichnung','Menge','Einheit','Dauer','Dauer-Einheit',
+    'Motivation','Anmerkungen'
+   ]];
+
+   function pushItemRow(day, entry, area, item){
+    const isSport = area === 'Sport / Bewegung';
+    rows.push([
+     state.clientName || '',
+     state.clientEmail || '',
+     formatDateForCsv(day.date || ''),
+     day.dayType || '',
+     formatTimeForCsv(entry.time || ''),
+     area,
+     isSport ? (item.type || '') : (item.name || ''),
+     isSport ? '' : (item.amount || ''),
+     isSport ? '' : (item.unit || ''),
+     isSport ? (item.duration || '') : '',
+     isSport ? (item.unit || '') : '',
+     isSport ? '' : (item.motivation || ''),
+     isSport ? '' : (item.notes || '')
+    ]);
+   }
+
+   const sortedDays = [...(state.days || [])].sort((a, b) => {
+    const dateDiff = daySortValue(a.date) - daySortValue(b.date);
+    if (dateDiff !== 0) return dateDiff;
+    return String(a.dayType || '').localeCompare(String(b.dayType || ''), 'de');
+   });
+
+   sortedDays.forEach(day => {
+    const sortedEntries = [...(day.entries || [])].sort((a, b) => {
+     const timeDiff = timeSortValue(a.time) - timeSortValue(b.time);
+     if (timeDiff !== 0) return timeDiff;
+     return String(a.time || '').localeCompare(String(b.time || ''), 'de');
     });
 
-    if (!loadDraft()){
-      state.days = [createEmptyDay()];
-    }
-    state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
-    activeDayId = state.days[0]?.id || null;
-    renderAll();
-  </script>
+    sortedEntries.forEach(entry => {
+     const foods = (entry.foods || []).filter(item =>
+      String(item.name || '').trim() ||
+      String(item.amount || '').trim() ||
+      String(item.motivation || '').trim() ||
+      String(item.notes || '').trim()
+     );
+     const drinks = (entry.drinks || []).filter(item =>
+      String(item.name || '').trim() ||
+      String(item.amount || '').trim() ||
+      String(item.motivation || '').trim() ||
+      String(item.notes || '').trim()
+     );
+     const sports = (entry.sports || []).filter(item =>
+      String(item.type || '').trim() ||
+      String(item.duration || '').trim()
+     );
 
-  <div id="mailAttachmentOverlay" class="mail-attachment-overlay" aria-hidden="true">
-    <div class="mail-attachment-dialog" role="dialog" aria-modal="true" aria-labelledby="mailAttachmentTitle">
-      <h3 id="mailAttachmentTitle">Wichtiger letzter Schritt</h3>
-      <p>Bitte hänge jetzt die heruntergeladene CSV-Datei an Deine E-Mail an.</p>
-      <div class="mail-attachment-file" id="mailAttachmentFileName">ernaehrungsprotokoll.csv</div>
-      <p>Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.</p>
-      <div class="mail-attachment-actions">
-        <button type="button" id="mailAttachmentCloseBtn">Verstanden</button>
-      </div>
-    </div>
+     if (!foods.length && !drinks.length && !sports.length) {
+      rows.push([
+       state.clientName || '',
+       state.clientEmail || '',
+       formatDateForCsv(day.date || ''),
+       day.dayType || '',
+       formatTimeForCsv(entry.time || ''),
+       '',
+       '',
+       '',
+       '',
+       '',
+       '',
+       '',
+       ''
+      ]);
+     }
+
+     foods.forEach(item => pushItemRow(day, entry, 'Speise', item));
+     drinks.forEach(item => pushItemRow(day, entry, 'Getränk', item));
+     sports.forEach(item => pushItemRow(day, entry, 'Sport / Bewegung', item));
+    });
+   });
+
+   return '\ufeff' + rows.map(r => r.map(csvEscape).join(';')).join('\n');
+  }
+
+
+  function normalizedData(){
+   return {
+    meta: {
+     app: 'Ernährungsprotokoll – digitale Erfassung',
+     exportedAt: new Date().toISOString(),
+     version: 4
+    },
+    client: {
+     name: normalizeTextValue(state.clientName || ''),
+     email: normalizeTextValue(state.clientEmail || ''),
+     consultantEmail: DEFAULT_CONSULTANT_EMAIL
+    },
+    days: (state.days || []).map(day => ({
+     date: normalizeTextValue(day.date || ''),
+     dayType: normalizeTextValue(day.dayType || ''),
+     entries: (day.entries || []).map(entry => ({
+      time: formatTimeForStructuredExport(entry.time || ''),
+      foods: (entry.foods || [])
+       .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
+       .map(item => ({
+        name: normalizeTextValue(item.name || ''),
+        amount: normalizeTextValue(item.amount || ''),
+        unit: normalizeTextValue(item.unit || ''),
+        motivation: normalizeTextValue(item.motivation || ''),
+        notes: normalizeTextValue(item.notes || '')
+       })),
+      drinks: (entry.drinks || [])
+       .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
+       .map(item => ({
+        name: normalizeTextValue(item.name || ''),
+        amount: normalizeTextValue(item.amount || ''),
+        unit: normalizeTextValue(item.unit || ''),
+        motivation: normalizeTextValue(item.motivation || ''),
+        notes: normalizeTextValue(item.notes || '')
+       })),
+      sports: (entry.sports || [])
+       .filter(item => String(item.type || '').trim() || String(item.duration || '').trim())
+       .map(item => ({
+        type: normalizeTextValue(item.type || ''),
+        duration: normalizeTextValue(item.duration || ''),
+        unit: normalizeTextValue(item.unit || '')
+       }))
+     }))
+    }))
+   };
+  }
+
+  function download(filename, content, type){
+   const blob = new Blob([content], {type});
+   const url = URL.createObjectURL(blob);
+   const a = document.createElement('a');
+   a.href = url;
+   a.download = filename;
+   a.click();
+   URL.revokeObjectURL(url);
+  }
+
+  function hasInvalidTimeEntries(){
+   return (state.days || []).some(day =>
+    (day.entries || []).some(entry => !isStrictValidTimeValue(entry.time || ''))
+   );
+  }
+
+  function exportJson(){
+   if (hasInvalidTimeEntries()){
+    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+    return;
+   }
+   const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.json`;
+   download(fileName, JSON.stringify(normalizedData(), null, 2), 'application/json;charset=utf-8');
+   setStatus('JSON-Datei exportiert.');
+  }
+
+
+  function csvEscape(value=''){
+   const normalized = String(value ?? '')
+    .normalize('NFC')
+    .replace(/\r\n/g, ' ')
+    .replace(/[\r\n]+/g, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+   const v = normalized.replaceAll('"','""');
+   return `"${v}"`;
+  }
+
+  function parseDateForCsv(dateStr){
+   if (!dateStr) return null;
+   const trimmed = String(dateStr).trim();
+   if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)){
+    const [y,m,d] = trimmed.split('-').map(Number);
+    return new Date(y, m - 1, d);
+   }
+   if (/^\d{2}\.\d{2}\.\d{4}$/.test(trimmed)){
+    const [d,m,y] = trimmed.split('.').map(Number);
+    return new Date(y, m - 1, d);
+   }
+   return null;
+  }
+
+  function formatDateForCsv(dateStr){
+   const d = parseDateForCsv(dateStr);
+   if (!d || Number.isNaN(d.getTime())) return String(dateStr || '').trim();
+   const day = String(d.getDate()).padStart(2, '0');
+   const month = String(d.getMonth() + 1).padStart(2, '0');
+   const year = d.getFullYear();
+   return `${day}.${month}.${year}`;
+  }
+
+  function timeSortValue(timeStr){
+   const raw = String(timeStr || '').trim().replace(/\s+/g, '');
+   if (!raw) return Number.MAX_SAFE_INTEGER;
+
+   let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
+   if (match){
+    return (parseInt(match[1], 10) * 60) + parseInt(match[2], 10);
+   }
+
+   match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
+   if (match){
+    return parseInt(match[1], 10) * 60;
+   }
+
+   return Number.MAX_SAFE_INTEGER - 1;
+  }
+
+  function formatTimeForCsv(timeStr){
+   const raw = String(timeStr || '').trim().replace(/\s+/g, '');
+   if (!raw) return '';
+
+   let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
+   if (match){
+    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
+    const m1 = String(parseInt(match[2], 10)).padStart(2, '0');
+    if (match[3] && match[4]){
+     const h2 = String(parseInt(match[3], 10)).padStart(2, '0');
+     const m2 = String(parseInt(match[4], 10)).padStart(2, '0');
+     return `${h1}:${m1}-${h2}:${m2}`;
+    }
+    return `${h1}:${m1}`;
+   }
+
+   match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
+   if (match){
+    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
+    if (match[2]){
+     const h2 = String(parseInt(match[2], 10)).padStart(2, '0');
+     return `${h1}:00-${h2}:00`;
+    }
+    return `${h1}:00`;
+   }
+
+   return raw.replace(/–/g, '-');
+  }
+
+  function daySortValue(dateStr){
+   const d = parseDateForCsv(dateStr);
+   return d && !Number.isNaN(d.getTime()) ? d.getTime() : Number.MAX_SAFE_INTEGER;
+  }
+
+  function exportCsv(){
+   if (hasInvalidTimeEntries()){
+    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+    return;
+   }
+   const csv = buildCsvPayload();
+   const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
+   download(fileName, csv, 'text/csv;charset=utf-8');
+   setStatus('CSV-Datei exportiert.');
+  }
+
+
+  function showMailAttachmentNotice(csvFileName){
+   const overlay = document.getElementById('mailAttachmentOverlay');
+   const fileNameEl = document.getElementById('mailAttachmentFileName');
+   if (fileNameEl) fileNameEl.textContent = csvFileName || 'ernaehrungsprotokoll.csv';
+   if (overlay){
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden', 'false');
+   }
+  }
+
+  function hideMailAttachmentNotice(){
+   const overlay = document.getElementById('mailAttachmentOverlay');
+   if (overlay){
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden', 'true');
+   }
+  }
+
+  function buildMailBody(csvFileName){
+   const days = state.days || [];
+   const entriesCount = days.flatMap(d => d.entries || []).length;
+   const daysWithEntries = countDaysWithEntries();
+   const summaryLines = [
+    'WICHTIG: Bitte hänge die heruntergeladene CSV-Datei an diese E-Mail an.',
+    csvFileName ? `Dateiname: ${csvFileName}` : '',
+    'Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.',
+    '',
+    `Name: ${state.clientName || ''}`,
+    `E-Mail: ${state.clientEmail || ''}`,
+    `Tage mit Einträgen: ${daysWithEntries}`,
+    `Anzahl Tage gesamt: ${days.length}`,
+    `Anzahl Einträge: ${entriesCount}`,
+    '',
+    'Kurzübersicht:'
+   ].filter(Boolean);
+
+   days.slice().sort((a, b) => daySortValue(a.date) - daySortValue(b.date)).forEach(day => {
+    summaryLines.push(`${formatDateForCsv(day.date || '') || (day.date || 'ohne Datum')} | ${day.dayType || 'ohne Tagesart'} | ${(day.entries || []).length} Einträge`);
+   });
+
+   return summaryLines.join('\n');
+  }
+
+  function prepareMail(){
+   if (hasInvalidTimeEntries()){
+    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+    return;
+   }
+
+   const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
+   const csv = buildCsvPayload();
+   download(csvFileName, csv, 'text/csv;charset=utf-8');
+   showMailAttachmentNotice(csvFileName);
+
+   const daysWithEntries = countDaysWithEntries();
+   const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
+   const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
+   const body = encodeURIComponent(buildMailBody(csvFileName));
+
+   setTimeout(() => {
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+   }, 250);
+
+   setStatus(`CSV-Datei heruntergeladen: ${csvFileName}. Bitte füge die Datei jetzt noch an.`);
+  }
+
+  function importJson(file){
+   const reader = new FileReader();
+   reader.onload = e => {
+    try{
+     const parsed = JSON.parse(e.target.result);
+     if (!parsed || !parsed.days) throw new Error('Ungültige Struktur');
+     state = migrateState(parsed);
+     mergeDuplicateDaysByDate();
+     ensureAtLeastOneDay();
+     activeDayId = state.days[0]?.id || null;
+     renderAll();
+     setStatus('JSON-Datei erfolgreich importiert.');
+    }catch(err){
+     alert('Die Datei konnte nicht importiert werden. Bitte verwende eine gültige JSON-Datei aus dieser Anwendung.');
+    }
+   };
+   reader.readAsText(file, 'utf-8');
+  }
+
+  function renderAll(){
+   mergeDuplicateDaysByDate();
+   sortDaysByDate();
+   ensureAtLeastOneDay();
+   ensureActiveDay();
+   bindTopFields();
+   renderDays();
+   renderSummary();
+   renderChips();
+   saveDraft();
+  }
+
+  document.getElementById('addDayBtn').onclick = addDay;
+  document.getElementById('saveDraftBtn').onclick = saveDraft;
+  document.getElementById('resetAllBtn').onclick = resetAll;
+  document.getElementById('exportCsvBtn').onclick = exportCsv;
+  document.getElementById('prepareMailBtn').onclick = prepareMail;
+
+  window.addDay = addDay;
+  window.removeDay = removeDay;
+  window.addEntry = addEntry;
+  window.removeEntry = removeEntry;
+  window.updateDay = updateDay;
+  window.updateEntry = updateEntry;
+  window.updateItem = updateItem;
+  window.addItem = addItem;
+  window.removeItem = removeItem;
+  window.selectDay = selectDay;
+  window.insertPreset = insertPreset;
+  window.loadPortalItem = loadPortalItem;
+  window.deletePortalItem = deletePortalItem;
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+   const mailAttachmentCloseBtn = document.getElementById('mailAttachmentCloseBtn');
+   if (mailAttachmentCloseBtn){
+    mailAttachmentCloseBtn.addEventListener('click', (event) => {
+     event.preventDefault();
+     hideMailAttachmentNotice();
+    });
+   }
+
+   const mailAttachmentOverlay = document.getElementById('mailAttachmentOverlay');
+   if (mailAttachmentOverlay){
+    mailAttachmentOverlay.addEventListener('click', (event) => {
+     if (event.target === mailAttachmentOverlay){
+      hideMailAttachmentNotice();
+     }
+    });
+   }
+  });
+
+
+  document.addEventListener('pointerdown', (event) => {
+   const option = event.target.closest('.inline-suggest-option');
+   if (option){
+    event.preventDefault();
+    const menu = option.closest('.inline-suggest-menu');
+    if (!menu) return;
+    const wrap = menu.closest('.inline-suggest-wrap');
+    if (!wrap) return;
+    const input = wrap.querySelector('input');
+    applyInlineSuggestion(input, option.getAttribute('data-value') || option.textContent || '');
+    return;
+   }
+
+   if (!event.target.closest('.inline-suggest-wrap')){
+    hideAllInlineSuggestions();
+   }
+  });
+
+  document.addEventListener('focusin', (event) => {
+   const input = event.target.closest('.inline-suggest-wrap input');
+   if (!input) return;
+   showInlineSuggestions(input);
+  });
+
+  document.addEventListener('focusout', (event) => {
+   const wrap = event.target.closest('.inline-suggest-wrap');
+   if (!wrap) return;
+   setTimeout(() => {
+    if (!wrap.contains(document.activeElement)){
+      const menu = wrap.querySelector('.inline-suggest-menu');
+      if (menu) menu.classList.remove('show');
+    }
+   }, 120);
+  });
+
+  if (!loadDraft()){
+   state.days = [createEmptyDay()];
+  }
+  state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
+  activeDayId = state.days[0]?.id || null;
+  renderAll();
+ </script>
+
+ <div id="mailAttachmentOverlay" class="mail-attachment-overlay" aria-hidden="true">
+  <div class="mail-attachment-dialog" role="dialog" aria-modal="true" aria-labelledby="mailAttachmentTitle">
+   <h3 id="mailAttachmentTitle">Wichtiger letzter Schritt</h3>
+   <p>Bitte hänge jetzt die heruntergeladene CSV-Datei an Deine E-Mail an.</p>
+   <div class="mail-attachment-file" id="mailAttachmentFileName">ernaehrungsprotokoll.csv</div>
+   <p>Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.</p>
+   <div class="mail-attachment-actions">
+    <button type="button" id="mailAttachmentCloseBtn">Verstanden</button>
+   </div>
   </div>
+ </div>
 </body>
 </html>
