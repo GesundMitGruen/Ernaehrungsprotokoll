@@ -1,2361 +1,1507 @@
-<!--
-© Dieter Grün Ernährungsberatung
-Digitale Ausfüllhilfe Ernährungsprotokoll
-Urheberrechtshinweis: Diese Datei und ihr Aufbau sind urheberrechtlich geschützt.
-Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün Ernährungsberatung.
--->
 <!DOCTYPE html>
 <html lang="de">
 <head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <title>Ernährungsprotokoll | Dieter Grün Ernährungsberatung</title>
- <style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dieter Grün Ernährungsberatung</title>
+<style>
   :root{
-   --bg:#f3f5f6;
-   --bg-soft:#edf2f4;
-   --card:#ffffff;
-   --line:#dbe4e8;
-   --line-strong:#c7d2d8;
-   --text:#303A44;
-   --muted:#66727c;
-   --brand:#51BCD5;
-   --brand-strong:#37ABC7;
-   --brand-dark:#303A44;
-   --brand-soft:#e7f6fa;
-   --secondary:#77848e;
-   --secondary-soft:#f1f4f6;
-   --hero-dark:#303A44;
-   --hero-dark-soft:#42505d;
-   --hero-accent:#8dd9e7;
-   --shadow:0 14px 34px rgba(48,58,68,0.09);
-   --radius:20px;
-   --radius-sm:14px;
+    --bg:#f2f7f8;
+    --brand:#51BCD5;
+    --brand-dark:#303A44;
+    --card:#ffffff;
+    --text:#303A44;
+    --muted:#66727c;
+    --line:#dbe4e8;
+    --soft:#f7fbfc;
+    --warning:#5e6d7c;
   }
   *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-   margin:0;
-   font-family:Arial, Helvetica, sans-serif;
-   background:
-    radial-gradient(circle at top right, rgba(81,188,213,0.16), transparent 26%),
-    linear-gradient(180deg, #f7f9fa 0%, #eef2f4 100%);
-   color:var(--text);
+  html,body{margin:0;padding:0;font-family:Arial,sans-serif;background:linear-gradient(90deg,#f3f6f7 0%, #eef4f6 45%, #e8f1f4 100%);color:var(--text)}
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image:url('data:image/png;base64,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');
+    background-repeat:no-repeat;
+    background-position:right 22px bottom 22px;
+    background-size:min(220px, 24vw);
+    opacity:0.03;
+    filter:grayscale(1);
   }
-  .container{
-   max-width:1220px;
-   margin:0 auto;
-   padding:16px;
-  }
+  .container{max-width:1320px;margin:0 auto;padding:20px;position:relative;z-index:1}
   .hero{
-   background:linear-gradient(135deg, var(--hero-dark) 0%, #374451 58%, var(--hero-dark-soft) 100%);
-   color:#fff;
-   padding:18px 22px;
-   border-radius:24px;
-   box-shadow:var(--shadow);
-   margin-bottom:18px;
-   position:relative;
-   overflow:hidden;
-   border:1px solid rgba(81,188,213,0.18);
+    display:flex;align-items:center;justify-content:space-between;gap:22px;
+    background:linear-gradient(135deg,var(--brand-dark),#455565 65%, #5f7b89 100%);
+    color:#fff;border-radius:30px;padding:24px 26px;border-bottom:8px solid var(--brand);
+    box-shadow:0 16px 34px rgba(34,52,63,0.08);
   }
-  .hero::before{
-   content:"";
-   position:absolute;
-   inset:auto auto 0 0;
-   width:100%;
-   height:5px;
-   background:linear-gradient(90deg, var(--brand) 0%, var(--hero-accent) 100%);
-  }
-  .hero::after{
-   content:"";
-   position:absolute;
-   right:-80px;
-   top:-70px;
-   width:240px;
-   height:240px;
-   border-radius:50%;
-   background:radial-gradient(circle, rgba(141,217,231,0.28), rgba(141,217,231,0));
-  }
-  .hero h1{
-   margin:0 0 8px 0;
-   font-size:30px;
-   line-height:1.12;
-   position:relative;
-   z-index:1;
-  }
-  .hero p{
-   margin:0;
-   max-width:900px;
-   line-height:1.48;
-   font-size:12px;
-   color:rgba(255,255,255,0.95);
-   position:relative;
-   z-index:1;
-  }
-  .brand-lockup{
-   display:flex;
-   gap:14px;
-   align-items:flex-start;
-   position:relative;
-   z-index:1;
-  }
-  .brand-mark{
-   flex:0 0 auto;
-   width:min(24vw, 210px);
-   max-width:210px;
-   min-width:120px;
-   border-radius:20px;
-   padding:0;
-   background:transparent;
-   border:none;
-   box-shadow:none;
-  }
-  .brand-mark img{
-   display:block;
-   width:100%;
-   height:auto;
-  }
-  .hero-text{
-   min-width:0;
-  }
-  .brand-line{
-   font-size:11px;
-   text-transform:uppercase;
-   letter-spacing:0.08em;
-   margin-bottom:8px;
-   color:var(--hero-accent);
-   font-weight:700;
-  }
-  .hero-help{
-   display:grid;
-   grid-template-columns:repeat(4, minmax(0,1fr));
-   gap:8px;
-   margin-top:14px;
-   position:relative;
-   z-index:1;
-  }
-  .help-chip{
-   display:flex;
-   gap:9px;
-   align-items:flex-start;
-   padding:9px 11px;
-   border-radius:14px;
-   background:rgba(255,255,255,0.10);
-   border:1px solid rgba(141,217,231,0.20);
-   line-height:1.35;
-   font-size:12px;
-  }
-  .help-chip strong{
-   font-size:15px;
-   line-height:1;
-   margin-top:1px;
-   color:var(--hero-accent);
-  }
-
-  .grid{
-   display:grid;
-   grid-template-columns:1.35fr 0.65fr;
-   gap:14px;
-  }
-  @media (max-width:1020px){
-   .grid{grid-template-columns:1fr}
-  }
-  @media (max-width:760px){
-   .brand-mark{
-    width:min(42vw, 170px);
-    min-width:96px;
-   }
-   .hero h1{font-size:26px}
-  }
-  .card{
-   background:rgba(255,255,255,0.96);
-   border:1px solid var(--line);
-   border-radius:18px;
-   box-shadow:var(--shadow);
-   padding:10px;
-   margin-bottom:14px;
-   backdrop-filter:blur(4px);
-  }
-  aside .card{
-   padding:10px;
-  }
-  aside table{
-   font-size:12px;
-  }
-  aside th, aside td{
-   padding:6px 5px;
-  }
-  h2,h3,h4{
-   margin:0 0 12px 0;
-   line-height:1.2;
-  }
-  h2{font-size:21px; color:var(--brand-dark)}
-  h3{font-size:17px}
-  h4{font-size:14px; color:var(--secondary); text-transform:uppercase; letter-spacing:0.04em;}
-  .muted{
-   color:var(--muted);
-   font-size:14px;
-   line-height:1.55;
-  }
-  .toolbar{
-   display:flex;
-   gap:8px;
-   flex-wrap:wrap;
-   margin-top:12px;
-  }
-  button, .button-like, label.file-label{
-   border:none;
-   border-radius:11px;
-   padding:9px 12px;
-   background:linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
-   color:#fff;
-   cursor:pointer;
-   font-weight:700;
-   font-size:12px;
-   transition:transform .08s ease, opacity .2s ease, box-shadow .2s ease;
-   text-decoration:none;
-   display:inline-flex;
-   align-items:center;
-   gap:7px;
-   box-shadow:0 6px 18px rgba(81,188,213,0.18);
-  }
-  button:hover, .button-like:hover, label.file-label:hover{
-   opacity:.96;
-   box-shadow:0 10px 20px rgba(81,188,213,0.22);
-  }
-  button:active, .button-like:active{transform:translateY(1px)}
-  .secondary{
-   background:linear-gradient(135deg, var(--secondary-soft) 0%, #f8fafb 100%);
-   color:var(--brand-dark);
-   border:1px solid #d6dde2;
-   box-shadow:none;
-  }
-  .warning{
-   background:linear-gradient(135deg, #687784 0%, #4e5b67 100%);
-   box-shadow:0 6px 18px rgba(48,58,68,0.18);
-  }
-  .danger{
-   background:linear-gradient(135deg, #56626e 0%, #3f4a55 100%);
-   box-shadow:0 6px 18px rgba(48,58,68,0.20);
-  }
-  .ghost{
-   background:#fff;
-   color:var(--brand-dark);
-   border:1px dashed #cfd7dc;
-   box-shadow:none;
-  }
-  .row{
-   display:grid;
-   grid-template-columns:repeat(12,1fr);
-   gap:10px;
-   margin-bottom:10px;
-  }
+  .hero-content{flex:1 1 auto;min-width:0}
+  .hero h1{margin:0 0 10px 0;font-size:32px;line-height:1.1}
+  .hero p{margin:0;color:rgba(255,255,255,.92);line-height:1.5;font-size:15px;max-width:940px}
+  .hero-brand img{width:160px;max-width:160px;height:auto;display:block;opacity:.98}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;margin-top:18px;align-items:start}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 22px rgba(36,61,71,0.05)}
+  .card h2{margin:0 0 12px 0;font-size:26px}
+  .section-title{margin:0 0 12px 0;font-size:20px}
+  .muted{color:var(--muted);line-height:1.5}
+  .form-section{margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px}
   .col-12{grid-column:span 12}
-  .col-9{grid-column:span 9}
   .col-8{grid-column:span 8}
   .col-6{grid-column:span 6}
   .col-4{grid-column:span 4}
   .col-3{grid-column:span 3}
-  @media (max-width:760px){
-   .col-9,.col-8,.col-6,.col-4,.col-3{grid-column:span 12}
-   .hero-help{grid-template-columns:1fr}
-   .brand-lockup{flex-direction:column}
+  label{display:block;margin-bottom:6px;font-weight:700;font-size:14px}
+  input,select,textarea{width:100%;border:1px solid #bcc8cf;border-radius:6px;padding:7px 10px;font-size:14px;background:#fff;color:var(--text)}
+  textarea{min-height:88px;resize:vertical}
+  input::placeholder, textarea::placeholder{color:#96a3af}
+  .checkgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+  .checkitem{display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--text)}
+  .checkitem input{width:auto;margin-top:2px}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .action-toolbar{position:sticky;top:0;z-index:50;background:rgba(242,247,248,.96);backdrop-filter:blur(6px);padding:10px;border:1px solid var(--line);border-radius:18px;margin:18px 0}
+  button{border:none;border-radius:14px;padding:11px 14px;font-size:14px;font-weight:700;cursor:pointer}
+  .primary{background:var(--brand);color:#fff}
+  .secondary{background:#fff;color:var(--brand-dark);border:1px solid #c7d5dc}
+  .warning{background:var(--warning);color:#fff}
+  .status{margin-top:12px;font-size:13px;color:var(--muted);min-height:18px}
+  .sidebar .card + .card{margin-top:16px}
+  .summary-box{background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:16px;line-height:1.5}
+  .summary-box h3{margin:0 0 10px 0;font-size:19px}
+  .summary-box ul{margin:0;padding-left:18px}
+  .summary-box li{margin-bottom:6px}
+  .footer-note{font-size:13px;color:var(--muted);line-height:1.5}
+  .summary-panel{display:none}
+  .summary-panel.show{display:block}
+  .summary-panel{scroll-margin-top:96px}
+  .summary-panel .summary-render{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:12px}
+  .summary-render h3{margin:0 0 10px 0;font-size:22px}
+  .summary-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:18px;
+    padding:0 0 12px 0;
+    margin:0 0 14px 0;
+    border-bottom:3px solid var(--brand);
   }
-  label{
-   display:block;
-   font-size:12px;
-   font-weight:700;
-   margin-bottom:6px;
-   color:var(--brand-dark);
+  .summary-header h3{
+    margin:0 0 6px 0;
   }
-  input, select, textarea{
-   width:100%;
-   padding:9px 11px;
-   border-radius:11px;
-   border:1px solid #cfd8dd;
-   background:#fff;
-   color:var(--text);
-   font-size:12px;
-   font-family:inherit;
-   transition:border-color .15s ease, box-shadow .15s ease;
+  .summary-header-meta{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.45;
   }
-  input[readonly]{
-   background:#f4f7f9;
-   color:#5f6c75;
-   cursor:not-allowed;
-  }
-  input:focus, select:focus, textarea:focus{
-   outline:none;
-   border-color:var(--brand);
-   box-shadow:0 0 0 4px rgba(81,188,213,0.14);
-  }
-  textarea{
-   min-height:82px;
-   resize:vertical;
-   line-height:1.45;
-  }
-  .chips{
-   display:flex;
-   flex-wrap:wrap;
-   gap:8px;
-   margin-top:8px;
-  }
-  .chip{
-   background:linear-gradient(135deg, #f5f8f9 0%, var(--brand-soft) 100%);
-   color:var(--brand-dark);
-   border:1px solid #d2e6ec;
-   border-radius:999px;
-   padding:7px 11px;
-   font-size:12px;
-   cursor:pointer;
-   user-select:none;
-  }
-  .summary-grid{
-   display:grid;
-   grid-template-columns:repeat(2,1fr);
-   gap:6px;
-  }
-  .stat{
-   background:linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
-   border:1px solid #dfe8ec;
-   border-radius:12px;
-   padding:8px 9px;
-  }
-  .stat-label{font-size:10px; line-height:1.15; color:var(--text);}
-    .stat strong{
-   display:block;
-   font-size:18px;
-   line-height:1;
-   margin-bottom:4px;
-   color:var(--brand-dark);
-  }
-  .day-card{
-   border:1px solid #d7e3e8;
-   border-radius:18px;
-   padding:10px;
-   background:linear-gradient(180deg, #ffffff 0%, #f8fafb 100%);
-   margin-top:14px;
-  }
-  .day-head, .entry-head, .split, .subsection-head{
-   display:flex;
-   justify-content:space-between;
-   gap:10px;
-   align-items:flex-start;
-   flex-wrap:wrap;
-  }
-  .entry-head > div{
-   min-width:0;
-   flex:1 1 auto;
-  }
-  .entry-remove-btn{
-   margin-left:auto;
-   flex:0 0 auto;
-   align-self:flex-start;
-  }
-  .entry{
-   border:1px solid #dde5e9;
-   background:#fff;
-   border-radius:14px;
-   padding:12px;
-   margin-top:12px;
-  }
-  .entry-title{
-   font-weight:700;
-   color:var(--brand-dark);
-  }
-  .small{
-   font-size:12px;
-   color:var(--muted);
-   line-height:1.45;
-  }
-  .subsection{
-   border:1px solid #e2e8eb;
-   border-radius:14px;
-   padding:12px;
-   margin-top:12px;
-   background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
-  }
-  .item-row{
-   border:1px solid #e3e8eb;
-   border-radius:13px;
-   padding:10px;
-   margin-top:10px;
-   background:#fff;
-  }
-
-  .day-layout{
-   display:grid;
-   grid-template-columns:minmax(0,1fr);
-   gap:16px;
-   margin-top:14px;
-   align-items:start;
-  }
-  .day-nav{
-   position:sticky;
-   top:10px;
-   z-index:5;
-   align-self:start;
-   background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(245,248,249,0.98) 100%);
-   border:1px solid #d7e2e7;
-   border-radius:18px;
-   padding:12px;
-   backdrop-filter:blur(6px);
-  }
-  .day-nav-list{
-   display:flex;
-   gap:10px;
-   overflow-x:auto;
-   overflow-y:hidden;
-   padding-bottom:4px;
-   scrollbar-width:thin;
-  }
-  .day-nav-item{
-   min-width:176px;
-   flex:0 0 auto;
-   text-align:left;
-   padding:14px 14px 13px;
-   border-radius:14px;
-   border:1px solid #d7e2e7;
-   background:linear-gradient(180deg, #ffffff 0%, #f5f8f9 100%);
-   color:var(--brand-dark);
-   box-shadow:none;
-   display:block;
-  }
-  .day-nav-item:hover{
-   box-shadow:none;
-   opacity:1;
-   border-color:#c0d9e0;
-   transform:none;
-  }
-  .day-nav-item.active{
-   background:linear-gradient(135deg, var(--hero-dark) 0%, #3b4854 100%);
-   color:#fff;
-   border-color:transparent;
-   box-shadow:0 10px 22px rgba(48,58,68,0.22);
-  }
-  .day-nav-item .nav-title{
-   display:block;
-   font-size:12px;
-   font-weight:700;
-   margin-bottom:4px;
-  }
-  .day-nav-item .nav-meta{
-   display:block;
-   font-size:11px;
-   line-height:1.45;
-   color:inherit;
-   opacity:0.9;
-  }
-  .day-detail{
-   min-width:0;
-  }
-  .day-overview{
-   border:1px solid #d7e2e7;
-   border-radius:14px;
-   padding:12px;
-   background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
-   margin:14px 0 0;
-   min-width:0;
-  }
-  .day-overview-scroll{
-   width:100%;
-   overflow-x:auto;
-   overflow-y:hidden;
-   margin-top:10px;
-  }
-  .day-overview-table{
-   width:100%;
-   min-width:720px;
-   border-collapse:collapse;
-   table-layout:fixed;
-   margin-top:0;
-  }
-  .day-overview-table th,
-  .day-overview-table td{
-   padding:7px 7px;
-   border-bottom:1px solid #e4eaed;
-   font-size:12px;
-   vertical-align:top;
-   white-space:normal;
-   overflow-wrap:anywhere;
-   word-break:break-word;
-  }
-  .day-overview-table th{
-   color:var(--muted);
-   font-weight:700;
-  }
-  .day-overview-table tr:last-child td{
-   border-bottom:none;
-  }
-  .day-overview-table th:nth-child(1),
-  .day-overview-table td:nth-child(1){
-   width:44px;
-  }
-  .day-overview-table th:nth-child(2),
-  .day-overview-table td:nth-child(2){
-   width:92px;
-  }
-  .overview-empty{
-   margin-top:10px;
-   font-size:12px;
-   color:var(--muted);
-  }
-  @media (max-width:980px){
-   .hero-help{
-    grid-template-columns:repeat(2, minmax(0,1fr));
-   }
-   .brand-lockup{
-    gap:12px;
-   }
-   .brand-mark{
-    width:min(44vw, 220px);
-    max-width:220px;
-    min-width:150px;
+  .summary-logo{
+    width:120px;
+    max-width:120px;
     height:auto;
-    border-radius:0;
-   }
-   .day-nav{
-    top:10px;
-    padding:10px;
-   }
-   .day-nav-item{
-    min-width:185px;
-   }
-   .day-overview-table{
-    min-width:760px;
-   }
+    flex:0 0 auto;
   }
-
-  .portal-list{
-   display:grid;
-   gap:10px;
-   margin-top:14px;
+  .summary-header .summary-logo{display:none;}
+  .summary-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
   }
-  .portal-item{
-   border:1px solid #d9e2e6;
-   border-radius:15px;
-   padding:12px;
-   background:#f9fbfc;
-   display:flex;
-   justify-content:space-between;
-   gap:10px;
-   align-items:flex-start;
-   flex-wrap:wrap;
+  .summary-section{
+    break-inside:avoid;
+    page-break-inside:avoid;
   }
-  .footer-note{
-   margin-top:12px;
-   font-size:11px;
-   color:var(--muted);
-   line-height:1.55;
+  .summary-render p{
+    margin:0 0 6px 0;
+    line-height:1.45;
   }
-  .hidden{display:none !important}
-  .status{
-   margin-top:12px;
-   padding:12px 14px;
-   border-radius:14px;
-   background:linear-gradient(135deg, #edf8fb 0%, #f5f8f9 100%);
-   border:1px solid #d6e9ef;
-   color:var(--brand-dark);
-   font-size:14px;
-   display:none;
+  .summary-render h4{
+    margin:16px 0 8px 0;
+    font-size:15px;
+    background:rgba(81,188,213,0.12);
+    color:var(--brand-dark);
+    padding:6px 9px;
+    border-radius:6px;
+    border-left:4px solid var(--brand);
   }
-  .status.show{display:block}
-  table{
-   width:100%;
-   border-collapse:collapse;
-   margin-top:10px;
-   font-size:12px;
-  }
-  th, td{
-   border-bottom:1px solid #e8edef;
-   padding:6px 5px;
-   text-align:left;
-   vertical-align:top;
-  }
-  th{
-   color:var(--muted);
-   font-weight:700;
-  }
-  input::placeholder, textarea::placeholder{
-   color:#98a3ad;
-   opacity:1;
-  }
-  .actions-card{
-   padding:12px 14px;
-  }
-  .actions-card .toolbar{
-   margin-top:0;
-  }
-  .helper-group{
-   margin-top:12px;
-  }
-  .helper-title{
-   font-size:12px;
-   font-weight:700;
-   margin-bottom:6px;
-   color:var(--text);
-  }
-  .inline-help{
-   font-size:12px;
-   color:var(--muted);
-   margin-top:4px;
-   line-height:1.45;
-  }
- 
-  .hero{
-   display:flex;
-   align-items:center;
-   justify-content:space-between;
-   gap:24px;
-   flex-wrap:nowrap;
-  }
-  .hero-content{
-   flex:1 1 auto;
-   min-width:0;
-  }
-  .hero-brand{
-   flex:0 0 auto;
-   display:flex;
-   justify-content:flex-end;
-   align-items:center;
-   margin-left:24px;
-  }
-  .hero-brand img{
-   width:clamp(120px, 11vw, 180px);
-   max-width:180px;
-   height:auto;
-   display:block;
-   opacity:0.98;
-  }
-  .hero h1,
-  .hero p,
-  .hero
-  @media (max-width: 900px){
-   .hero{
-    flex-wrap:wrap;
-    gap:14px;
-   }
-   .hero-content{
-    flex:1 1 100%;
-   }
-   .hero-brand{
-    width:100%;
-    margin-left:0;
-    justify-content:center;
-   }
-   .hero-brand img{
-    width:160px;
-    max-width:160px;
-   }
-  }
-
-  .input-invalid{
-   border-color:#d96b6b !important;
-   box-shadow:0 0 0 2px rgba(217,107,107,0.12);
-   background:#fff8f8;
-  }
-  .field-error{
-   margin-top:4px;
-   font-size:12px;
-   color:#b94a48;
-   line-height:1.35;
-   display:none;
-  }
-  .field-error.show{
-   display:block;
-  }
-
-    .inline-suggest-wrap{position:relative; z-index:40}
-    .inline-suggest-menu{
-      position:absolute;
-      left:0;
-      right:0;
-      top:calc(100% + 4px);
-      z-index:30;
-      background:#fff;
-      border:1px solid #dbe3ea;
-      border-radius:12px;
-      box-shadow:0 10px 24px rgba(0,0,0,0.08);
-      max-height:180px;
-      overflow:auto;
-      padding:6px;
-      display:none;
+  .summary-render p{margin:0 0 6px 0;line-height:1.42;font-size:13px}
+  .app-copyright-note{margin-top:14px;font-size:10px;line-height:1.35;color:rgba(32,48,37,0.52);text-align:right;user-select:none}
+  .inline-note{font-size:12px;color:var(--muted);line-height:1.45;margin-top:6px}
+  .conditional-box{display:none}
+  .conditional-box.show{display:block}
+  .summary-toggle-row{display:flex;gap:10px;flex-wrap:wrap}
+  @media print {
+    @page{
+      size:A4;
+      margin:12mm 12mm 14mm 12mm;
     }
-    .inline-suggest-menu.show{display:block}
-    .inline-suggest-option{
-      display:block;
-      width:100%;
-      text-align:left;
-      background:transparent;
-      color:var(--text);
-      border:none;
-      border-radius:8px;
-      padding:8px 10px;
-      font-size:13px;
-      cursor:pointer;
+    html, body{
+      background:#fff !important;
+      color:#1f2a33 !important;
+      font-size:11pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
-    .inline-suggest-option:hover{background:#f1f6f8}
-    .inline-suggest-empty{
-      padding:8px 10px;
-      font-size:12px;
-      color:var(--muted);
+    body::before,
+    .hero,
+    .action-toolbar,
+    .sidebar,
+    .status,
+    .toolbar,
+    .summary-toggle-row,
+    .form-section,
+    .section-accordion,
+    .section-accordion-body,
+    .section-accordion-header{
+      display:none !important;
     }
-
-    .toolbar > button{
-      min-height:42px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+    main > :not(#summaryPanel){
+      display:none !important;
     }
-    .day-nav{
-      position:sticky;
-      top:0;
-      z-index:120;
-      background:var(--card);
+    .layout{
+      display:block !important;
     }
-    .day-nav-list{
-      position:relative;
-      z-index:121;
+    #summaryPanel{
+      display:block !important;
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      margin:0 !important;
+      background:#fff !important;
     }
-    @media (max-width: 900px){
-      .toolbar > button{
-        min-height:44px;
-      }
-      .day-nav{
-        z-index:160;
-      }
-      .day-nav-list{
-        z-index:161;
-      }
-      .inline-suggest-wrap{
-        z-index:40 !important;
-      }
-      .inline-suggest-menu{
-        z-index:41 !important;
-      }
+    #summaryPanel > .section-title{
+      display:none !important;
     }
-
-    .action-toolbar{
+    #summaryPanel .summary-render{
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      border-radius:0 !important;
+      background:#fff !important;
+    }
+    .summary-grid{
+      display:grid !important;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:12px 18px;
+      align-items:start;
+    }
+    .summary-section{
+      display:block !important;
+      break-inside:avoid;
+      page-break-inside:avoid;
+      margin:0 0 10px 0;
+    }
+    .summary-section.wide{
+      grid-column:1 / -1;
+    }
+    .summary-section.compact{
+      grid-column:span 1;
+    }
+    .summary-header{
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      padding:0 0 10px 0;
+      margin:0 0 14px 0;
+      border-bottom:3px solid #51BCD5;
     }
-    .action-toolbar > button{
-      flex:1 1 220px;
+    .summary-logo{
+      width:150px !important;
+      max-width:150px !important;
+      height:auto !important;
+      display:block !important;
+      visibility:visible !important;
+      opacity:1 !important;
+      object-fit:contain;
     }
-    @media (max-width: 900px){
-      .action-toolbar > button{
-        flex:1 1 100%;
-      }
+    .summary-header h3{
+      font-size:16pt;
+      margin:0 0 4px 0;
+      color:#303A44 !important;
+      background:none !important;
+      border:none !important;
+      padding:0 !important;
     }
-
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
-      background-image:url('data:image/png;base64,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');
-      background-repeat:no-repeat;
-      background-position:right 28px bottom 24px;
-      background-size:min(220px, 24vw);
-      opacity:0.035;
-      filter:grayscale(1);
-    }
-    .container, .hero, .card, .day-nav, .status, .mail-workflow-dialog, .mail-attachment-dialog{
-      position:relative;
-      z-index:1;
-    }
-    @media (max-width: 900px){
-      body::before{
-        background-position:right 14px bottom 14px;
-        background-size:min(150px, 30vw);
-        opacity:0.03;
-      }
-    }
-    
-    .app-copyright-note{
-      margin-top:14px;
-      font-size:10px;
+    .summary-header-meta{
+      color:#55636e !important;
+      font-size:10pt;
       line-height:1.35;
-      color:rgba(32,48,37,0.52);
-      text-align:right;
-      user-select:none;
     }
-    .hero .app-copyright-note{
-      color:rgba(255,255,255,0.52);
-      text-align:left;
-      margin-top:12px;
+    .summary-render h4{
+      margin:10px 0 6px 0;
+      font-size:10.5pt;
+      background:rgba(81,188,213,0.14) !important;
+      color:#303A44 !important;
+      padding:4px 7px;
+      border-radius:4px;
+      border-left:4px solid #51BCD5;
+      break-after:avoid;
     }
+    .summary-render p{
+      margin:0 0 6px 0;
+      line-height:1.34;
+      orphans:3;
+      widows:3;
+    }
+    .summary-value{
+      display:block;
+      margin-top:2px;
+      font-size:9.5pt;
+      line-height:1.28;
+    }
+    .summary-list{
+      margin:3px 0 8px 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:2px 12px;
+    }
+    .summary-list li{
+      display:block;
+      padding:0;
+      border:none;
+      border-radius:0;
+      background:none !important;
+      font-size:9.5pt;
+      line-height:1.24;
+    }
+    .summary-list li::before{
+      content:"• ";
+      color:#303A44;
+      font-weight:700;
+    }
+    .summary-render strong{
+      color:#24333d;
+    }
+    .summary-row-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px 18px;
+      align-items:start;
+      margin-bottom:2px;
+    }
+    .summary-row-3{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px 16px;
+      align-items:start;
+      margin-bottom:4px;
+    }
+    .summary-row-compact{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px 16px;
+      align-items:start;
+      margin-bottom:4px;
+    }
+    .card{
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      background:#fff !important;
+    }
+    .container{
+      max-width:none !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+    .app-copyright-note{
+      display:none !important;
+    }
+  }
+  @media (max-width: 980px){
+    .layout{grid-template-columns:1fr}
+    .hero{flex-wrap:wrap}
+    .hero-brand{width:100%;display:flex;justify-content:center}
+    .hero-brand img{width:140px;max-width:140px}
+  }
+  @media (max-width: 760px){
+    .col-8,.col-6,.col-4,.col-3{grid-column:span 12}
+    .checkgrid{grid-template-columns:1fr}
+    .hero h1{font-size:26px}
+    .card h2{font-size:24px}
+  }
+
+  .top-actions{align-items:center}
+  .top-actions .spacer{flex:1 1 auto}
+  .toolbar-label{font-size:14px;font-weight:700;color:var(--brand-dark);padding:0 2px}
+  .section-accordion{
+    overflow:hidden;
+    scroll-margin-top:96px;
+  }
+  .section-accordion-header{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    background:transparent;
+    color:var(--brand-dark);
+    border:none;
+    padding:0;
+    margin:0 0 10px 0;
+    text-align:left;
+    cursor:pointer;
+  }
+  .section-accordion-header .title{
+    font-size:20px;
+    font-weight:700;
+  }
+  .section-accordion-header .toggle{
+    display:none;
+  }
+  .section-accordion-body{display:block}
+  .section-accordion.collapsed .section-accordion-body{display:none}
+  .section-accordion-header:focus-visible{outline:2px solid var(--brand);outline-offset:4px}
+  @media (max-width:760px){
+    .toolbar-label{width:100%;padding-top:4px}
+    .top-actions > button{flex:1 1 100%}
+  }
+
+
+  .summary-switch{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:4px;
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:var(--soft);
+  }
+  .summary-switch button{
+    margin:0;
+    padding:10px 14px;
+    border-radius:12px;
+  }
+  .summary-switch button.is-active{
+    background:var(--brand-dark);
+    color:#fff;
+    border-color:transparent;
+  }
+
+
+  .section-status{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:12px;
+    color:var(--muted);
+    margin-left:auto;
+  }
+  .section-status-dot{
+    width:10px;
+    height:10px;
+    border-radius:999px;
+    display:inline-block;
+    border:1px solid rgba(0,0,0,0.08);
+    flex:0 0 auto;
+  }
+  .section-status.is-open .section-status-dot{background:#d96b6b;}
+  .section-status.is-partial .section-status-dot{background:#d9b35f;}
+  .section-status.is-complete .section-status-dot{background:#6bb882;}
+  .section-accordion-header{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .section-accordion-header .header-main{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+  }
+
+
+  .required-legend{
+    margin-top:8px;
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.4;
+  }
+  .required-star{
+    color:#b85c5c;
+    font-weight:700;
+    margin-left:2px;
+  }
+
+  .message-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(32,44,55,.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+    padding:20px;
+  }
+  .message-overlay.show{display:flex}
+  .message-dialog{
+    width:min(560px, 100%);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:22px;
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
+    padding:22px;
+  }
+  .message-dialog h3{
+    margin:0 0 10px 0;
+    font-size:24px;
+    color:var(--brand-dark);
+  }
+  .message-dialog p{
+    margin:0 0 14px 0;
+    line-height:1.55;
+    color:var(--text);
+  }
+  .message-dialog .toolbar{
+    justify-content:flex-end;
+  }
+  .message-dialog button{
+    min-width:96px;
+  }
+
+  .summary-value{
+    display:block;
+    margin-top:2px;
+    font-size:12px;
+    line-height:1.35;
+    color:#2e3c47;
+  }
+  .summary-list{
+    margin:2px 0 8px 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:2px 14px;
+  }
+  .summary-list li{
+    display:block;
+    padding:0;
+    border:none;
+    background:none;
+    font-size:12px;
+    line-height:1.3;
+  }
+  .summary-list li::before{
+    content:"• ";
+    color:var(--brand-dark);
+    font-weight:700;
+  }
+
+
+  .summary-row-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 18px;
+    align-items:start;
+    margin-bottom:2px;
+  }
+  .summary-row-3{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 16px;
+    align-items:start;
+    margin-bottom:4px;
+  }
+  .summary-row-compact{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 16px;
+    align-items:start;
+    margin-bottom:4px;
+  }
+
 </style>
 </head>
 <body>
- <div class="container">
+<div class="container">
   <section class="hero">
-   <div class="hero-content">
-    <h1>Dein digitales Ernährungsprotokoll</h1>
-    <p>Bitte trage Deine Mahlzeiten, Getränke und Aktivitäten möglichst vollständig und genau ein. So lassen sich Deine Angaben später besser nachvollziehen und fundierter auswerten. Am hilfreichsten ist es, wenn Du Deine Einträge möglichst zeitnah nach dem Essen, Trinken oder einer Aktivität festhältst.</p>
-   </div>
-   <div class="hero-brand">
-    <img src="data:image/png;base64,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" alt="Dieter Grün Ernährungsberatung">
-   </div>
+    <div class="hero-content">
+      <h1>Dein digitales Anamneseprotokoll</h1>
+      <p>Bitte fülle die folgenden Angaben möglichst vollständig aus. Deine Eingaben werden lokal im Browser auf dem jeweils verwendeten Gerät gespeichert, bis Du sie versendest oder bewusst zurücksetzt. Über die Schaltflächen unterhalb des Headers kannst Du Deinen Zwischenstand speichern oder die Zusammenfassung ein- und ausblenden. Wie Du die Angaben anschließend als PDF speichern und per E-Mail vorbereiten kannst, findest Du weiter unten im Abschnitt „Export & Versand“.</p>
+    </div>
+    <div class="hero-brand">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMoAAABTCAYAAADeDJgjAAAACXBIWXMAAAsSAAALEgHS3X78AAAM2UlEQVR4nO2d7XHjOBKGX1/tf/siEC8CKwNjI7A3AnMiGF8Ew4lgvRGsnIEngoUjWDmCpSM4OwLeDxDDZgtNNkhIpG08VSpRINBoAWx8AzxrmgaZzIIYAH8F3M/a7wrAN3bvqQ13Mv51ysgymfdKNpRMRkE2lExGQTaUTEZBNpRMRsFZHvXKZMbJNUomo+CX9ruKCGMB7AG8KvyWAIqAeyi+GB24PkCacXXbfgo43aewA1C31zFyXtGlbSoKAHdwaXMZuP8DwCOczkMY6NO3hvsf9Yi/EuFnYyeErQQ53L2AnOY1wv/VIPz/OtlN06CZxq5pmqINL32sEDbkdypV+0lB1epiZsgwTfefpsipiR5zPmXTNK/KOPdN02wHZE1JX9v000L7bEhhJLi/oTSvBdnS//vpZ07T6xbAP5he8mbCbOBmoi2Ai4kySgB/AjhX+r9EV5Om4gpuxv0uocy5bDDxP6boo/yJEy8n+CRcAbifEK6Ay5NYzjHeBJvC7wBujiB3KpN0SdWZ3yWSk+lzC2AbGaaaEd/VhPg0TDH4Y2GmBPpl5P739nvbfjaCvw2cpT5OUeIT8oJ+4VJCTtsS+ubLBZxxDcVZw+XVdYL4ntANphSt3FBzb03Ph5kUKrKjVA743QX8z+3MW8Gv9iN10sY6y1KHMFafGDlSWu0j4rsRZLw2hwMvjxG6adNx28gDCNzvEp15Dx+4SN6Z3wF4EO4Vkyw145FK8dCwroTUbHrE4ZBrFSlDwx5yM9zMkJsaExtgSh9lJ7hfTZCV6UgxfyI95HVEfNqRMok1NK/GMLEBphiKnRAmcxqk4eSUk5gfARMbIC9h+RxoVlF8Js4R2cTMhvK5ORM+nwET4zkbSuaz8MZ+m5jA2VDWQyG48wxeOzEDCktiYjxnQ1kPpeBuT6hDCqQlIksPKFj2O6qfMjYzvzRbjD8o5vhq/ORY+hjI8yjvYbjVU0GeJlj6f1gcrkYwUBrw2g3lHOuan0mlDzW4AvLylRekf8CMwk/MfiMvbwt5DuYByze99nDNWKrjh6lRPioag3uDa8akHtoNHTbH+RW6Jt8GspF7nrGepfYW/VrFaAPmPso6eUFEs2DF/ID7H2uZx7Hst3p/SjaUdbKBa+9P3bi1Fq6xrr0oNuBmNAGzoayXa8zbW7IW1rSxz/dTKEYTcO2G8gR59niJWeRU+jzD9QN+BfCllRviK9Zdqzyg+x//hWsyhqhOpZAC3pw1mkBrN5SPij9xxcKtxjaQjSV104UatRSnlhrd/7iH/NBdYT0Gb9lvVT8lG8p62AnuxQl1mEsN14EPcYwtxlOwAbdR3bKhrIdacF/LA6Zl7SN1NuA2WttlQ1k/a2myzMUsrQCBNznH5oKyoWQ+JTY2QDaUzGfExgbIhvK5eW/9n1TY2ABTDMUI7u9t38RnQjKIuQdJvGeihsanGMpa9xtk5DVVoQGB4oh6zKEIuB1jQMPGeI41lC0+zgajj4hUWIUKt6XXYEm6lgE3Sdc5rRgb43lsmb0h1zdwf0Kqro+xMUezUQpwy7hPUaNp9SmxzP4LKc5LuJlzv9zdYPllJVJ+XcFNvt7B1ZA3kM8utjPijwo7ZiiavQuAa+8d40HVbpQ61VyDVp96gmw7IUyMjK/tZy3YgXu3kM9QpswtnJ+g3IiXatRr6Y05duH4KdLCwFNQY/76rblo957UkI/n1cAPOp+C1XpMYShfsGxHfm2jbfXC8VeR/lMbdsyzUGF6/qUonK3W4xxDeYFbXr2bISMFaxttS61P7FyHBfCH0u93nM6wQ83jGq6/FGssX5CmT2y1HmMM5RmuWv8DwG9ww3jqiI5IvbQCjDnbXp8DblPmOu7gHiaptniD2z9SIX36SfIkg9/DPUsPGDeYBwD/QdrCWdVUze+Z//gYuIf0As6I91hHASdh4AynaH97nbUnwxyFbCiZjIK81iuTUZANJZNRkA0lk1GQDSWTUZANJZNRkA0lk1GQDSWTUZANJZNRkA0lk1GwJkO5R3c8p99J6X+Xi2iUybSs6UVCW3SbaC7g1vr433YBfTKZn6ypRslkVsuaapQdupqjRr8WschkFuSsaRoz4sfCNYWG9hPw5c9Upl8mjYAcy8IVODyuhsvnMuh9v5ycx0v1odQ43D9BZdD7ku5cZ0kfHtcFXN9ri25vzx7hDUncr18q/8j8xOQR1W0ojBHu1xjee8Jl24i4qQ4FwmlYoJ/uXj6XLeVH6Lkq0c8P/wGacdA0jRnxU7X+/IdzIcgB++wCYQ3zw2XQ+5a42wF9GuavEGTQ/yXpXjH3O4WsbdM0rwP6XBC/F03T7AW/uwH9ODyP7LD3n+k6BNd1SPY2Im6qg5SGPN0l2aVwjz43Q/mxa5omWR/lG4b3MBulnGJG2KlcIe1RS0bh5xHyzsUr9NPyHu64oRC30J/P9Q3pRw+ltAvVbEXiuLWYkfsXcLWGlB+3AEpuKH67L/2E+A63JZhu3UxhKKGjYwplWC1PcPrTbbeXSGeQ1yP3DfqvGfjR6kPTsiTXt8zvb8yvZCgxefSCw3wP7SZ8aOXSLcZX6BvGBcIPHW8u+3j4duUxHWIxI/dv0Nc3mB+8M38HXce5ar9f4UoqYPgdE0Yhs4h0n4qF0/8ewP+Iu0G6QYMhWYb9LuHSsYZ7MSjQpSUvmf1c0yM6AyqEeKr2e0/kSjXTDrrTW3boXqf3D3HfousPSv0k6k4NtkL3DAHpWxD+1XO1cL8g1y/oFzxer6u5TS+r9HeJ8c5bQa5paa86oGwCrwgf5pACo/RHS806cF9Ks5BfiRi/U2UW5JoaxJPg59QY5b2aXFvq6ZTDwwbDVakh1xb90q/AcTL8WIcVmAlhargqfwhvOJaFWxMFud6jK+ik2uwUGMSf3FKD5MdcQ4k5ytRguNNMZfnS3idugeM8EMeqrabIrXHY/OFnhFXgw5broCbXfAj9K7u3xDlsZkKYGiQ/uKHw9iWdiwhRkmvpDCn/wBsMGwrv7Bny20B+MEritxiQz+GdYEl+DG/oOoZSWz2GV/TPx71Et/Zt7IEz7fc9cZPe2Fvg8GGyA7L5oADVpSDXoQLvlIbi80P1iuwhuKH8zn4/IWyNFu5BoKMF9wF/3u8lxvsp9MHyBuofkGIgnOYwZ0oJZyS0KfCMdIdk+1EvExGuCrjt4Eq1OwB/E3dvLHcYbk7wA9bfhHiA8KHYZwF/Po9p2vED2umgDp/U2+I4bz2QoM+QiQhXcYepTS/etPiBYUPx1a9UyvIhRYv+HytilBthg35mviHdu0J8TXiOuIz5FnCzcIayhzv18R5dGp2jG8naKeNI0R/j/QyediYQJ31YU9SyMVhMM5SD/BibR9FWk9cDimhkhBLQkuuhNj/VecqBz+eQjXwKtv02CWXuED6j90/ID993uALMh9lALs1D8ygaztEvfQty7WW8CvdPhdfDzBHCDeWuFeg/0gTVGdwZsHR4VfJbo+u/GMEPzewXuMQvmZ9CCEt11hjldzj96QjT9YD8WGz7fQ59Cfod469A8Oue+JB2Jfiv4Ep7WuJvEM6DHfr5HvIDuEPZ/42+rrSzXrDrirktMfJl2+8N9INPB/kxZx6lxuGiPAnbfks1Q0GuN3BVH28zF0gLr0VSybfkWnvAdgVdE+oV7iGmAydjKwEs+13oVBrUoWJuhn0Dcj4u0fzyaA21AsuPlPtRhppHdiSsJvGMWhMdx5pD2SPdO1sKdCW8T6NXzGsqFnMUaqlnyE4RfwxJRtlONeFoR+4X5PoBXUaU6Dre1M/asRgv6TWU6DqWdARyibkIDXSQhOYj7RyfeuSLD1FP4lSGUsM1F6T1YNR9h/7egiUNhdZ0MfFb6AwlZsI2xu8QdSI5HN4qqEhcBsuNfAGHKz009NL7lFuBreBu2O+aXNOS81iz6Bw+7u8TjHaKx5pWVhnXJToDHBuipvNQMcPZJftdR4SNoRiIh15zfzGU5NqQ67E1e1Z5T8rvA0P5C0DDPgYyMU0AK7gX7HctXIf8HgNLrjfoXmJzLfgJMdRP4Wm2x+FSDw9vouzhalzqV5ptt+ivHEarkw34/YbDfI/tB/GRS0pNrmNLdpoGG3S7HGnBaUdkDN2vyfU5uvzuDUJoapR64F5Mh9gK7gW5Hkpg7jc1viTZMT02OMzcSiHPCu6PTP7QK7n36M9pbHA4iiTpcoVDvaUh/BCxgx3UUGp2jxcOMc2vHfqFTmjCeMyofT8lxGNA/oExzzWUGGqE14OZgbjsgN8U0MSjo0o3CE+6vcBtnNLUpHbg3g0O0+IZ4ZeUptDlB+JfTGtH7tOH6wKH+9Qp3Ohi+luhIXHPS3uvVsixA/JvcNgCeAKprfOr6YYpcPguwZSYCNnH1uU9QPsQJ82P/wMUzx+4Ju4uoQAAAABJRU5ErkJggg==" alt="Dieter Grün Ernährungsberatung">
+    </div>
   </section>
 
-  <div class="grid">
-   <main>
-    <section class="card">
-     <div class="split">
-      <div>
-       <h2>Deine Angaben</h2>
-       <div class="muted">Bitte trage hier Deine Angaben ein und ergänze danach darunter die einzelnen Tage. Deine Eingaben werden lokal im Browser auf dem jeweils verwendeten Gerät gespeichert, bis Du sie versendest oder bewusst zurücksetzt. Bitte nutze für die Erfassung möglichst durchgehend dasselbe Gerät – also entweder einen PC oder ein Mobilgerät. Ein geräteübergreifendes Fortsetzen zwischen verschiedenen Geräten ist derzeit nicht möglich.<br><br>Wie Du Deine Angaben anschließend versenden kannst, findest Du weiter unten im Abschnitt „Export & Versand“.</div>
+  <div class="layout">
+    <main>
+
+
+      <section class="action-toolbar" id="topActionToolbar">
+        <div class="toolbar top-actions">
+          <button class="primary" id="saveBtnTop">Zwischenstand speichern</button>
+          <button class="secondary" id="resetBtnTop">Alles zurücksetzen</button>
+          <span class="spacer" aria-hidden="true"></span>
+          <span class="toolbar-label">Zusammenfassung</span>
+          <span class="summary-switch"><button class="secondary" id="showSummaryBtnTop">Ein</button><button class="secondary" id="hideSummaryBtnTop">Aus</button></span>
+        </div>
+        <div class="status" id="status"></div>
+        <div class="required-legend"><span class="required-star">*</span> Pflichtfeld</div>
+      </section>
+
+      <section class="card summary-panel" id="summaryPanel">
+        <h3 class="section-title">Zusammenfassung</h3>
+        <div class="summary-toggle-row">
+          <button class="secondary" id="printBtnInline">1. Drucken / PDF</button>
+          <button class="warning" id="mailBtnInline">2. E-Mail öffnen</button>
+        </div>
+        <div class="summary-render" id="summaryRender"></div>
+      </section>
+
+      <section class="card form-section section-accordion" id="section-a">
+        <button type="button" class="section-accordion-header" data-accordion-target="section-a">
+          <span class="header-main">
+            <span class="title">Persönliche Angaben</span>
+            <span class="section-status is-open" id="section-a-status"><span class="section-status-dot"></span><span class="section-status-text">Wichtige Informationen fehlen noch</span></span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </button>
+        <div class="section-accordion-body">
+        <div class="grid">
+          <div class="col-6"><label for="fullName">Name <span class="required-star">*</span></label><input id="fullName" placeholder="Vor- und Nachname"></div>
+          <div class="col-6"><label for="email">E-Mail <span class="required-star">*</span></label><input id="email" type="email" placeholder="name@beispiel.de" required></div>
+          <div class="col-3"><label for="phoneCode">Ländercode</label><select id="phoneCode"><option value="+49">Deutschland (+49)</option><option value="+43">Österreich (+43)</option><option value="+41">Schweiz (+41)</option><option value="+352">Luxemburg (+352)</option><option value="+31">Niederlande (+31)</option><option value="+32">Belgien (+32)</option><option value="+33">Frankreich (+33)</option><option value="+39">Italien (+39)</option><option value="+34">Spanien (+34)</option><option value="+45">Dänemark (+45)</option><option value="+1">USA / Kanada (+1)</option><option value="other">Sonstiger Ländercode</option></select></div>
+          <div class="col-3"><label for="phoneOtherCode">Sonstiger Ländercode</label><input id="phoneOtherCode" placeholder="+..." disabled></div>
+          <div class="col-6"><label for="phone">Telefon</label><input id="phone" inputmode="tel" placeholder="Telefonnummer ohne Ländercode"></div>
+          <div class="col-4"><label for="birthDate">Geburtsdatum <span class="required-star">*</span></label><input id="birthDate" type="date"></div>
+          <div class="col-4"><label for="gender">Geschlecht <span class="required-star">*</span></label><select id="gender"><option value="">Bitte wählen</option><option>weiblich</option><option>männlich</option><option>divers</option><option>keine Angabe</option></select></div>
+          <div class="col-4"><label for="familyStatus">Familienstand</label><select id="familyStatus"><option value="">Bitte wählen</option><option>ledig</option><option>verheiratet / in Partnerschaft</option><option>geschieden</option><option>verwitwet</option><option>keine Angabe</option></select></div>
+          <div class="col-4"><label for="children">Kinder</label><select id="children"><option value="">Bitte wählen</option><option>keine</option><option>1</option><option>2</option><option>3 oder mehr</option></select></div>
+          <div class="col-8"><label for="job">Beruf / Tätigkeit <span class="required-star">*</span></label><input id="job" placeholder="z. B. Büro, Schichtarbeit, körperlich aktiv"></div>
+          <div class="col-6"><label for="street">Straße / Hausnummer <span class="required-star">*</span></label><input id="street" placeholder="Straße und Hausnummer"></div>
+          <div class="col-3"><label for="postalCode">PLZ <span class="required-star">*</span></label><input id="postalCode" inputmode="numeric" placeholder="PLZ"></div>
+          <div class="col-3"><label for="city">Wohnort <span class="required-star">*</span></label><input id="city" placeholder="Wohnort"></div>
+        </div>
       </div>
-     </div>
+      </section>
 
-     <div class="row" style="margin-top:14px;">
-      <div class="col-6">
-       <label for="clientName">Name</label>
-       <input id="clientName" placeholder="Vor- und Nachname" />
+      <section class="card form-section section-accordion collapsed" id="section-b">
+        <button type="button" class="section-accordion-header" data-accordion-target="section-b">
+          <span class="header-main">
+            <span class="title">Beratungsanlass und Ziele</span>
+            <span class="section-status is-open" id="section-b-status"><span class="section-status-dot"></span><span class="section-status-text">Wichtige Informationen fehlen noch</span></span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </button>
+        <div class="section-accordion-body">
+        <div class="grid">
+          <div class="col-12"><label>Welche Ziele sind Dir besonders wichtig? <span class="required-star">*</span></label>
+            <div class="checkgrid" id="goalChecks"></div>
+            <div class="conditional-box" id="goalOtherWrap" style="margin-top:8px;">
+              <label for="goalOtherText">Bitte Sonstiges kurz ergänzen</label>
+              <input id="goalOtherText" placeholder="Bitte Ziel kurz beschreiben" disabled>
+            </div>
+          </div>
+          <div class="col-6"><label for="goalWeight">Zielgewicht (kg) / Zielbereich</label><input id="goalWeight" inputmode="decimal" placeholder="z. B. 78 oder 78-80"></div>
+          <div class="col-6"><label for="timeframe">Gewünschter Zeithorizont</label><input id="timeframe" placeholder="z. B. in 6 Monaten"></div>
+          <div class="col-12"><label for="success">Woran würdest Du merken, dass die Beratung erfolgreich ist? <span class="required-star">*</span></label><textarea id="success" placeholder="z. B. weniger Beschwerden, mehr Energie, bessere Blutwerte"></textarea></div>
+          <div class="col-6"><label for="motivationScale">Motivation (1 = gering, 10 = sehr hoch) <span class="required-star">*</span></label><select id="motivationScale"></select></div>
+          <div class="col-6"><label for="changeScale">Veränderungsbereitschaft (1 = gering, 10 = sehr hoch) <span class="required-star">*</span></label><select id="changeScale"></select></div>
+        </div>
       </div>
-      <div class="col-6">
-       <label for="clientEmail">E-Mail</label>
-       <input id="clientEmail" type="email" placeholder="kunde@example.de" />
+      </section>
+
+      <section class="card form-section section-accordion collapsed" id="section-c">
+        <button type="button" class="section-accordion-header" data-accordion-target="section-c">
+          <span class="header-main">
+            <span class="title">Gesundheit und Beschwerden</span>
+            <span class="section-status is-open" id="section-c-status"><span class="section-status-dot"></span><span class="section-status-text">Wichtige Informationen fehlen noch</span></span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </button>
+        <div class="section-accordion-body">
+        <div class="grid">
+          <div class="col-12"><label>Bekannte Vorerkrankungen / Diagnosen <span class="required-star">*</span></label><div class="checkgrid" id="diseaseChecks"></div></div>
+          <div class="col-12"><label for="otherDiseases">Sonstige Diagnosen / wichtige medizinische Hinweise</label><textarea id="otherDiseases" placeholder="Falls etwas oben nicht enthalten ist, bitte hier ergänzen."></textarea></div>
+          <div class="col-12"><label>Verdauungsbeschwerden / Symptome <span class="required-star">*</span></label><div class="checkgrid" id="symptomChecks"></div></div>
+          <div class="col-6"><label for="allergies">Allergien / Intoleranzen</label><textarea id="allergies" placeholder="Welche? ärztlich bestätigt oder vermutet?"></textarea></div>
+          <div class="col-6"><label for="surgeries">Relevante Operationen / Eingriffe</label><textarea id="surgeries" placeholder="z. B. Magen, Darm, Galle"></textarea></div>
+          <div class="col-6"><label for="medication">Regelmäßige Medikamente</label><textarea id="medication" placeholder="Wirkstoff / Name, falls bekannt"></textarea></div>
+          <div class="col-6"><label for="supplements">Nahrungsergänzungsmittel</label><textarea id="supplements" placeholder="Welche Präparate nimmst Du aktuell?"></textarea></div>
+          <div class="col-12"><label>Familiäre Vorbelastungen <span class="required-star">*</span></label><div class="checkgrid" id="familyHistoryChecks"></div></div>
+          <div class="col-12"><label for="familyHistoryOther">Sonstige familiäre Hinweise</label><textarea id="familyHistoryOther" placeholder="Falls oben etwas Wichtiges fehlt, bitte hier ergänzen."></textarea></div>
+        </div>
       </div>
-     </div>
+      </section>
 
-    </section>
-
-    <section class="card actions-card">
-     <div class="toolbar action-toolbar">
-      <button id="addDayBtn">+ Neuen Tag hinzufügen</button>
-      <button id="saveDraftBtn" class="secondary">Zwischenstand speichern</button>
-      <button id="resetAllBtn" class="danger">Alles zurücksetzen</button>
-     </div>
-     <div id="status" class="status"></div>
-    </section>
-
-    <section class="card">
-     <div class="split">
-      <div>
-       <h2>Tagesnavigation & Details</h2>
-       <div class="muted">Unter diesem Text wählst Du den gewünschten Tag aus. Oben über „Neuen Tag hinzufügen“ legst Du weitere Tage an, die danach ebenfalls hier auswählbar sind. Sichtbar ist immer nur der aktuell ausgewählte Tag.</div>
+      <section class="card form-section section-accordion collapsed" id="section-d">
+        <button type="button" class="section-accordion-header" data-accordion-target="section-d">
+          <span class="header-main">
+            <span class="title">Körperdaten und Gewichtsverlauf</span>
+            <span class="section-status is-open" id="section-d-status"><span class="section-status-dot"></span><span class="section-status-text">Wichtige Informationen fehlen noch</span></span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </button>
+        <div class="section-accordion-body">
+        <div class="grid">
+          <div class="col-3"><label for="height">Größe (cm) <span class="required-star">*</span></label><input id="height" inputmode="decimal" placeholder="z. B. 176"></div>
+          <div class="col-3"><label for="weight">Aktuelles Gewicht (kg) <span class="required-star">*</span></label><input id="weight" inputmode="decimal" placeholder="z. B. 87"></div>
+          <div class="col-3"><label for="waist">Taillenumfang (cm)</label><input id="waist" inputmode="decimal" placeholder="optional"></div>
+          <div class="col-3"><label for="hip">Hüftumfang (cm)</label><input id="hip" inputmode="decimal" placeholder="optional"></div>
+          <div class="col-4"><label for="weight3m">Gewicht vor 3 Monaten (kg)</label><input id="weight3m" inputmode="decimal" placeholder="optional"></div>
+          <div class="col-4"><label for="weight6m">Gewicht vor 6 Monaten (kg)</label><input id="weight6m" inputmode="decimal" placeholder="optional"></div>
+          <div class="col-4"><label for="weight12m">Gewicht vor 12 Monaten (kg)</label><input id="weight12m" inputmode="decimal" placeholder="optional"></div>
+          <div class="col-12"><label for="weightComment">Weitere Hinweise zum Gewichtsverlauf</label><textarea id="weightComment" placeholder="z. B. schnelle Zu- oder Abnahme, starke Schwankungen"></textarea></div>
+        </div>
       </div>
-     </div>
-     <div id="daysContainer"></div>
-    </section>
-   </main>
+      </section>
 
-   <aside>
-    <section class="card">
-     <h2>Kurzübersicht</h2>
-     <div class="summary-grid">
-      <div class="stat"><strong id="sumDays">0</strong><div class="stat-label">Tage</div></div>
-      <div class="stat"><strong id="sumEntries">0</strong><div class="stat-label">Einträge</div></div>
-      <div class="stat"><strong id="sumFoods">0</strong><div class="stat-label">Speisen-Positionen</div></div>
-      <div class="stat"><strong id="sumDrinks">0</strong><div class="stat-label">Getränke-Positionen</div></div>
-      <div class="stat"><strong id="sumSports">0</strong><div class="stat-label">Sport-Positionen</div></div>
-      <div class="stat"><strong id="sumNotes">0</strong><div class="stat-label">Speisen / Getränke mit Motivation oder Anmerkung</div></div>
-     </div>
+      <section class="card form-section section-accordion collapsed" id="section-e">
+        <button type="button" class="section-accordion-header" data-accordion-target="section-e">
+          <span class="header-main">
+            <span class="title">Essen und Trinken im Alltag</span>
+            <span class="section-status is-open" id="section-e-status"><span class="section-status-dot"></span><span class="section-status-text">Wichtige Informationen fehlen noch</span></span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </button>
+        <div class="section-accordion-body">
+        <div class="grid">
+          <div class="col-4"><label for="mealCount">Wie viele Mahlzeiten pro Tag? <span class="required-star">*</span></label><select id="mealCount"><option value="">Bitte wählen</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5 oder mehr</option></select></div>
+          <div class="col-4"><label for="snacks">Snacks zwischendurch <span class="required-star">*</span></label><select id="snacks"><option value="">Bitte wählen</option><option>selten</option><option>gelegentlich</option><option>häufig</option><option>täglich</option></select></div>
+          <div class="col-4"><label for="eatOut">Essen außer Haus <span class="required-star">*</span></label><select id="eatOut"><option value="">Bitte wählen</option><option>selten</option><option>1–2x pro Woche</option><option>mehrmals pro Woche</option><option>fast täglich</option></select></div>
+          <div class="col-6"><label for="dayPattern">Typischer Essalltag / Tagesablauf <span class="required-star">*</span></label><textarea id="dayPattern" placeholder="z. B. Frühstück auslassen, Mittag Kantine, abends große Mahlzeit"></textarea></div>
+          <div class="col-6"><label for="drinks">Hauptgetränke und ungefähre Trinkmenge pro Tag <span class="required-star">*</span></label><textarea id="drinks" placeholder="z. B. Wasser, Kaffee, Softdrinks, Alkohol"></textarea></div>
+          <div class="col-6"><label for="likes">Vorlieben /<br>Abneigungen <span class="required-star">*</span></label><textarea id="likes" placeholder="z. B. gerne herzhaft, wenig Fisch, keine Milchprodukte"></textarea></div>
+          <div class="col-6"><label for="triggerFoods">Lebensmittel, die Beschwerden auslösen<br>oder besonders problematisch sind <span class="required-star">*</span></label><textarea id="triggerFoods" placeholder="z. B. Hülsenfrüchte, Süßes, Weizenprodukte"></textarea></div>
+          <div class="col-6"><label for="appetite">Appetit / Hungergefühl <span class="required-star">*</span></label><select id="appetite"><option value="">Bitte wählen</option><option>normal</option><option>eher vermindert</option><option>eher gesteigert</option><option>stark schwankend</option></select></div>
+          <div class="col-6"><label for="eatingSpeed">Essgeschwindigkeit <span class="required-star">*</span></label><select id="eatingSpeed"><option value="">Bitte wählen</option><option>langsam</option><option>normal</option><option>schnell</option><option>sehr schnell</option></select></div>
+        </div>
+      </div>
+      </section>
 
-     <table>
-      <thead>
-       <tr>
-        <th>Datum</th>
-        <th>Tagesart</th>
-        <th>Einträge</th>
-       </tr>
-      </thead>
-      <tbody id="summaryTableBody"></tbody>
-     </table>
-    </section>
+      <section class="card form-section section-accordion collapsed" id="section-f">
+        <button type="button" class="section-accordion-header" data-accordion-target="section-f">
+          <span class="header-main">
+            <span class="title">Lebensstil</span>
+            <span class="section-status is-open" id="section-f-status"><span class="section-status-dot"></span><span class="section-status-text">Wichtige Informationen fehlen noch</span></span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </button>
+        <div class="section-accordion-body">
+        <div class="grid">
+          <div class="col-4"><label for="sleepHours">Schlafdauer <span class="required-star">*</span></label><select id="sleepHours"><option value="">Bitte wählen</option><option>&lt; 5 Stunden</option><option>5–6 Stunden</option><option>6–7 Stunden</option><option>7–8 Stunden</option><option>&gt; 8 Stunden</option></select></div>
+          <div class="col-4"><label for="sleepQuality">Schlafqualität</label><select id="sleepQuality"><option value="">Bitte wählen</option><option>gut</option><option>mittel</option><option>eher schlecht</option></select></div>
+          <div class="col-4"><label for="stressLevel">Stressniveau <span class="required-star">*</span></label><select id="stressLevel"><option value="">Bitte wählen</option><option>niedrig</option><option>mittel</option><option>hoch</option><option>sehr hoch</option></select></div>
+          <div class="col-6"><label for="activity">Bewegung / Sport <span class="required-star">*</span></label><textarea id="activity" placeholder="Was, wie oft, wie lange?"></textarea></div>
+          <div class="col-6"><label for="workPattern">Arbeits- und Tagesstruktur</label><textarea id="workPattern" placeholder="z. B. Büro, Schicht, viel Sitzen, körperlich aktiv"></textarea></div>
+          <div class="col-4"><label for="smoking">Rauchen <span class="required-star">*</span></label><select id="smoking"><option value="">Bitte wählen</option><option>nein</option><option>gelegentlich</option><option>täglich</option><option>früher</option></select></div>
+          <div class="col-4"><label for="alcohol">Alkohol <span class="required-star">*</span></label><select id="alcohol"><option value="">Bitte wählen</option><option>nein</option><option>selten</option><option>gelegentlich</option><option>regelmäßig</option></select></div>
+          <div class="col-4"><label for="shiftwork">Schichtarbeit <span class="required-star">*</span></label><select id="shiftwork"><option value="">Bitte wählen</option><option>nein</option><option>ja</option><option>unregelmäßige Arbeitszeiten</option></select></div>
+          <div class="col-12"><label for="stressEating">Einfluss von Stress, Emotionen oder Alltag auf das Essen</label><textarea id="stressEating" placeholder="z. B. Heißhunger, wenig Zeit, Frustessen, unregelmäßige Mahlzeiten"></textarea></div>
+        </div>
+      </div>
+      </section>
 
-    <section class="card">
-     <h2>Export & Versand</h2>
-     <div class="muted">Bitte gehe die folgenden Schritte nacheinander durch:</div>
-     <div class="footer-note" style="margin-top:8px;">
-      <strong>1. CSV herunterladen</strong><br>
-      Klicke zuerst auf <strong>„1. CSV herunterladen“</strong>. Dadurch wird Deine Datei für den Versand gespeichert.
-     </div>
-     <div class="footer-note" style="margin-top:10px;">
-      <strong>2. E-Mail öffnen</strong><br>
-      Klicke danach auf <strong>„2. E-Mail öffnen“</strong>. Dein Mailprogramm wird mit einer vorbereiteten E-Mail an <strong>gesundmitgruen@gmail.com</strong> geöffnet.
-     </div>
-     <div class="footer-note" style="margin-top:10px;">
-      <strong>3. Datei anhängen und senden</strong><br>
-      Bitte hänge die zuvor heruntergeladene CSV-Datei an die vorbereitete E-Mail an und sende sie danach ab.
-     </div>
-     <div class="toolbar">
-      <button id="downloadCsvBtn" class="secondary">1. CSV herunterladen</button>
-      <button id="openMailBtn" class="warning">2. E-Mail öffnen</button>
-     </div>
-     <div class="footer-note">
-      <strong>Hinweis:</strong> Wenn sich kein Mailprogramm öffnet, kannst Du die heruntergeladene CSV-Datei auch manuell über Deinen E-Mail-Anbieter versenden, zum Beispiel über Web.de, GMX, Gmail oder andere Dienste.
-     </div>
-    </section>
-   </aside>
+      <section class="card form-section section-accordion collapsed" id="section-g">
+        <button type="button" class="section-accordion-header" data-accordion-target="section-g">
+          <span class="header-main">
+            <span class="title">Relevante Werte und bisherige Maßnahmen</span>
+            <span class="section-status is-open" id="section-g-status"><span class="section-status-dot"></span><span class="section-status-text">Wichtige Informationen fehlen noch</span></span>
+          </span>
+          <span class="toggle" aria-hidden="true"></span>
+        </button>
+        <div class="section-accordion-body">
+        <div class="grid">
+          <div class="col-12"><label for="labs">Relevante Blutwerte / Befunde, falls bekannt</label><textarea id="labs" placeholder="z. B. HbA1c, Cholesterin, Triglyceride, Harnsäure, Vitamin D, Ferritin, TSH, Leberwerte"></textarea></div>
+          <div class="col-6"><label for="previousApproaches">Bisherige Ernährungsumstellungen / Diäten / Maßnahmen <span class="required-star">*</span></label><textarea id="previousApproaches" placeholder="z. B. Kalorienzählen, Low Carb, WeightWatchers, Intervallfasten, Ernährungsberatung, nichts davon"></textarea></div>
+          <div class="col-6"><label for="barriers">Was war bisher die größte Hürde?</label><textarea id="barriers" placeholder="z. B. Alltag, Motivation, Beschwerden, fehlende Struktur"></textarea></div>
+          <div class="col-12"><label for="extraNotes">Sonstige Hinweise, die für die Beratung wichtig sein könnten</label><textarea id="extraNotes" placeholder="Hier ist Platz für alles, was oben noch nicht angesprochen wurde."></textarea></div>
+        </div>
+      </div>
+      </section>
+    </main>
+
+    <aside class="sidebar">
+
+
+      <section class="card">
+        <h2>Export & Versand</h2>
+        <div class="muted">Bitte gehe die folgenden Schritte nacheinander durch:</div>
+        <div class="footer-note" style="margin-top:8px;">
+          <strong>1. Zusammenfassung prüfen</strong><br>
+          Blende zuerst die Zusammenfassung im Hauptbereich ein und prüfe Deine Angaben.
+        </div>
+        <div class="footer-note" style="margin-top:10px;">
+          <strong>2. PDF speichern</strong><br>
+          Klicke auf <strong>„1. Drucken / PDF“</strong> und speichere die Zusammenfassung anschließend als PDF-Datei.
+        </div>
+        <div class="footer-note" style="margin-top:10px;">
+          <strong>3. E-Mail öffnen</strong><br>
+          Klicke danach auf <strong>„2. E-Mail öffnen“</strong>. Dein Mailprogramm wird mit einer vorbereiteten E-Mail an <strong>gesundmitgruen@gmail.com</strong> geöffnet.
+        </div>
+        <div class="footer-note" style="margin-top:10px;">
+          <strong>4. PDF anhängen und senden</strong><br>
+          Bitte hänge die zuvor gespeicherte PDF-Datei an die vorbereitete E-Mail an und sende sie danach ab.
+        </div>
+        <div class="toolbar">
+          <button class="secondary" id="printBtn">1. Drucken / PDF</button>
+          <button class="warning" id="mailBtn">2. E-Mail öffnen</button>
+        </div>
+        <div class="footer-note" style="margin-top:16px;">
+          <strong>Hinweis:</strong> Wenn sich kein Mailprogramm öffnet, kannst Du die gespeicherte PDF-Datei auch manuell über Deinen E-Mail-Anbieter versenden.
+        </div>
+      </section>
+      <div class="app-copyright-note">© Dieter Grün Ernährungsberatung</div>
+    </aside>
   </div>
- </div>
+</div>
 
- <script>
- // © Dieter Grün Ernährungsberatung | Ernährungsprotokoll Ausfüllhilfe
+<script>
+const STORAGE_KEY = 'anamneseprotokoll_dieter_gruen_v2';
+const DEFAULT_CONSULTANT_EMAIL = 'gesundmitgruen@gmail.com';
 
-  const STORAGE_KEY_V2 = 'ebdg_ernaehrungsprotokoll_draft_v2';
-  const STORAGE_KEY_V1 = 'ebdg_ernaehrungsprotokoll_draft_v1';
-  const PORTAL_KEY_V2 = 'ebdg_ernaehrungsprotokoll_portal_v2';
-  const PORTAL_KEY_V1 = 'ebdg_ernaehrungsprotokoll_portal_v1';
+const goalOptions = [
+  'Gewichtsreduktion','Gewichtszunahme','Gewicht halten','Mehr Energie','Bessere Verdauung','Bessere Blutwerte',
+  'Mehr Struktur im Alltag','Weniger Beschwerden','Sportliche Unterstützung','Sonstiges'
+];
+const diseaseOptions = [
+  'Diabetes mellitus','Prädiabetes','Bluthochdruck','Erhöhte Blutfette','Schilddrüsenerkrankung','Reizdarm',
+  'Chronisch-entzündliche Darmerkrankung','Zöliakie','Fettleber','Gicht / erhöhte Harnsäure','Nierenerkrankung',
+  'Herz-Kreislauf-Erkrankung','Adipositas','Migräne','PCOS','Keine bekannten Vorerkrankungen'
+];
+const symptomOptions = [
+  'Blähungen','Völlegefühl','Sodbrennen','Bauchschmerzen','Übelkeit','Durchfall',
+  'Verstopfung','Wechselnder Stuhlgang','Heißhunger','Müdigkeit nach dem Essen','Keine relevanten Beschwerden'
+];
+const familyHistoryOptions = [
+  'Diabetes mellitus','Bluthochdruck','Erhöhte Blutfette','Herz-Kreislauf-Erkrankungen',
+  'Adipositas','Schilddrüsenerkrankungen','Gicht / erhöhte Harnsäure','Magen-Darm-Erkrankungen','Keine bekannt'
+];
 
-  const FOOD_DRINK_UNITS = ['g', 'kg', 'ml', 'l', 'Stück', 'Portion', 'EL', 'TL', 'Glas', 'Tasse', 'Becher', 'Scheibe', 'Handvoll', 'Packung', 'Flasche', 'Dose'];
-  const SPORT_UNITS = ['Min', 'Std'];
-  const DEFAULT_CONSULTANT_EMAIL = 'gesundmitgruen@gmail.com';
-  const TIME_PATTERN = /^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$/;
+function byId(id){ return document.getElementById(id); }
+function setStatus(msg=''){ byId('status').textContent = msg; }
 
-  const motivationPresets = ['Hunger', 'Appetit', 'Gewohnheit', 'Langeweile', 'Stress', 'Ärger', 'Belohnung', 'Geselligkeit'];
-  const feelingPresets = ['Zufrieden', 'Sehr gut', 'Erfrischt', 'Müde', 'Völlegefühl', 'Übel', 'Blähungen', 'Schlechtes Gewissen'];
+function renderChecks(targetId, options){
+  const target = byId(targetId);
+  target.innerHTML = options.map((option) => `
+    <label class="checkitem">
+      <input type="checkbox" value="${escapeHtml(option)}" data-check-group="${targetId}" />
+      <span>${escapeHtml(option)}</span>
+    </label>
+  `).join('');
+}
 
-  let activeTextTarget = null;
-  let activeTextTargetKind = null;
-  let activeDayId = null;
+function fillScale(id){
+  const select = byId(id);
+  select.innerHTML = '<option value="">Bitte wählen</option>' + Array.from({length:10}, (_,i)=>`<option>${i+1}</option>`).join('');
+}
 
-  let state = {
-   clientName: '',
-   clientEmail: '',
-   consultantEmail: DEFAULT_CONSULTANT_EMAIL,
-   days: []
-  };
-
-  function uid(){
-   return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `id_${Date.now()}_${Math.random().toString(16).slice(2)}`;
-  }
-
-  function createFoodItem(){
-   return { id: uid(), name: '', amount: '', unit: 'g', motivation: '', notes: '' };
-  }
-
-  function createDrinkItem(){
-   return { id: uid(), name: '', amount: '', unit: 'ml', motivation: '', notes: '' };
-  }
-
-  function createSportItem(){
-   return { id: uid(), type: '', duration: '', unit: 'Min' };
-  }
-
-  function createEmptyEntry(){
-   return {
-    id: uid(),
-    time: '',
-    foods: [createFoodItem()],
-    drinks: [createDrinkItem()],
-    sports: []
-   };
-  }
-
-  function sanitizeTimeValue(value){
-   return String(value || '')
-    .replace(/[^\d:\-\s]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-  }
-
-  function isStrictValidTimeValue(value){
-   const raw = sanitizeTimeValue(value);
-   if (!raw) return true;
-
-   let match = raw.match(/^(\d{1,2}):(\d{2})(?:\s*-\s*(\d{1,2}):(\d{2}))?$/);
-   if (match){
-    const h1 = parseInt(match[1], 10);
-    const m1 = parseInt(match[2], 10);
-    if (h1 > 23 || m1 > 59) return false;
-    if (match[3] && match[4]){
-     const h2 = parseInt(match[3], 10);
-     const m2 = parseInt(match[4], 10);
-     if (h2 > 23 || m2 > 59) return false;
-    }
-    return true;
-   }
-
-   match = raw.match(/^(\d{1,2})(?:\s*-\s*(\d{1,2}))?$/);
-   if (match){
-    const h1 = parseInt(match[1], 10);
-    if (h1 > 23) return false;
-    if (match[2]){
-     const h2 = parseInt(match[2], 10);
-     if (h2 > 23) return false;
-    }
-    return true;
-   }
-
-   return false;
-  }
-
-  function validateTimeInput(el){
-   const value = sanitizeTimeValue(el.value);
-   el.value = value;
-   const valid = !value || (TIME_PATTERN.test(value) && isStrictValidTimeValue(value));
-
-   if (valid){
-    el.setCustomValidity('');
-    el.classList.remove('input-invalid');
-   } else {
-    el.setCustomValidity('Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.');
-    el.classList.add('input-invalid');
-   }
-
-   const errorEl = el.parentElement ? el.parentElement.querySelector('.field-error') : null;
-   if (errorEl){
-    errorEl.classList.toggle('show', !valid);
-   }
-
-   return valid;
-  }
-
-  function createEmptyDay(dateStr = null){
-   const today = new Date().toISOString().slice(0,10);
-   return {
-    id: uid(),
-    date: dateStr || today,
-    dayType: 'Arbeitstag',
-    entries: [createEmptyEntry()]
-   };
-  }
-
-  function normalizeDateKey(dateStr){
-   return String(dateStr || '').trim();
-  }
-
-  function parseDateToLocalMidnight(dateStr){
-   const raw = normalizeDateKey(dateStr);
-   if (!raw) return null;
-
-   const isoMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-   if (isoMatch){
-    const [, y, m, d] = isoMatch;
-    const parsed = new Date(Number(y), Number(m) - 1, Number(d));
-    return Number.isNaN(parsed.getTime()) ? null : parsed;
-   }
-
-   const deMatch = raw.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
-   if (deMatch){
-    const [, d, m, y] = deMatch;
-    const parsed = new Date(Number(y), Number(m) - 1, Number(d));
-    return Number.isNaN(parsed.getTime()) ? null : parsed;
-   }
-
-   const fallback = new Date(raw);
-   if (Number.isNaN(fallback.getTime())) return null;
-   return new Date(fallback.getFullYear(), fallback.getMonth(), fallback.getDate());
-  }
-
-  function formatDateForInput(dateObj){
-   const year = dateObj.getFullYear();
-   const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-   const day = String(dateObj.getDate()).padStart(2, '0');
-   return `${year}-${month}-${day}`;
-  }
-
-  function compareDates(a, b){
-   const aDate = parseDateToLocalMidnight(a);
-   const bDate = parseDateToLocalMidnight(b);
-
-   if (!aDate && !bDate) return 0;
-   if (!aDate) return 1;
-   if (!bDate) return -1;
-   return aDate.getTime() - bDate.getTime();
-  }
-  function sortDaysByDate(){
-   state.days = [...(state.days || [])].sort((a, b) => {
-    const dateDiff = compareDates(a.date, b.date);
-    if (dateDiff !== 0) return dateDiff;
-    return String(a.dayType || '').localeCompare(String(b.dayType || ''), 'de');
-   });
-  }
-
-  function getSuggestedNewDayDate(){
-   const parsedDates = (state.days || [])
-    .map(day => parseDateToLocalMidnight(day.date))
-    .filter(Boolean)
-    .sort((a, b) => a.getTime() - b.getTime());
-
-   if (!parsedDates.length){
-    return formatDateForInput(new Date());
-   }
-
-   const usedDates = new Set((state.days || []).map(day => normalizeDateKey(day.date)).filter(Boolean));
-   const dt = new Date(parsedDates[parsedDates.length - 1].getTime());
-   dt.setDate(dt.getDate() + 1);
-
-   while (usedDates.has(formatDateForInput(dt))){
-    dt.setDate(dt.getDate() + 1);
-   }
-
-   return formatDateForInput(dt);
-  }
-
-  function mergeDuplicateDaysByDate(preferredDayId = null){
-   const mergedDays = [];
-   const byDate = new Map();
-   let mergedCount = 0;
-   let resolvedPreferredDayId = preferredDayId;
-
-   (state.days || []).forEach(day => {
-    const key = normalizeDateKey(day.date);
-
-    if (!key){
-     mergedDays.push(day);
-     return;
-    }
-
-    if (!byDate.has(key)){
-     byDate.set(key, day);
-     mergedDays.push(day);
-     return;
-    }
-
-    const targetDay = byDate.get(key);
-    targetDay.entries = [...(targetDay.entries || []), ...(day.entries || [])];
-
-    if ((!targetDay.dayType || targetDay.dayType === 'Arbeitstag') && day.dayType && day.dayType !== targetDay.dayType){
-     targetDay.dayType = day.dayType;
-    }
-
-    if (preferredDayId === day.id || activeDayId === day.id){
-     resolvedPreferredDayId = targetDay.id;
-    }
-
-    mergedCount += 1;
-   });
-
-   state.days = mergedDays;
-   if (resolvedPreferredDayId){
-    activeDayId = resolvedPreferredDayId;
-   }
-   return mergedCount;
-  }
-
-  function ensureAtLeastOneDay(){
-   if (!state.days.length) state.days.push(createEmptyDay());
-  }
-
-  function ensureActiveDay(){
-   ensureAtLeastOneDay();
-   if (!state.days.some(d => d.id === activeDayId)){
-    activeDayId = state.days[0]?.id || null;
-   }
-  }
-
-  function selectDay(dayId){
-   activeDayId = dayId;
-   renderAll();
-  }
-
-  function formatDateDisplay(dateStr){
-   if (!dateStr) return 'ohne Datum';
-   const date = parseDateToLocalMidnight(dateStr);
-   if (!date) return dateStr;
-   return date.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' });
-  }
-
-  function setStatus(message){
-   const el = document.getElementById('status');
-   el.textContent = message;
-   el.classList.add('show');
-   clearTimeout(setStatus._t);
-   setStatus._t = setTimeout(() => el.classList.remove('show'), 2600);
-  }
-
-  function escapeHtml(str=''){
-   return String(str ?? '')
+function escapeHtml(value=''){
+  return String(value)
     .replaceAll('&','&amp;')
     .replaceAll('<','&lt;')
     .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;');
-  }
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#39;');
+}
 
-  function unitOptions(options, selected){
-   return options.map(opt => `<option ${opt === selected ? 'selected' : ''}>${opt}</option>`).join('');
-  }
 
-  function bindTopFields(){
-   ['clientName','clientEmail'].forEach(id => {
-    const el = document.getElementById(id);
-    el.value = state[id] || '';
-    el.oninput = () => {
-     state[id] = el.value;
-     renderSummary();
-    };
-    el.onfocus = () => activeTextTarget = el;
-   });
+function updateExclusiveCheckboxGroup(groupId, noneValue){
+  const boxes = Array.from(document.querySelectorAll(`[data-check-group="${groupId}"]`));
+  if (!boxes.length) return;
+  const noneBox = boxes.find(b => b.value === noneValue);
+  const otherBoxes = boxes.filter(b => b.value !== noneValue);
+  const anyOtherChecked = otherBoxes.some(b => b.checked);
 
-   const consultantEl = document.getElementById('consultantEmail');
-   if (consultantEl){
-    state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
-    consultantEl.value = DEFAULT_CONSULTANT_EMAIL;
-   }
-  }
-
-  function addDay(){
-   const newDay = createEmptyDay(getSuggestedNewDayDate());
-   state.days.push(newDay);
-   mergeDuplicateDaysByDate(newDay.id);
-   activeDayId = state.days.some(day => day.id === newDay.id)
-    ? newDay.id
-    : (state.days[state.days.length - 1]?.id || state.days[0]?.id || null);
-   renderAll();
-   setStatus(`Neuer Tag hinzugefügt: ${formatDateDisplay(newDay.date)}`);
-  }
-
-  function removeDay(dayId){
-   state.days = state.days.filter(d => d.id !== dayId);
-   ensureAtLeastOneDay();
-   ensureActiveDay();
-   renderAll();
-  }
-
-  function addEntry(dayId){
-   const day = state.days.find(d => d.id === dayId);
-   if (!day) return;
-   day.entries.push(createEmptyEntry());
-   renderAll();
-  }
-
-  function removeEntry(dayId, entryId){
-   const day = state.days.find(d => d.id === dayId);
-   if (!day) return;
-   day.entries = day.entries.filter(e => e.id !== entryId);
-   if (!day.entries.length) day.entries.push(createEmptyEntry());
-   renderAll();
-  }
-
-  function updateDay(dayId, key, value){
-   const day = state.days.find(d => d.id === dayId);
-   if (!day) return;
-   day[key] = value;
-
-   if (key === 'date'){
-    const mergedCount = mergeDuplicateDaysByDate(dayId);
-    if (mergedCount){
-     setStatus('Gleiche Datumsangaben wurden automatisch zu einem Tag zusammengeführt.');
+  if (noneBox){
+    if (anyOtherChecked){
+      noneBox.checked = false;
+      noneBox.disabled = true;
+    } else {
+      noneBox.disabled = false;
     }
-   }
-
-   renderAll();
   }
 
-  function updateEntry(dayId, entryId, key, value){
-   const day = state.days.find(d => d.id === dayId);
-   if (!day) return;
-   const entry = day.entries.find(e => e.id === entryId);
-   if (!entry) return;
-   entry[key] = key === 'time' ? sanitizeTimeValue(value) : value;
-   renderSummary();
-   refreshLiveDayViews();
-  }
-
-  function updateItem(dayId, entryId, listKey, itemId, key, value){
-   const day = state.days.find(d => d.id === dayId);
-   if (!day) return;
-   const entry = day.entries.find(e => e.id === entryId);
-   if (!entry) return;
-   const item = (entry[listKey] || []).find(i => i.id === itemId);
-   if (!item) return;
-   item[key] = value;
-   renderSummary();
-   refreshLiveDayViews();
-  }
-
-  function addItem(dayId, entryId, listKey){
-   const day = state.days.find(d => d.id === dayId);
-   if (!day) return;
-   const entry = day.entries.find(e => e.id === entryId);
-   if (!entry) return;
-   if (listKey === 'foods') entry.foods.push(createFoodItem());
-   if (listKey === 'drinks') entry.drinks.push(createDrinkItem());
-   if (listKey === 'sports') entry.sports.push(createSportItem());
-   renderAll();
-  }
-
-  function removeItem(dayId, entryId, listKey, itemId){
-   const day = state.days.find(d => d.id === dayId);
-   if (!day) return;
-   const entry = day.entries.find(e => e.id === entryId);
-   if (!entry) return;
-   entry[listKey] = (entry[listKey] || []).filter(i => i.id !== itemId);
-   if ((listKey === 'foods' || listKey === 'drinks') && !(entry[listKey] || []).length){
-    entry[listKey].push(listKey === 'foods' ? createFoodItem() : createDrinkItem());
-   }
-   renderAll();
-  }
-
-  function renderFoodRows(dayId, entryId, items){
-   return items.map((item, idx) => `
-    <div class="item-row">
-     <div class="subsection-head">
-      <div class="small"><strong>Speise ${idx + 1}</strong></div>
-      <button class="secondary" onclick="removeItem('${dayId}','${entryId}','foods','${item.id}')">Entfernen</button>
-     </div>
-     <div class="row" style="margin-top:10px;">
-      <div class="col-6">
-       <label>Art</label>
-       <input value="${escapeHtml(item.name)}" placeholder="z. B. Haferflocken" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','name',this.value)" onfocus="activeTextTarget=this" />
-      </div>
-      <div class="col-3">
-       <label>Menge</label>
-       <input type="number" step="0.1" value="${escapeHtml(item.amount)}" placeholder="z. B. 80" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','amount',this.value)" onfocus="activeTextTarget=this" />
-      </div>
-      <div class="col-3">
-       <label>Einheit</label>
-       <select onchange="updateItem('${dayId}','${entryId}','foods','${item.id}','unit',this.value)">
-        ${unitOptions(FOOD_DRINK_UNITS, item.unit)}
-       </select>
-      </div>
-      <div class="col-6">
-       <label>Motivation</label>
-       <div class="inline-suggest-wrap">
-        <input value="${escapeHtml(item.motivation || '')}" data-suggestion-type="motivation" data-menu-id="foods-motivation-${item.id}" placeholder="z. B. Hunger, Appetit" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','motivation',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'; showInlineSuggestions(this)" />
-        <div class="inline-suggest-menu" id="foods-motivation-${item.id}"></div>
-       </div>
-      </div>
-      <div class="col-6">
-       <label>Anmerkungen</label>
-       <div class="inline-suggest-wrap">
-        <input value="${escapeHtml(item.notes || '')}" data-suggestion-type="notes" data-menu-id="foods-notes-${item.id}" placeholder="z. B. gut vertragen, Völlegefühl" oninput="updateItem('${dayId}','${entryId}','foods','${item.id}','notes',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'; showInlineSuggestions(this)" />
-        <div class="inline-suggest-menu" id="foods-notes-${item.id}"></div>
-       </div>
-      </div>
-     </div>
-    </div>
-   `).join('');
-  }
-
-  function renderDrinkRows(dayId, entryId, items){
-   return items.map((item, idx) => `
-    <div class="item-row">
-     <div class="subsection-head">
-      <div class="small"><strong>Getränk ${idx + 1}</strong></div>
-      <button class="secondary" onclick="removeItem('${dayId}','${entryId}','drinks','${item.id}')">Entfernen</button>
-     </div>
-     <div class="row" style="margin-top:10px;">
-      <div class="col-6">
-       <label>Art</label>
-       <input value="${escapeHtml(item.name)}" placeholder="z. B. Wasser still" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','name',this.value)" onfocus="activeTextTarget=this" />
-      </div>
-      <div class="col-3">
-       <label>Menge</label>
-       <input type="number" step="0.1" value="${escapeHtml(item.amount)}" placeholder="z. B. 500" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','amount',this.value)" onfocus="activeTextTarget=this" />
-      </div>
-      <div class="col-3">
-       <label>Einheit</label>
-       <select onchange="updateItem('${dayId}','${entryId}','drinks','${item.id}','unit',this.value)">
-        ${unitOptions(FOOD_DRINK_UNITS, item.unit)}
-       </select>
-      </div>
-      <div class="col-6">
-       <label>Motivation</label>
-       <div class="inline-suggest-wrap">
-        <input value="${escapeHtml(item.motivation || '')}" data-suggestion-type="motivation" data-menu-id="drinks-motivation-${item.id}" placeholder="z. B. Durst, Gewohnheit" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','motivation',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='motivation'; showInlineSuggestions(this)" />
-        <div class="inline-suggest-menu" id="drinks-motivation-${item.id}"></div>
-       </div>
-      </div>
-      <div class="col-6">
-       <label>Anmerkungen</label>
-       <div class="inline-suggest-wrap">
-        <input value="${escapeHtml(item.notes || '')}" data-suggestion-type="notes" data-menu-id="drinks-notes-${item.id}" placeholder="z. B. gut vertragen, aufgebläht" oninput="updateItem('${dayId}','${entryId}','drinks','${item.id}','notes',this.value); showInlineSuggestions(this)" onfocus="activeTextTarget=this; activeTextTargetKind='notes'; showInlineSuggestions(this)" />
-        <div class="inline-suggest-menu" id="drinks-notes-${item.id}"></div>
-       </div>
-      </div>
-     </div>
-    </div>
-   `).join('');
-  }
-
-  function renderSportRows(dayId, entryId, items){
-   if (!items.length){
-    return `<div class="small">Noch keine Sport- oder Bewegungsposition ergänzt.</div>`;
-   }
-   return items.map((item, idx) => `
-    <div class="item-row">
-     <div class="subsection-head">
-      <div class="small"><strong>Sport ${idx + 1}</strong></div>
-      <button class="secondary" onclick="removeItem('${dayId}','${entryId}','sports','${item.id}')">Entfernen</button>
-     </div>
-     <div class="row" style="margin-top:10px;">
-      <div class="col-6">
-       <label>Art</label>
-       <input value="${escapeHtml(item.type)}" placeholder="z. B. Spaziergang" oninput="updateItem('${dayId}','${entryId}','sports','${item.id}','type',this.value)" onfocus="activeTextTarget=this" />
-      </div>
-      <div class="col-3">
-       <label>Dauer</label>
-       <input type="number" step="0.1" value="${escapeHtml(item.duration)}" placeholder="z. B. 45" oninput="updateItem('${dayId}','${entryId}','sports','${item.id}','duration',this.value)" onfocus="activeTextTarget=this" />
-      </div>
-      <div class="col-3">
-       <label>Einheit</label>
-       <select onchange="updateItem('${dayId}','${entryId}','sports','${item.id}','unit',this.value)">
-        ${unitOptions(SPORT_UNITS, item.unit)}
-       </select>
-      </div>
-     </div>
-    </div>
-   `).join('');
-  }
-
-  function currentActiveDay(){
-   ensureActiveDay();
-   return state.days.find(day => day.id === activeDayId) || state.days[0] || null;
-  }
-
-  function dayNavListTemplate(){
-   const activeDay = currentActiveDay();
-   return state.days.map((day, idx) => {
-    const isActive = day.id === activeDay?.id;
-    return `
-     <button class="day-nav-item ${isActive ? 'active' : ''}" onclick="selectDay('${day.id}')">
-      <span class="nav-title">Tag ${idx + 1}</span>
-      <span class="nav-meta">${escapeHtml(formatDateDisplay(day.date))}</span>
-      <span class="nav-meta">${escapeHtml(day.dayType || 'ohne Tagesart')} · ${formatEntryCountLabel((day.entries || []).length)}</span>
-     </button>
-    `;
-   }).join('');
-  }
-
-  function dayOverviewTable(day){
-   const rows = (day.entries || []).map((entry, idx) => {
-    const foods = compactList(entry.foods, 'foodDrink');
-    const drinks = compactList(entry.drinks, 'foodDrink');
-    const sports = compactList(entry.sports, 'sport');
-    const motivations = compactItemField(entry, 'motivation');
-    const notes = compactItemField(entry, 'notes');
-    return `
-     <tr>
-      <td>${idx + 1}</td>
-      <td>${escapeHtml(entry.time || '–')}</td>
-      <td>${escapeHtml(foods || '–')}</td>
-      <td>${escapeHtml(drinks || '–')}</td>
-      <td>${escapeHtml(sports || '–')}</td>
-      <td>${escapeHtml(motivations || '–')}</td>
-      <td>${escapeHtml(notes || '–')}</td>
-     </tr>
-    `;
-   }).join('');
-
-   return `
-    <div class="day-overview">
-     <div class="split">
-      <div>
-       <h3 style="margin-bottom:6px;">Eingetragene Punkte des Tages</h3>
-       <div class="small">Übersicht aller bisher erfassten Einträge dieses Tages.</div>
-      </div>
-     </div>
-     ${(day.entries || []).length ? `
-      <div class="day-overview-scroll">
-       <table class="day-overview-table">
-        <thead>
-         <tr>
-          <th>#</th>
-          <th>Uhrzeit</th>
-          <th>Speisen</th>
-          <th>Getränke</th>
-          <th>Sport</th>
-          <th>Motivation</th>
-          <th>Anmerkungen</th>
-         </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-       </table>
-      </div>
-     ` : '<div class="overview-empty">Für diesen Tag sind noch keine Einträge vorhanden.</div>'}
-    </div>
-   `;
-  }
-
-  function dayCardTemplate(day, dayIndex){
-   return `
-    <div class="day-card">
-     <div class="day-head">
-      <div>
-       <h3>Tag ${dayIndex + 1}</h3>
-       <div class="small">Mehrere Einträge pro Tag sind möglich.</div>
-      </div>
-      <button class="danger" onclick="removeDay('${day.id}')">Tag löschen</button>
-     </div>
-
-     <div class="row">
-      <div class="col-6">
-       <label>Datum</label>
-       <input type="date" value="${escapeHtml(day.date)}" onchange="updateDay('${day.id}','date',this.value)" />
-      </div>
-      <div class="col-6">
-       <label>Tagesart</label>
-       <select onchange="updateDay('${day.id}','dayType',this.value)">
-        <option ${day.dayType === 'Arbeitstag' ? 'selected' : ''}>Arbeitstag</option>
-        <option ${day.dayType === 'Frei / WE' ? 'selected' : ''}>Frei / WE</option>
-        <option ${day.dayType === 'Urlaub' ? 'selected' : ''}>Urlaub</option>
-       </select>
-      </div>
-     </div>
-
-     <div id="activeDayOverview">${dayOverviewTable(day)}</div>
-
-     ${day.entries.map((entry, idx) => `
-      <div class="entry">
-       <div class="entry-head">
-        <div>
-         <div class="entry-title">Eintrag ${idx + 1}</div>
-         <div class="small">Ein Eintrag kann eine Mahlzeit, Getränke, Bewegung oder eine Kombination daraus enthalten.</div>
-        </div>
-        <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag entfernen</button>
-       </div>
-
-       <div class="row">
-        <div class="col-12">
-         <label>Uhrzeit / Zeitraum</label>
-         <input value="${escapeHtml(entry.time)}" inputmode="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this; activeTextTargetKind='time'" />
-         <div class="inline-help">Erlaubt sind z. B. 08:30, 08:30-09:15 oder 8-9.</div>
-         <div class="field-error">Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.</div>
-        </div>
-       </div>
-
-       <div class="subsection">
-        <div class="subsection-head">
-         <div>
-          <h4>Speisen</h4>
-          <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
-         </div>
-         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','foods')">+ Speise</button>
-        </div>
-        ${renderFoodRows(day.id, entry.id, entry.foods || [])}
-       </div>
-
-       <div class="subsection">
-        <div class="subsection-head">
-         <div>
-          <h4>Getränke</h4>
-          <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
-         </div>
-         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','drinks')">+ Getränk</button>
-        </div>
-        ${renderDrinkRows(day.id, entry.id, entry.drinks || [])}
-       </div>
-
-       <div class="subsection">
-        <div class="subsection-head">
-         <div>
-          <h4>Bewegung / Sport</h4>
-          <div class="small">Art und Dauer werden getrennt erfasst.</div>
-         </div>
-         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','sports')">+ Sport</button>
-        </div>
-        ${renderSportRows(day.id, entry.id, entry.sports || [])}
-       </div>
-
-      </div>
-     `).join('')}
-
-     <div class="toolbar">
-      <button class="secondary" onclick="addEntry('${day.id}')">+ Eintrag hinzufügen</button>
-     </div>
-    </div>
-   `;
-  }
-
-  function renderDays(){
-   const container = document.getElementById('daysContainer');
-   ensureActiveDay();
-   const activeDay = state.days.find(day => day.id === activeDayId) || state.days[0];
-   container.innerHTML = `
-    <div class="day-layout">
-     <div class="day-nav">
-      <div class="day-nav-list" id="daysNavList">
-       ${dayNavListTemplate()}
-      </div>
-     </div>
-     <div class="day-detail">
-      ${activeDay ? dayCardTemplate(activeDay, state.days.findIndex(day => day.id === activeDay.id)) : ''}
-     </div>
-    </div>
-   `;
-  }
-
-  function renderDayNavList(){
-   const nav = document.getElementById('daysNavList');
-   if (nav) nav.innerHTML = dayNavListTemplate();
-  }
-
-  function renderActiveDayOverview(){
-   const overview = document.getElementById('activeDayOverview');
-   const activeDay = currentActiveDay();
-   if (overview && activeDay) overview.innerHTML = dayOverviewTable(activeDay);
-  }
-
-  function refreshLiveDayViews(){
-   renderDayNavList();
-   renderActiveDayOverview();
-  }
-
-  function filledCount(items, key){
-
-   return (items || []).filter(i => String(i?.[key] || '').trim()).length;
-  }
-
-  function compactList(items, kind){
-   if (kind === 'foodDrink'){
-    return (items || [])
-     .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
-     .map(item => `${item.name || 'ohne Bezeichnung'}${String(item.amount || '').trim() ? ` ${item.amount} ${item.unit || ''}` : ''}`.trim())
-     .join(' | ');
-   }
-   if (kind === 'sport'){
-    return (items || [])
-     .filter(item => String(item.type || '').trim() || String(item.duration || '').trim())
-     .map(item => `${item.type || 'ohne Bezeichnung'}${String(item.duration || '').trim() ? ` ${item.duration} ${item.unit || ''}` : ''}`.trim())
-     .join(' | ');
-   }
-   return '';
-  }
-
-  function compactItemField(entry, field){
-   return [...(entry.foods || []), ...(entry.drinks || [])]
-    .filter(item => String(item?.[field] || '').trim())
-    .map(item => item[field].trim())
-    .join(' | ');
-  }
-
-
-  function formatEntryCountLabel(count){
-   return `${count} ${count === 1 ? 'Eintrag' : 'Einträge'}`;
-  }
-
-  function renderSummary(){
-   const days = [...(state.days || [])].sort((a, b) => compareDates(a.date, b.date));
-   const entries = (state.days || []).flatMap(d => d.entries || []);
-   const foodsCount = entries.reduce((sum, e) => sum + filledCount(e.foods, 'name'), 0);
-   const drinksCount = entries.reduce((sum, e) => sum + filledCount(e.drinks, 'name'), 0);
-   const sportsCount = entries.reduce((sum, e) => sum + filledCount(e.sports, 'type'), 0);
-   const withNotes = entries.reduce((sum, e) => {
-    const relatedItems = [...(e.foods || []), ...(e.drinks || [])];
-    return sum + relatedItems.filter(item => String(item.motivation || '').trim() || String(item.notes || '').trim()).length;
-   }, 0);
-
-   document.getElementById('sumDays').textContent = days.length;
-   document.getElementById('sumEntries').textContent = entries.length;
-   document.getElementById('sumFoods').textContent = foodsCount;
-   document.getElementById('sumDrinks').textContent = drinksCount;
-   document.getElementById('sumSports').textContent = sportsCount;
-   document.getElementById('sumNotes').textContent = withNotes;
-
-   const tbody = document.getElementById('summaryTableBody');
-   tbody.innerHTML = days.map(d => `
-    <tr>
-     <td>${escapeHtml(formatDateDisplay(d.date) || '–')}</td>
-     <td>${escapeHtml(d.dayType || '–')}</td>
-     <td>${(d.entries || []).length}</td>
-    </tr>
-   `).join('') || '<tr><td colspan="3" class="muted">Noch keine Daten vorhanden.</td></tr>';
-  }
-
-  function getPortalItems(){
-   return JSON.parse(localStorage.getItem(PORTAL_KEY_V2) || localStorage.getItem(PORTAL_KEY_V1) || '[]');
-  }
-
-  function renderPortalList(){
-   const portalList = document.getElementById('portalList');
-   if (!portalList) return;
-   const items = getPortalItems();
-   if (!items.length){
-    portalList.innerHTML = '<div class="muted">Noch keine gespeicherten Datensätze vorhanden.</div>';
-    return;
-   }
-
-   portalList.innerHTML = items.map((item, idx) => `
-    <div class="portal-item">
-     <div>
-      <div><strong>${escapeHtml(item.clientName || 'Ohne Namen')}</strong></div>
-      <div class="small">Gespeichert: ${escapeHtml(item.savedAtReadable)} · Tage: ${item.daysCount} · Einträge: ${item.entriesCount}</div>
-     </div>
-     <div class="toolbar" style="margin-top:0;">
-      <button class="secondary" onclick="loadPortalItem(${idx})">Laden</button>
-      <button class="danger" onclick="deletePortalItem(${idx})">Löschen</button>
-     </div>
-    </div>
-   `).join('');
-  }
-
-  function renderChips(){
-   return;
-  }
-
-  function insertPreset(text, presetType){
-   return;
-  }
-
-  function parseSuggestionValues(value){
-   return String(value || '')
-    .split(',')
-    .map(v => v.trim())
-    .filter(Boolean);
-  }
-
-  function getSuggestionSourceForInput(inputEl){
-   const type = inputEl.getAttribute('data-suggestion-type');
-   return type === 'motivation' ? motivationPresets : feelingPresets;
-  }
-
-  function getSuggestionMatches(source, query){
-   const raw = String(query || '');
-   const values = parseSuggestionValues(raw);
-   const selected = values.map(v => v.toLowerCase());
-   const trimmed = raw.trim();
-   const endsWithComma = /,\s*$/.test(raw);
-   const lastToken = raw.split(',').pop().trim().toLowerCase();
-
-   const shouldShowAllRemaining =
-    !lastToken ||
-    endsWithComma ||
-    selected.includes(lastToken);
-
-   return source.filter(item => {
-    const lower = item.toLowerCase();
-    if (selected.includes(lower)) return false;
-    if (shouldShowAllRemaining) return true;
-    return lower.includes(lastToken);
-   });
-  }
-
-  function hideAllInlineSuggestions(){
-   document.querySelectorAll('.inline-suggest-menu').forEach(el => el.classList.remove('show'));
-  }
-
-  function showInlineSuggestions(inputEl){
-   const menuId = inputEl.getAttribute('data-menu-id');
-   if (!menuId) return;
-   const menu = document.getElementById(menuId);
-   if (!menu) return;
-
-   const source = getSuggestionSourceForInput(inputEl);
-   const matches = getSuggestionMatches(source, inputEl.value || '');
-
-   menu.innerHTML = matches.length
-    ? matches.map(item => `<div class="inline-suggest-option" tabindex="0" data-value="${escapeHtml(item)}">${escapeHtml(item)}</div>`).join('')
-    : '<div class="inline-suggest-empty">Keine weiteren passenden Vorschläge.</div>';
-
-   menu.classList.add('show');
-  }
-
-  function applyInlineSuggestion(inputEl, value){
-   if (!inputEl) return;
-   const values = parseSuggestionValues(inputEl.value);
-   const normalized = String(value || '').trim();
-   const exists = values.some(v => v.toLowerCase() === normalized.toLowerCase());
-
-   if (!exists){
-    values.push(normalized);
-   }
-
-   inputEl.value = values.join(', ');
-   inputEl.dispatchEvent(new Event('input', { bubbles:true }));
-   inputEl.focus();
-   setTimeout(() => showInlineSuggestions(inputEl), 0);
-  }
-
-  function saveDraft(){
-   localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(state));
-   setStatus('Zwischenstand im Browser gespeichert.');
-  }
-
-  function migrateEntry(entry){
-   const oldMotivation = entry.motivation || '';
-   const oldNotes = entry.notes || '';
-
-   const foods = Array.isArray(entry.foods)
-    ? entry.foods.map((f, idx) => ({
-      id: uid(),
-      name: f.name || '',
-      amount: f.amount || '',
-      unit: f.unit || 'g',
-      motivation: f.motivation || ((idx === 0 && !Array.isArray(entry.drinks)) ? oldMotivation : ''),
-      notes: f.notes || ((idx === 0 && !Array.isArray(entry.drinks)) ? oldNotes : '')
-     }))
-    : [ { id: uid(), name: entry.foods || '', amount: '', unit: 'g', motivation: oldMotivation, notes: oldNotes } ];
-
-   const drinks = Array.isArray(entry.drinks)
-    ? entry.drinks.map((d, idx) => ({
-      id: uid(),
-      name: d.name || '',
-      amount: d.amount || '',
-      unit: d.unit || 'ml',
-      motivation: d.motivation || ((idx === 0 && !foods.some(item => String(item.name || '').trim() || String(item.amount || '').trim())) ? oldMotivation : ''),
-      notes: d.notes || ((idx === 0 && !foods.some(item => String(item.name || '').trim() || String(item.amount || '').trim())) ? oldNotes : '')
-     }))
-    : [ { id: uid(), name: entry.drinks || '', amount: '', unit: 'ml', motivation: !String(entry.foods || '').trim() ? oldMotivation : '', notes: !String(entry.foods || '').trim() ? oldNotes : '' } ];
-
-   const sports = Array.isArray(entry.sports)
-    ? entry.sports.map(s => ({ id: uid(), type: s.type || '', duration: s.duration || '', unit: s.unit || 'Min' }))
-    : (String(entry.activity || '').trim() ? [ { id: uid(), type: entry.activity || '', duration: '', unit: 'Min' } ] : []);
-
-   return {
-    id: uid(),
-    time: sanitizeTimeValue(entry.time || ''),
-    foods: foods.length ? foods : [createFoodItem()],
-    drinks: drinks.length ? drinks : [createDrinkItem()],
-    sports
-   };
-  }
-
-  function migrateState(parsed){
-   return {
-    clientName: parsed.clientName || parsed.client?.name || '',
-    clientEmail: parsed.clientEmail || parsed.client?.email || '',
-    consultantEmail: DEFAULT_CONSULTANT_EMAIL,
-    days: (parsed.days || []).map(day => ({
-     id: uid(),
-     date: day.date || '',
-     dayType: day.dayType || 'Arbeitstag',
-     entries: (day.entries || []).map(migrateEntry)
-    }))
-   };
-  }
-
-  function loadDraft(){
-   const raw = localStorage.getItem(STORAGE_KEY_V2) || localStorage.getItem(STORAGE_KEY_V1);
-   if (!raw) return false;
-   try{
-    const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed === 'object'){
-     state = migrateState(parsed);
-     mergeDuplicateDaysByDate();
-     ensureAtLeastOneDay();
-     return true;
-    }
-   }catch(e){}
-   return false;
-  }
-
-  function savePortalSnapshot(){
-   const items = getPortalItems();
-   const days = state.days || [];
-   const entries = days.flatMap(d => d.entries || []);
-   const now = new Date();
-   items.unshift({
-    id: uid(),
-    savedAt: now.toISOString(),
-    savedAtReadable: now.toLocaleString('de-DE'),
-    clientName: state.clientName || '',
-    daysCount: days.length,
-    entriesCount: entries.length,
-    payload: structuredClone(state)
-   });
-   localStorage.setItem(PORTAL_KEY_V2, JSON.stringify(items.slice(0, 25)));
-   setStatus('Datensatz im Portal-Zwischenspeicher abgelegt.');
-  }
-
-  function loadPortalItem(index){
-   const items = getPortalItems();
-   if (!items[index]) return;
-   state = migrateState(items[index].payload || {});
-   mergeDuplicateDaysByDate();
-   ensureAtLeastOneDay();
-   activeDayId = state.days[0]?.id || null;
-   renderAll();
-   setStatus('Datensatz aus dem Portal-Zwischenspeicher geladen.');
-  }
-
-  function deletePortalItem(index){
-   const items = getPortalItems();
-   items.splice(index, 1);
-   localStorage.setItem(PORTAL_KEY_V2, JSON.stringify(items));
-   setStatus('Gespeicherter Datensatz entfernt.');
-  }
-
-  function resetAll(){
-   if (!confirm('Möchtest Du wirklich alle aktuell erfassten Daten zurücksetzen?')) return;
-   state = {
-    clientName: '',
-    clientEmail: '',
-    consultantEmail: DEFAULT_CONSULTANT_EMAIL,
-    days: [createEmptyDay()]
-   };
-   activeDayId = state.days[0]?.id || null;
-   renderAll();
-   setStatus('Aktuelle Eingaben wurden zurückgesetzt.');
-  }
-
-  function normalizeTextValue(value){
-   return String(value ?? '')
-    .normalize('NFC')
-    .replace(/\r\n/g, '\n')
-    .replace(/\r/g, '\n')
-    .trim();
-  }
-
-  function formatTimeForStructuredExport(timeStr){
-   const raw = String(timeStr || '').trim().replace(/\s+/g, '');
-   if (!raw) return '';
-
-   let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
-   if (match){
-    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-    const m1 = String(parseInt(match[2], 10)).padStart(2, '0');
-    if (match[3] && match[4]){
-     const h2 = String(parseInt(match[3], 10)).padStart(2, '0');
-     const m2 = String(parseInt(match[4], 10)).padStart(2, '0');
-     return `${h1}:${m1}-${h2}:${m2}`;
-    }
-    return `${h1}:${m1}`;
-   }
-
-   match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
-   if (match){
-    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-    if (match[2]){
-     const h2 = String(parseInt(match[2], 10)).padStart(2, '0');
-     return `${h1}:00-${h2}:00`;
-    }
-    return `${h1}:00`;
-   }
-
-   return raw.replace(/–/g, '-');
-  }
-
-  function countDaysWithEntries(){
-   return (state.days || []).filter(day => (day.entries || []).some(entry =>
-    String(entry.time || '').trim() ||
-    (entry.foods || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
-    (entry.drinks || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
-    (entry.sports || []).some(item => String(item.type || '').trim() || String(item.duration || '').trim())
-   )).length;
-  }
-
-  function buildCsvPayload(){
-   const rows = [[
-    'Name','Kunden-E-Mail','Datum','Tagesart','Uhrzeit / Zeitraum',
-    'Bereich','Art / Bezeichnung','Menge','Einheit','Dauer','Dauer-Einheit',
-    'Motivation','Anmerkungen'
-   ]];
-
-   function pushItemRow(day, entry, area, item){
-    const isSport = area === 'Sport / Bewegung';
-    rows.push([
-     state.clientName || '',
-     state.clientEmail || '',
-     formatDateForCsv(day.date || ''),
-     day.dayType || '',
-     formatTimeForCsv(entry.time || ''),
-     area,
-     isSport ? (item.type || '') : (item.name || ''),
-     isSport ? '' : (item.amount || ''),
-     isSport ? '' : (item.unit || ''),
-     isSport ? (item.duration || '') : '',
-     isSport ? (item.unit || '') : '',
-     isSport ? '' : (item.motivation || ''),
-     isSport ? '' : (item.notes || '')
-    ]);
-   }
-
-   const sortedDays = [...(state.days || [])].sort((a, b) => {
-    const dateDiff = daySortValue(a.date) - daySortValue(b.date);
-    if (dateDiff !== 0) return dateDiff;
-    return String(a.dayType || '').localeCompare(String(b.dayType || ''), 'de');
-   });
-
-   sortedDays.forEach(day => {
-    const sortedEntries = [...(day.entries || [])].sort((a, b) => {
-     const timeDiff = timeSortValue(a.time) - timeSortValue(b.time);
-     if (timeDiff !== 0) return timeDiff;
-     return String(a.time || '').localeCompare(String(b.time || ''), 'de');
+  if (noneBox && noneBox.checked){
+    otherBoxes.forEach(b => {
+      b.checked = false;
+      b.disabled = true;
     });
-
-    sortedEntries.forEach(entry => {
-     const foods = (entry.foods || []).filter(item =>
-      String(item.name || '').trim() ||
-      String(item.amount || '').trim() ||
-      String(item.motivation || '').trim() ||
-      String(item.notes || '').trim()
-     );
-     const drinks = (entry.drinks || []).filter(item =>
-      String(item.name || '').trim() ||
-      String(item.amount || '').trim() ||
-      String(item.motivation || '').trim() ||
-      String(item.notes || '').trim()
-     );
-     const sports = (entry.sports || []).filter(item =>
-      String(item.type || '').trim() ||
-      String(item.duration || '').trim()
-     );
-
-     if (!foods.length && !drinks.length && !sports.length) {
-      rows.push([
-       state.clientName || '',
-       state.clientEmail || '',
-       formatDateForCsv(day.date || ''),
-       day.dayType || '',
-       formatTimeForCsv(entry.time || ''),
-       '',
-       '',
-       '',
-       '',
-       '',
-       '',
-       '',
-       ''
-      ]);
-     }
-
-     foods.forEach(item => pushItemRow(day, entry, 'Speise', item));
-     drinks.forEach(item => pushItemRow(day, entry, 'Getränk', item));
-     sports.forEach(item => pushItemRow(day, entry, 'Sport / Bewegung', item));
-    });
-   });
-
-   return '\ufeff' + rows.map(r => r.map(csvEscape).join(';')).join('\n');
+  } else {
+    otherBoxes.forEach(b => b.disabled = false);
   }
+}
 
-  function normalizedData(){
-   return {
-    meta: {
-     app: 'Ernährungsprotokoll – digitale Erfassung',
-     exportedAt: new Date().toISOString(),
-     version: 4
-    },
-    client: {
-     name: normalizeTextValue(state.clientName || ''),
-     email: normalizeTextValue(state.clientEmail || ''),
-     consultantEmail: DEFAULT_CONSULTANT_EMAIL
-    },
-    days: (state.days || []).map(day => ({
-     date: normalizeTextValue(day.date || ''),
-     dayType: normalizeTextValue(day.dayType || ''),
-     entries: (day.entries || []).map(entry => ({
-      time: formatTimeForStructuredExport(entry.time || ''),
-      foods: (entry.foods || [])
-       .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
-       .map(item => ({
-        name: normalizeTextValue(item.name || ''),
-        amount: normalizeTextValue(item.amount || ''),
-        unit: normalizeTextValue(item.unit || ''),
-        motivation: normalizeTextValue(item.motivation || ''),
-        notes: normalizeTextValue(item.notes || '')
-       })),
-      drinks: (entry.drinks || [])
-       .filter(item => String(item.name || '').trim() || String(item.amount || '').trim())
-       .map(item => ({
-        name: normalizeTextValue(item.name || ''),
-        amount: normalizeTextValue(item.amount || ''),
-        unit: normalizeTextValue(item.unit || ''),
-        motivation: normalizeTextValue(item.motivation || ''),
-        notes: normalizeTextValue(item.notes || '')
-       })),
-      sports: (entry.sports || [])
-       .filter(item => String(item.type || '').trim() || String(item.duration || '').trim())
-       .map(item => ({
-        type: normalizeTextValue(item.type || ''),
-        duration: normalizeTextValue(item.duration || ''),
-        unit: normalizeTextValue(item.unit || '')
-       }))
-     }))
-    }))
-   };
-  }
+function updateAllExclusiveGroups(){
+  updateExclusiveCheckboxGroup('diseaseChecks', 'Keine bekannten Vorerkrankungen');
+  updateExclusiveCheckboxGroup('symptomChecks', 'Keine relevanten Beschwerden');
+  updateExclusiveCheckboxGroup('familyHistoryChecks', 'Keine bekannt');
+}
 
-  function download(filename, content, type){
-   const blob = new Blob([content], {type});
-   const url = URL.createObjectURL(blob);
-   const a = document.createElement('a');
-   a.href = url;
-   a.download = filename;
-   a.click();
-   URL.revokeObjectURL(url);
-  }
+function collectCheckValues(groupId){
+  return Array.from(document.querySelectorAll(`[data-check-group="${groupId}"]`))
+    .filter(el => el.checked)
+    .map(el => el.value);
+}
 
-  function hasInvalidTimeEntries(){
-   return (state.days || []).some(day =>
-    (day.entries || []).some(entry => !isStrictValidTimeValue(entry.time || ''))
-   );
-  }
-
-  function exportJson(){
-   if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-    return;
-   }
-   const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.json`;
-   download(fileName, JSON.stringify(normalizedData(), null, 2), 'application/json;charset=utf-8');
-   setStatus('JSON-Datei exportiert.');
-  }
-
-  function csvEscape(value=''){
-   const normalized = String(value ?? '')
-    .normalize('NFC')
-    .replace(/\r\n/g, ' ')
-    .replace(/[\r\n]+/g, ' ')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
-   const v = normalized.replaceAll('"','""');
-   return `"${v}"`;
-  }
-
-  function parseDateForCsv(dateStr){
-   if (!dateStr) return null;
-   const trimmed = String(dateStr).trim();
-   if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)){
-    const [y,m,d] = trimmed.split('-').map(Number);
-    return new Date(y, m - 1, d);
-   }
-   if (/^\d{2}\.\d{2}\.\d{4}$/.test(trimmed)){
-    const [d,m,y] = trimmed.split('.').map(Number);
-    return new Date(y, m - 1, d);
-   }
-   return null;
-  }
-
-  function formatDateForCsv(dateStr){
-   const d = parseDateForCsv(dateStr);
-   if (!d || Number.isNaN(d.getTime())) return String(dateStr || '').trim();
-   const day = String(d.getDate()).padStart(2, '0');
-   const month = String(d.getMonth() + 1).padStart(2, '0');
-   const year = d.getFullYear();
-   return `${day}.${month}.${year}`;
-  }
-
-  function timeSortValue(timeStr){
-   const raw = String(timeStr || '').trim().replace(/\s+/g, '');
-   if (!raw) return Number.MAX_SAFE_INTEGER;
-
-   let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
-   if (match){
-    return (parseInt(match[1], 10) * 60) + parseInt(match[2], 10);
-   }
-
-   match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
-   if (match){
-    return parseInt(match[1], 10) * 60;
-   }
-
-   return Number.MAX_SAFE_INTEGER - 1;
-  }
-
-  function formatTimeForCsv(timeStr){
-   const raw = String(timeStr || '').trim().replace(/\s+/g, '');
-   if (!raw) return '';
-
-   let match = raw.match(/^(\d{1,2}):(\d{2})(?:[-–](\d{1,2}):(\d{2}))?$/);
-   if (match){
-    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-    const m1 = String(parseInt(match[2], 10)).padStart(2, '0');
-    if (match[3] && match[4]){
-     const h2 = String(parseInt(match[3], 10)).padStart(2, '0');
-     const m2 = String(parseInt(match[4], 10)).padStart(2, '0');
-     return `${h1}:${m1}-${h2}:${m2}`;
-    }
-    return `${h1}:${m1}`;
-   }
-
-   match = raw.match(/^(\d{1,2})(?:[-–](\d{1,2}))?$/);
-   if (match){
-    const h1 = String(parseInt(match[1], 10)).padStart(2, '0');
-    if (match[2]){
-     const h2 = String(parseInt(match[2], 10)).padStart(2, '0');
-     return `${h1}:00-${h2}:00`;
-    }
-    return `${h1}:00`;
-   }
-
-   return raw.replace(/–/g, '-');
-  }
-
-  function daySortValue(dateStr){
-   const d = parseDateForCsv(dateStr);
-   return d && !Number.isNaN(d.getTime()) ? d.getTime() : Number.MAX_SAFE_INTEGER;
-  }
-
-  function exportCsv(){
-   if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-    return;
-   }
-   const csv = buildCsvPayload();
-   const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-   download(fileName, csv, 'text/csv;charset=utf-8');
-   setStatus('CSV-Datei exportiert.');
-  }
-  function openPreparedMail(){
-   if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-    return;
-   }
-
-   const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-   const daysWithEntries = countDaysWithEntries();
-   const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
-   const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
-   const body = encodeURIComponent(buildMailBody(csvFileName));
-
-   window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-   setStatus('E-Mail geöffnet. Bitte hänge jetzt noch die zuvor heruntergeladene CSV-Datei an.');
-  }
-
-  function buildMailBody(csvFileName){
-   const days = state.days || [];
-   const entriesCount = days.flatMap(d => d.entries || []).length;
-   const daysWithEntries = countDaysWithEntries();
-   const summaryLines = [
-    'WICHTIG: Bitte hänge die heruntergeladene CSV-Datei an diese E-Mail an.',
-    csvFileName ? `Dateiname: ${csvFileName}` : '',
-    'Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.',
-    '',
-    `Name: ${state.clientName || ''}`,
-    `E-Mail: ${state.clientEmail || ''}`,
-    `Tage mit Einträgen: ${daysWithEntries}`,
-    `Anzahl Tage gesamt: ${days.length}`,
-    `Anzahl Einträge: ${entriesCount}`,
-    '',
-    'Kurzübersicht:'
-   ].filter(Boolean);
-
-   days.slice().sort((a, b) => daySortValue(a.date) - daySortValue(b.date)).forEach(day => {
-    summaryLines.push(`${formatDateForCsv(day.date || '') || (day.date || 'ohne Datum')} | ${day.dayType || 'ohne Tagesart'} | ${formatEntryCountLabel((day.entries || []).length)}`);
-   });
-
-   return summaryLines.join('\n');
-  }
-
-  function prepareMail(){
-   if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-    return;
-   }
-
-   const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-   const csv = buildCsvPayload();
-   download(csvFileName, csv, 'text/csv;charset=utf-8');
-
-   const daysWithEntries = countDaysWithEntries();
-   const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
-   const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
-   const body = encodeURIComponent(buildMailBody(csvFileName));
-
-   setTimeout(() => {
-    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-   }, 250);
-
-   setStatus(`CSV-Datei heruntergeladen: ${csvFileName}. Bitte füge die Datei jetzt noch an.`);
-  }
-
-  function importJson(file){
-   const reader = new FileReader();
-   reader.onload = e => {
-    try{
-     const parsed = JSON.parse(e.target.result);
-     if (!parsed || !parsed.days) throw new Error('Ungültige Struktur');
-     state = migrateState(parsed);
-     mergeDuplicateDaysByDate();
-     ensureAtLeastOneDay();
-     activeDayId = state.days[0]?.id || null;
-     renderAll();
-     setStatus('JSON-Datei erfolgreich importiert.');
-    }catch(err){
-     alert('Die Datei konnte nicht importiert werden. Bitte verwende eine gültige JSON-Datei aus dieser Anwendung.');
-    }
-   };
-   reader.readAsText(file, 'utf-8');
-  }
-
-  function renderAll(){
-   mergeDuplicateDaysByDate();
-   sortDaysByDate();
-   ensureAtLeastOneDay();
-   ensureActiveDay();
-   bindTopFields();
-   renderDays();
-   renderSummary();
-   renderChips();
-   saveDraft();
-  }
-
-  document.getElementById('addDayBtn').onclick = addDay;
-  document.getElementById('saveDraftBtn').onclick = saveDraft;
-  document.getElementById('resetAllBtn').onclick = resetAll;
-
-  const downloadCsvBtn = document.getElementById('downloadCsvBtn');
-  if (downloadCsvBtn){
-   downloadCsvBtn.onclick = exportCsv;
-  }
-
-  const openMailBtn = document.getElementById('openMailBtn');
-  if (openMailBtn){
-   openMailBtn.onclick = openPreparedMail;
-  }
-
-  window.addDay = addDay;
-  window.removeDay = removeDay;
-  window.addEntry = addEntry;
-  window.removeEntry = removeEntry;
-  window.updateDay = updateDay;
-  window.updateEntry = updateEntry;
-  window.updateItem = updateItem;
-  window.addItem = addItem;
-  window.removeItem = removeItem;
-  window.selectDay = selectDay;
-  window.insertPreset = insertPreset;
-  window.loadPortalItem = loadPortalItem;
-  window.deletePortalItem = deletePortalItem;
-
-  document.addEventListener('DOMContentLoaded', () => {
-   const mailAttachmentCloseBtn = document.getElementById('mailAttachmentCloseBtn');
-   if (mailAttachmentCloseBtn){
-    mailAttachmentCloseBtn.addEventListener('click', (event) => {
-     event.preventDefault();
-     hideMailAttachmentNotice();
-    });
-   }
-
-   const mailAttachmentOverlay = document.getElementById('mailAttachmentOverlay');
-   if (mailAttachmentOverlay){
-    mailAttachmentOverlay.addEventListener('click', (event) => {
-     if (event.target === mailAttachmentOverlay){
-      hideMailAttachmentNotice();
-     }
-    });
-   }
+function setCheckValues(groupId, values){
+  const wanted = new Set(values || []);
+  document.querySelectorAll(`[data-check-group="${groupId}"]`).forEach(el => {
+    el.checked = wanted.has(el.value);
   });
+}
 
+function sanitizeNumericInput(value){
+  return String(value || '').replace(/[^0-9,.\-]/g, '');
+}
+
+function validateEmailField(){
+  const el = byId('email');
+  const value = el.value.trim();
+  if (!value){ el.setCustomValidity(''); return true; }
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  el.setCustomValidity(ok ? '' : 'Bitte trage eine gültige E-Mail-Adresse ein, zum Beispiel name@beispiel.de.');
+  return ok;
+}
+
+function validateNumericField(id){
+  const el = byId(id);
+  if (!el) return true;
+  el.value = sanitizeNumericInput(el.value);
+  const value = el.value.trim();
+  if (!value){ el.setCustomValidity(''); return true; }
+  const ok = /^[0-9]+([,.][0-9]+)?([\-][0-9]+([,.][0-9]+)?)?$/.test(value);
+  el.setCustomValidity(ok ? '' : 'Bitte nur Zahlen eingeben.');
+  return ok;
+}
+
+function showMessage(message, title='Bitte beachte'){
+  const overlay = byId('messageOverlay');
+  const titleEl = byId('messageTitle');
+  const textEl = byId('messageText');
+  if (titleEl) titleEl.textContent = title;
+  if (textEl) textEl.textContent = message;
+  if (overlay){
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden','false');
+    const okBtn = byId('messageOkBtn');
+    if (okBtn){
+      setTimeout(() => { try { okBtn.focus(); } catch(e) {} }, 0);
+    }
+  }
+}
+
+function hideMessage(){
+  const overlay = byId('messageOverlay');
+  if (overlay){
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden','true');
+  }
+}
+
+function validateFormBasics(){
+  const emailOk = validateEmailField();
+  const numericIds = ['height','weight','waist','hip','weight3m','weight6m','weight12m','goalWeight','postalCode'];
+  const numericOk = numericIds.every(validateNumericField);
+
+  const requiredChecks = [
+    ['fullName', 'Im Abschnitt „Persönliche Angaben“ fehlt noch Dein Name.'],
+    ['email', 'Bitte trage eine gültige E-Mail-Adresse ein, zum Beispiel name@beispiel.de.'],
+    ['birthDate', 'Im Abschnitt „Persönliche Angaben“ fehlt noch Dein Geburtsdatum.'],
+    ['gender', 'Im Abschnitt „Persönliche Angaben“ fehlt noch die Angabe zum Geschlecht.'],
+    ['job', 'Im Abschnitt „Persönliche Angaben“ fehlt noch Dein Beruf bzw. Deine Tätigkeit.'],
+    ['street', 'Im Abschnitt „Persönliche Angaben“ fehlt noch Straße und Hausnummer.'],
+    ['postalCode', 'Im Abschnitt „Persönliche Angaben“ fehlt noch die PLZ.'],
+    ['city', 'Im Abschnitt „Persönliche Angaben“ fehlt noch der Wohnort.'],
+    ['success', 'Im Abschnitt „Beratungsanlass und Ziele“ fehlt noch die Angabe, woran Du den Erfolg der Beratung erkennen würdest.'],
+    ['motivationScale', 'Im Abschnitt „Beratungsanlass und Ziele“ fehlt noch Deine Motivation.'],
+    ['changeScale', 'Im Abschnitt „Beratungsanlass und Ziele“ fehlt noch Deine Veränderungsbereitschaft.'],
+    ['height', 'Im Abschnitt „Körperdaten und Gewichtsverlauf“ fehlt noch Deine Größe.'],
+    ['weight', 'Im Abschnitt „Körperdaten und Gewichtsverlauf“ fehlt noch Dein aktuelles Gewicht.'],
+    ['mealCount', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlt noch die Angabe zur Anzahl Deiner Mahlzeiten.'],
+    ['snacks', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlt noch die Angabe zu Snacks zwischendurch.'],
+    ['eatOut', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlt noch die Angabe zum Essen außer Haus.'],
+    ['dayPattern', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlt noch Dein typischer Essalltag.'],
+    ['drinks', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlen noch Deine Hauptgetränke.'],
+    ['likes', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlen noch Deine Vorlieben oder Abneigungen.'],
+    ['triggerFoods', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlen noch problematische oder beschwerdeauslösende Lebensmittel.'],
+    ['appetite', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlt noch die Angabe zu Appetit / Hungergefühl.'],
+    ['eatingSpeed', 'Im Abschnitt „Essen und Trinken im Alltag“ fehlt noch die Angabe zur Essgeschwindigkeit.'],
+    ['sleepHours', 'Im Abschnitt „Lebensstil“ fehlt noch Deine Schlafdauer.'],
+    ['stressLevel', 'Im Abschnitt „Lebensstil“ fehlt noch Dein Stressniveau.'],
+    ['activity', 'Im Abschnitt „Lebensstil“ fehlt noch Deine Bewegung / Dein Sport.'],
+    ['smoking', 'Im Abschnitt „Lebensstil“ fehlt noch die Angabe zum Rauchen.'],
+    ['alcohol', 'Im Abschnitt „Lebensstil“ fehlt noch die Angabe zu Alkohol.'],
+    ['shiftwork', 'Im Abschnitt „Lebensstil“ fehlt noch die Angabe zu Schichtarbeit.'],
+    ['previousApproaches', 'Im Abschnitt „Relevante Werte und bisherige Maßnahmen“ fehlt noch, welche Ernährungsumstellungen / Diäten / Maßnahmen bisher durchgeführt wurden. Wenn bisher nichts durchgeführt wurde, trage bitte z. B. „keine“ ein.']
+  ];
+
+  const goalsFilled = collectCheckValues('goalChecks').length > 0;
+  const diseasesFilled = collectCheckValues('diseaseChecks').length > 0;
+  const symptomsFilled = collectCheckValues('symptomChecks').length > 0;
+  const familyHistoryFilled = collectCheckValues('familyHistoryChecks').length > 0;
+
+  let requiredOk = goalsFilled && diseasesFilled && symptomsFilled && familyHistoryFilled;
+  let requiredMessage = '';
+  if (!goalsFilled) requiredMessage = 'Im Abschnitt „Beratungsanlass und Ziele“ fehlt noch mindestens ein Ziel. Bitte markiere dort mindestens eine passende Angabe.';
+  else if (!diseasesFilled) requiredMessage = 'Im Abschnitt „Gesundheit und Beschwerden“ fehlt bei „Vorerkrankungen / Diagnosen“ noch mindestens eine passende Angabe.';
+  else if (!symptomsFilled) requiredMessage = 'Im Abschnitt „Gesundheit und Beschwerden“ fehlt bei „Verdauungsbeschwerden / Symptome“ noch mindestens eine passende Angabe.';
+  else if (!familyHistoryFilled) requiredMessage = 'Im Abschnitt „Gesundheit und Beschwerden“ fehlt bei „Familiäre Vorbelastungen“ noch mindestens eine passende Angabe.';
+
+  if (requiredOk){
+    for (const [id, message] of requiredChecks){
+      if (!isFieldFilled(byId(id))){
+        requiredOk = false;
+        requiredMessage = message;
+        break;
+      }
+    }
+  }
+
+  if (!emailOk) showMessage('Bitte trage eine gültige E-Mail-Adresse ein, zum Beispiel name@beispiel.de.');
+  else if (!numericOk) showMessage('Bitte prüfe die markierten Zahlenfelder. Dort sind nur passende Zahlenangaben erlaubt.');
+  else if (!requiredOk) showMessage(requiredMessage);
+
+  updateSectionStatuses();
+  return emailOk && numericOk && requiredOk;
+}
+
+function toggleGoalOther(){
+  const selected = collectCheckValues('goalChecks');
+  const wrap = byId('goalOtherWrap');
+  const input = byId('goalOtherText');
+  const active = selected.includes('Sonstiges');
+  wrap.classList.toggle('show', active);
+  input.disabled = !active;
+  if (!active) input.value = '';
+}
+
+function togglePhoneOther(){
+  const active = byId('phoneCode').value === 'other';
+  byId('phoneOtherCode').disabled = !active;
+  if (!active) byId('phoneOtherCode').value = '';
+}
+
+
+
+function isFieldFilled(el){
+  if (!el) return false;
+  if (el.type === 'checkbox') return !!el.checked;
+  return !!String(el.value || '').trim();
+}
+
+function getRequiredElementsForSection(sectionId){
+  const requiredMap = {
+    'section-a': ['fullName','email'],
+    'section-b': ['goalChecks','success','motivationScale','changeScale'],
+    'section-c': [],
+    'section-d': ['height','weight'],
+    'section-e': ['mealCount','drinks'],
+    'section-f': ['sleepHours','stressLevel','activity'],
+    'section-g': []
+  };
+  const ids = requiredMap[sectionId] || [];
+  return ids.map(id => {
+    if (id.endsWith('Checks')) return document.querySelector(`[data-check-group="${id}"]`);
+    return byId(id);
+  }).filter(Boolean);
+}
+
+
+function getSectionProgress(sectionId){
+  const section = byId(sectionId);
+  if (!section) return {status:'open',label:'Wichtige Informationen fehlen noch'};
+
+  const body = section.querySelector('.section-accordion-body');
+  if (!body) return {status:'open',label:'Wichtige Informationen fehlen noch'};
+
+  const fields = Array.from(body.querySelectorAll('input, textarea, select'))
+    .filter(el => {
+      if (el.type === 'button' || el.type === 'submit' || el.type === 'reset') return false;
+      if (el.id === 'phoneOtherCode' && el.disabled) return false;
+      if (el.id === 'goalOtherText' && el.disabled) return false;
+      return true;
+    });
+
+  const total = fields.length;
+  const filledCount = fields.filter(isFieldFilled).length;
+  const hasAnyInput = filledCount > 0;
+
+  const requiredIdsMap = {
+    'section-a': ['fullName','email','birthDate','gender','job','street','postalCode','city'],
+    'section-b': ['success','motivationScale','changeScale'],
+    'section-c': ['diseaseChecks','symptomChecks','familyHistoryChecks'],
+    'section-d': ['height','weight'],
+    'section-e': ['mealCount','snacks','eatOut','dayPattern','drinks','likes','triggerFoods','appetite','eatingSpeed'],
+    'section-f': ['sleepHours','stressLevel','activity','smoking','alcohol','shiftwork'],
+    'section-g': ['previousApproaches']
+  };
+
+  const requiredFilled = (() => {
+    if (sectionId === 'section-b'){
+      const goalsFilled = collectCheckValues('goalChecks').length > 0;
+      const others = requiredIdsMap[sectionId].every(id => isFieldFilled(byId(id)));
+      return goalsFilled && others;
+    }
+    if (sectionId === 'section-c'){
+      return collectCheckValues('diseaseChecks').length > 0 &&
+             collectCheckValues('symptomChecks').length > 0 &&
+             collectCheckValues('familyHistoryChecks').length > 0;
+    }
+    const ids = requiredIdsMap[sectionId] || [];
+    if (!ids.length) return hasAnyInput;
+    return ids.every(id => isFieldFilled(byId(id)));
+  })();
+
+  const fullyFilled = (() => {
+    if (sectionId === 'section-b'){
+      const goals = collectCheckValues('goalChecks');
+      const goalsFilled = goals.length > 0;
+      const baseFilled = requiredIdsMap[sectionId].every(id => isFieldFilled(byId(id)));
+      const otherOk = !goals.includes('Sonstiges') || isFieldFilled(byId('goalOtherText'));
+      return goalsFilled && baseFilled && otherOk;
+    }
+    if (sectionId === 'section-c'){
+      const diseaseOk = collectCheckValues('diseaseChecks').length > 0;
+      const symptomOk = collectCheckValues('symptomChecks').length > 0;
+      const familyOk = collectCheckValues('familyHistoryChecks').length > 0;
+      const optionalCount = ['otherDiseases','allergies','surgeries','medication','supplements','familyHistoryOther']
+        .filter(id => isFieldFilled(byId(id))).length;
+      return diseaseOk && symptomOk && familyOk && optionalCount >= 2;
+    }
+    if (sectionId === 'section-g'){
+      const baseRequired = isFieldFilled(byId('previousApproaches'));
+      const optionalCount = ['labs','barriers','extraNotes']
+        .filter(id => isFieldFilled(byId(id))).length;
+      return baseRequired && optionalCount >= 1;
+    }
+    return total > 0 && filledCount === total;
+  })();
+
+  const hasRequiredFields = (requiredIdsMap[sectionId] || []).length > 0;
+
+  if (hasRequiredFields){
+    if (!requiredFilled) return {status:'open',label:'Wichtige Informationen fehlen noch'};
+    if (!fullyFilled) return {status:'partial',label:'Teilweise ausgefüllt – Versand möglich'};
+    return {status:'complete',label:'Vollständig ausgefüllt'};
+  }
+
+  if (!hasAnyInput) return {status:'open',label:'Wichtige Informationen fehlen noch'};
+  if (!fullyFilled) return {status:'partial',label:'Teilweise ausgefüllt – Versand möglich'};
+  return {status:'complete',label:'Vollständig ausgefüllt'};
+}
+
+function updateSectionStatuses(){
+  ['section-a','section-b','section-c','section-d','section-e','section-f','section-g'].forEach(sectionId => {
+    const state = getSectionProgress(sectionId);
+    const badge = byId(sectionId + '-status');
+    if (!badge) return;
+    badge.classList.remove('is-open','is-partial','is-complete');
+    badge.classList.add('is-' + state.status);
+    const textEl = badge.querySelector('.section-status-text');
+    if (textEl) textEl.textContent = state.label;
+  });
+}
+
+function collectData(){
+  return {
+    fullName: byId('fullName').value.trim(),
+    email: byId('email').value.trim(),
+    phoneCode: byId('phoneCode').value,
+    phoneOtherCode: byId('phoneOtherCode').value.trim(),
+    phone: byId('phone').value.trim(),
+    birthDate: byId('birthDate').value,
+    gender: byId('gender').value,
+    familyStatus: byId('familyStatus').value,
+    children: byId('children').value,
+    job: byId('job').value.trim(),
+    street: byId('street').value.trim(),
+    postalCode: byId('postalCode').value.trim(),
+    city: byId('city').value.trim(),
+    goals: collectCheckValues('goalChecks'),
+    goalOtherText: byId('goalOtherText').value.trim(),
+    goalWeight: byId('goalWeight').value.trim(),
+    timeframe: byId('timeframe').value.trim(),
+    success: byId('success').value.trim(),
+    motivationScale: byId('motivationScale').value,
+    changeScale: byId('changeScale').value,
+    diseases: collectCheckValues('diseaseChecks'),
+    otherDiseases: byId('otherDiseases').value.trim(),
+    symptoms: collectCheckValues('symptomChecks'),
+    allergies: byId('allergies').value.trim(),
+    surgeries: byId('surgeries').value.trim(),
+    medication: byId('medication').value.trim(),
+    supplements: byId('supplements').value.trim(),
+    familyHistory: collectCheckValues('familyHistoryChecks'),
+    familyHistoryOther: byId('familyHistoryOther').value.trim(),
+    height: byId('height').value.trim(),
+    weight: byId('weight').value.trim(),
+    waist: byId('waist').value.trim(),
+    hip: byId('hip').value.trim(),
+    weight3m: byId('weight3m').value.trim(),
+    weight6m: byId('weight6m').value.trim(),
+    weight12m: byId('weight12m').value.trim(),
+    weightComment: byId('weightComment').value.trim(),
+    mealCount: byId('mealCount').value,
+    snacks: byId('snacks').value,
+    eatOut: byId('eatOut').value,
+    dayPattern: byId('dayPattern').value.trim(),
+    drinks: byId('drinks').value.trim(),
+    likes: byId('likes').value.trim(),
+    triggerFoods: byId('triggerFoods').value.trim(),
+    appetite: byId('appetite').value,
+    eatingSpeed: byId('eatingSpeed').value,
+    sleepHours: byId('sleepHours').value,
+    sleepQuality: byId('sleepQuality').value,
+    stressLevel: byId('stressLevel').value,
+    activity: byId('activity').value.trim(),
+    workPattern: byId('workPattern').value.trim(),
+    smoking: byId('smoking').value,
+    alcohol: byId('alcohol').value,
+    shiftwork: byId('shiftwork').value,
+    stressEating: byId('stressEating').value.trim(),
+    labs: byId('labs').value.trim(),
+    previousApproaches: byId('previousApproaches').value.trim(),
+    barriers: byId('barriers').value.trim(),
+    extraNotes: byId('extraNotes').value.trim()
+  };
+}
+
+function applyData(data){
+  if (!data) return;
+  for (const [key, value] of Object.entries(data)){
+    const el = byId(key);
+    if (el && typeof value === 'string') el.value = value;
+  }
+  setCheckValues('goalChecks', data.goals || []);
+  setCheckValues('diseaseChecks', data.diseases || []);
+  setCheckValues('symptomChecks', data.symptoms || []);
+  setCheckValues('familyHistoryChecks', data.familyHistory || []);
   document.addEventListener('pointerdown', (event) => {
-   const option = event.target.closest('.inline-suggest-option');
-   if (option){
+  const target = event.target;
+  if (!target || typeof target.closest !== 'function') return;
+
+  if (target.closest('#messageOkBtn')){
     event.preventDefault();
-    const menu = option.closest('.inline-suggest-menu');
-    if (!menu) return;
-    const wrap = menu.closest('.inline-suggest-wrap');
-    if (!wrap) return;
-    const input = wrap.querySelector('input');
-    applyInlineSuggestion(input, option.getAttribute('data-value') || option.textContent || '');
+    hideMessage();
     return;
-   }
-
-   if (!event.target.closest('.inline-suggest-wrap')){
-    hideAllInlineSuggestions();
-   }
-  });
-
-  document.addEventListener('focusin', (event) => {
-   const input = event.target.closest('.inline-suggest-wrap input');
-   if (!input) return;
-   showInlineSuggestions(input);
-  });
-
-  document.addEventListener('focusout', (event) => {
-   const wrap = event.target.closest('.inline-suggest-wrap');
-   if (!wrap) return;
-   setTimeout(() => {
-    if (!wrap.contains(document.activeElement)){
-      const menu = wrap.querySelector('.inline-suggest-menu');
-      if (menu) menu.classList.remove('show');
-    }
-   }, 120);
-  });
-
-  if (!loadDraft()){
-   state.days = [createEmptyDay()];
   }
-  state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
-  activeDayId = state.days[0]?.id || null;
-  renderAll();
- </script>
+
+  const overlay = target.closest('#messageOverlay');
+  if (overlay && target === overlay){
+    hideMessage();
+  }
+});
+
+toggleGoalOther();
+  togglePhoneOther();
+}
+
+function saveDraft(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(collectData()));
+  updateSectionStatuses();
+  setStatus('Zwischenstand gespeichert.');
+}
+
+function loadDraft(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    applyData(JSON.parse(raw));
+    updateAllExclusiveGroups();
+    updateSectionStatuses();
+    return true;
+  }catch(err){
+    return false;
+  }
+}
+
+function resetAll(){
+  if (!confirm('Möchtest Du wirklich alle Angaben zurücksetzen?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('input, textarea, select').forEach(el => {
+    if (el.type === 'checkbox') el.checked = false;
+    else el.value = '';
+  });
+  fillScale('motivationScale');
+  fillScale('changeScale');
+  renderChecks('goalChecks', goalOptions);
+  renderChecks('diseaseChecks', diseaseOptions);
+  renderChecks('symptomChecks', symptomOptions);
+  renderChecks('familyHistoryChecks', familyHistoryOptions);
+  updateAllExclusiveGroups();
+  byId('summaryPanel').classList.remove('show');
+  updateSummaryToggleButtons();
+  toggleGoalOther();
+  togglePhoneOther();
+  updateSectionStatuses();
+  setStatus('Alle Angaben wurden zurückgesetzt.');
+}
+
+function bindAccordions(){
+  document.querySelectorAll('.section-accordion-header').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-accordion-target');
+      const section = byId(id);
+      if (!section) return;
+
+      document.querySelectorAll('.section-accordion').forEach(other => {
+        if (other !== section){
+          other.classList.add('collapsed');
+        }
+      });
+
+      section.classList.remove('collapsed');
+      btn.focus({ preventScroll: true });
+
+      const toolbar = byId('topActionToolbar');
+      const toolbarHeight = toolbar ? toolbar.getBoundingClientRect().height : 0;
+      const extraGap = 14;
+      const absoluteTop = window.scrollY + section.getBoundingClientRect().top;
+      const targetTop = Math.max(absoluteTop - toolbarHeight - extraGap, 0);
+
+      window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    });
+  });
+}
+
+function updateSummaryToggleButtons(){
+  const panelVisible = byId('summaryPanel').classList.contains('show');
+  byId('showSummaryBtnTop').classList.toggle('is-active', panelVisible);
+  byId('hideSummaryBtnTop').classList.toggle('is-active', !panelVisible);
+}
+
+function lineIf(label, value){
+  if (!value) return '';
+  return `<p><strong>${escapeHtml(label)}:</strong><span class="summary-value">${escapeHtml(value)}</span></p>`;
+}
+function listIf(label, values){
+  if (!values || !values.length) return '';
+  return `<div><p><strong>${escapeHtml(label)}:</strong></p><ul class="summary-list">${values.map(v => `<li>${escapeHtml(v)}</li>`).join('')}</ul></div>`;
+}
+
+function renderSummary(){
+  const d = collectData();
+  const goalList = d.goalOtherText ? [...d.goals, 'Sonstiges: ' + d.goalOtherText] : d.goals;
+  const panel = byId('summaryPanel');
+  const target = byId('summaryRender');
+  const displayName = d.fullName && d.fullName.trim() ? d.fullName.trim() : 'Kundin / Kunde';
+  const birthDateDisplay = d.birthDate ? d.birthDate.split('-').reverse().join('.') : '';
+
+  target.innerHTML = `
+    <div class="summary-header">
+      <div>
+        <h3>Anamneseprotokoll für ${escapeHtml(displayName)}</h3>
+        <div class="summary-header-meta">
+          Basis: Online-Abfrage
+        </div>
+      </div>
+      <img class="summary-logo" src="data:image/jpeg;base64,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" alt="Dieter Grün Ernährungsberatung">
+    </div>
+
+    <div class="summary-grid">
+      <section class="summary-section compact">
+        <h4>Persönliche Angaben</h4>
+        <p><strong>Name:</strong> ${escapeHtml(d.fullName || '-')}</p>
+        ${lineIf('E-Mail', d.email)}
+        ${lineIf('Telefon', [d.phoneCode === 'other' ? d.phoneOtherCode : d.phoneCode, d.phone].filter(Boolean).join(' '))}
+        ${lineIf('Geburtsdatum', birthDateDisplay)}
+        ${lineIf('Geschlecht', d.gender)}
+        ${lineIf('Beruf / Tätigkeit', d.job)}
+        ${lineIf('Straße / Hausnummer', d.street)}
+        ${lineIf('PLZ / Wohnort', [d.postalCode, d.city].filter(Boolean).join(' '))}
+      </section>
+
+      <section class="summary-section compact">
+        <h4>Körperdaten und Gewichtsverlauf</h4>
+        ${lineIf('Größe', d.height ? d.height + ' cm' : '')}
+        ${lineIf('Aktuelles Gewicht', d.weight ? d.weight + ' kg' : '')}
+        ${lineIf('Taillenumfang', d.waist ? d.waist + ' cm' : '')}
+        ${lineIf('Hüftumfang', d.hip ? d.hip + ' cm' : '')}
+        ${lineIf('Gewicht vor 3 Monaten', d.weight3m ? d.weight3m + ' kg' : '')}
+        ${lineIf('Gewicht vor 6 Monaten', d.weight6m ? d.weight6m + ' kg' : '')}
+        ${lineIf('Gewicht vor 12 Monaten', d.weight12m ? d.weight12m + ' kg' : '')}
+        ${lineIf('Hinweise zum Gewichtsverlauf', d.weightComment)}
+      </section>
+
+      <section class="summary-section wide">
+        <h4>Beratungsanlass und Ziele</h4>
+        ${listIf('Ziele', goalList)}
+        <div class="summary-row-compact">
+          ${lineIf('Zielgewicht / Zielbereich', d.goalWeight)}
+          ${lineIf('Zeithorizont', d.timeframe)}
+        </div>
+        ${lineIf('Erfolg wäre für mich', d.success)}
+        <div class="summary-row-compact">
+          ${lineIf('Motivation', d.motivationScale ? d.motivationScale + ' / 10' : '')}
+          ${lineIf('Veränderungsbereitschaft', d.changeScale ? d.changeScale + ' / 10' : '')}
+        </div>
+      </section>
+
+      <section class="summary-section wide">
+        <h4>Gesundheit und Beschwerden</h4>
+        ${listIf('Vorerkrankungen', d.diseases)}
+        ${lineIf('Sonstige Diagnosen / Hinweise', d.otherDiseases)}
+        ${listIf('Beschwerden', d.symptoms)}
+        ${lineIf('Allergien / Intoleranzen', d.allergies)}
+        ${lineIf('Operationen', d.surgeries)}
+        ${lineIf('Medikamente', d.medication)}
+        ${lineIf('Nahrungsergänzungen', d.supplements)}
+        ${listIf('Familiäre Vorbelastungen', d.familyHistory)}
+        ${lineIf('Sonstige familiäre Hinweise', d.familyHistoryOther)}
+      </section>
+
+      <section class="summary-section wide">
+        <h4>Essen und Trinken im Alltag</h4>
+        <div class="summary-row-3">
+          ${lineIf('Mahlzeiten pro Tag', d.mealCount)}
+          ${lineIf('Snacks', d.snacks)}
+        </div>
+        <div class="summary-row-3">
+          ${lineIf('Essen außer Haus', d.eatOut)}
+          ${lineIf('Appetit', d.appetite)}
+        </div>
+        ${lineIf('Typischer Essalltag', d.dayPattern)}
+        ${lineIf('Hauptgetränke pro Tag', d.drinks)}
+        ${lineIf('Vorlieben / Abneigungen', d.likes)}
+        ${lineIf('Problematische Lebensmittel', d.triggerFoods)}
+        ${lineIf('Essgeschwindigkeit', d.eatingSpeed)}
+      </section>
+
+      <section class="summary-section wide">
+        <h4>Lebensstil</h4>
+        <div class="summary-row-3">
+          ${lineIf('Schlafdauer', d.sleepHours)}
+          ${lineIf('Schlafqualität', d.sleepQuality)}
+        </div>
+        <div class="summary-row-3">
+          ${lineIf('Stressniveau', d.stressLevel)}
+          ${lineIf('Schichtarbeit', d.shiftwork)}
+        </div>
+        <div class="summary-row-compact">
+          ${lineIf('Rauchen', d.smoking)}
+          ${lineIf('Alkohol', d.alcohol)}
+        </div>
+        ${lineIf('Bewegung / Sport', d.activity)}
+        ${lineIf('Arbeits- und Tagesstruktur', d.workPattern)}
+        ${lineIf('Einfluss von Stress / Emotionen auf das Essen', d.stressEating)}
+      </section>
+
+      <section class="summary-section wide">
+        <h4>Relevante Werte und bisherige Maßnahmen</h4>
+        ${lineIf('Relevante Blutwerte / Befunde', d.labs)}
+        ${lineIf('Bisherige Maßnahmen', d.previousApproaches)}
+        ${lineIf('Größte Hürde', d.barriers)}
+        ${lineIf('Sonstige Hinweise', d.extraNotes)}
+      </section>
+    </div>
+  `;
+
+  panel.classList.add('show');
+  updateSummaryToggleButtons();
+
+  const toolbar = byId('topActionToolbar');
+  const toolbarHeight = toolbar ? toolbar.getBoundingClientRect().height : 0;
+  const extraGap = 14;
+  const absoluteTop = window.scrollY + panel.getBoundingClientRect().top;
+  const targetTop = Math.max(absoluteTop - toolbarHeight - extraGap, 0);
+  window.scrollTo({ top: targetTop, behavior: 'smooth' });
+
+  setStatus('Zusammenfassung aktualisiert.');
+}
+
+function buildMailBody(){
+  const lines = [
+    'WICHTIG:',
+    'Bitte speichere zuerst die Zusammenfassung über „1. Drucken / PDF“ als PDF-Datei.',
+    'Hänge diese PDF-Datei anschließend an diese E-Mail an.',
+    '',
+    'Du findest die Datei in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.'
+  ];
+  return lines.join('\n');
+}
+
+function openMail(){
+  const d = collectData();
+  const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
+  const subject = encodeURIComponent(`Anamneseprotokoll | ${d.fullName || 'Kundin/Kunde'}`);
+  const body = encodeURIComponent(buildMailBody());
+  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  setStatus('E-Mail geöffnet. Bitte füge Deine Zusammenfassung oder PDF-Datei jetzt noch an.');
+}
+
+renderChecks('goalChecks', goalOptions);
+renderChecks('diseaseChecks', diseaseOptions);
+renderChecks('symptomChecks', symptomOptions);
+renderChecks('familyHistoryChecks', familyHistoryOptions);
+updateAllExclusiveGroups();
+fillScale('motivationScale');
+fillScale('changeScale');
+loadDraft();
+
+document.querySelectorAll('input, textarea, select').forEach(el => {
+  el.addEventListener('input', () => {
+    setStatus('');
+    updateSectionStatuses();
+  });
+  el.addEventListener('change', () => {
+    updateSectionStatuses();
+  });
+});
+document.addEventListener('change', (event) => {
+  if (event.target.matches('[data-check-group="goalChecks"]')) toggleGoalOther();
+  if (event.target.id === 'phoneCode') togglePhoneOther();
+  if (event.target.matches('[data-check-group]')) updateAllExclusiveGroups();
+  updateSectionStatuses();
+});
+['height','weight','waist','hip','weight3m','weight6m','weight12m','goalWeight','postalCode'].forEach(id => {
+  const el = byId(id);
+  if (el) el.addEventListener('input', () => validateNumericField(id));
+});
+byId('email').addEventListener('input', validateEmailField);
+
+byId('saveBtnTop').onclick = saveDraft;
+byId('showSummaryBtnTop').onclick = () => { renderSummary(); updateSummaryToggleButtons(); };
+byId('hideSummaryBtnTop').onclick = () => { byId('summaryPanel').classList.remove('show'); updateSummaryToggleButtons(); setStatus('Zusammenfassung ausgeblendet.'); };
+byId('printBtn').onclick = () => {
+  if (validateFormBasics()) {
+    const wasVisible = byId('summaryPanel').classList.contains('show');
+    renderSummary();
+    window.print();
+    if (!wasVisible){
+      byId('summaryPanel').classList.remove('show');
+      updateSummaryToggleButtons();
+    }
+  }
+};
+byId('printBtnInline').onclick = () => {
+  if (validateFormBasics()) {
+    const wasVisible = byId('summaryPanel').classList.contains('show');
+    renderSummary();
+    window.print();
+    if (!wasVisible){
+      byId('summaryPanel').classList.remove('show');
+      updateSummaryToggleButtons();
+    }
+  }
+};
+byId('mailBtn').onclick = () => { if (validateFormBasics()) { renderSummary(); openMail(); } };
+byId('mailBtnInline').onclick = () => { if (validateFormBasics()) { renderSummary(); openMail(); } };
+byId('resetBtnTop').onclick = resetAll;
+bindAccordions();
+updateSummaryToggleButtons();
+toggleGoalOther();
+togglePhoneOther();
+updateAllExclusiveGroups();
+updateSectionStatuses();
+</script>
+
+<div class="message-overlay" id="messageOverlay" aria-hidden="true">
+  <div class="message-dialog" role="dialog" aria-modal="true" aria-labelledby="messageTitle">
+    <h3 id="messageTitle">Bitte beachte</h3>
+    <p id="messageText"></p>
+    <div class="toolbar">
+      <button class="primary" id="messageOkBtn" type="button" onclick="hideMessage()">OK</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
