@@ -367,11 +367,36 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   .entry-title{
    font-weight:700;
    color:var(--brand-dark);
+   margin-bottom:8px;
   }
   .small{
    font-size:12px;
    color:var(--muted);
    line-height:1.45;
+  }
+  .entry-head-copy .entry-title + .small{
+   margin-top:4px;
+  }
+  .entry-tip{
+   margin-top:6px;
+  }
+  .entry-start-spacer{
+   height:16px;
+  }
+  .entry .row:first-of-type{
+   margin-top:0;
+  }
+  .entry .row + .subsection{
+   margin-top:16px;
+  }
+  .subsection-head .small{
+   margin-top:6px;
+  }
+  .subsection-start-spacer{
+   height:14px;
+  }
+  .subsection-head + *{
+   margin-top:0;
   }
   .subsection{
    border:1px solid #e2e8eb;
@@ -461,11 +486,18 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    border-color:transparent;
    box-shadow:0 10px 22px rgba(48,58,68,0.22);
   }
+  .day-nav-item .nav-head{
+   display:flex;
+   align-items:center;
+   justify-content:space-between;
+   gap:12px;
+   margin-bottom:4px;
+  }
   .day-nav-item .nav-title{
    display:block;
    font-size:12px;
    font-weight:700;
-   margin-bottom:4px;
+   margin-bottom:0;
   }
   .day-nav-item .nav-meta{
    display:block;
@@ -474,6 +506,33 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    color:inherit;
    opacity:0.9;
   }
+  .day-nav-item .nav-status{
+   display:inline-flex;
+   align-items:center;
+   justify-content:flex-end;
+   gap:6px;
+   margin-top:0;
+   margin-left:auto;
+   font-size:11px;
+   line-height:1.2;
+   font-weight:700;
+   color:inherit;
+   opacity:0.96;
+   text-align:right;
+   white-space:nowrap;
+   flex:0 0 auto;
+  }
+  .day-nav-item .status-dot{
+   width:8px;
+   height:8px;
+   border-radius:50%;
+   flex:0 0 8px;
+   background:#9aa7b2;
+   box-shadow:0 0 0 1px rgba(48,58,68,0.08) inset;
+  }
+  .day-nav-item .status-dot.status-good{background:#4f9f65;}
+  .day-nav-item .status-dot.status-partial{background:#c89a34;}
+  .day-nav-item .status-dot.status-review{background:#9aa7b2;}
   .day-detail{
    min-width:0;
   }
@@ -690,15 +749,19 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    line-height:1.55;
    color:rgba(255,255,255,0.92);
   }
+  .hero-note-block{
+   display:block;
+   margin-top:12px;
+   min-height:12px;
+   position:relative;
+   z-index:1;
+  }
   .hero-note{
    display:block;
-   margin:40px 0 0;
-   padding-top:6px;
+   margin:0;
    font-size:12px;
    line-height:1.65;
    color:rgba(255,255,255,0.90);
-   position:relative;
-   z-index:1;
   }
   @media (max-width: 900px){
    .hero{
@@ -738,6 +801,47 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
   .field-error.show{
    display:block;
+  }
+
+  .notice-overlay{
+   position:fixed;
+   inset:0;
+   background:rgba(32,44,55,.45);
+   display:none;
+   align-items:center;
+   justify-content:center;
+   z-index:2400;
+   padding:20px;
+  }
+  .notice-overlay.show{display:flex}
+  .notice-dialog{
+   width:min(560px, 100%);
+   background:#fff;
+   border:1px solid var(--line);
+   border-radius:22px;
+   box-shadow:0 18px 40px rgba(0,0,0,.18);
+   padding:22px;
+  }
+  .notice-dialog h3{
+   margin:0 0 10px 0;
+   font-size:24px;
+   color:var(--brand-dark);
+  }
+  .notice-dialog p{
+   margin:0 0 14px 0;
+   line-height:1.55;
+   color:var(--text);
+   white-space:pre-line;
+  }
+  .notice-actions{
+   display:flex;
+   justify-content:flex-end;
+   gap:10px;
+  }
+  .notice-actions button{
+   min-width:96px;
+   justify-content:center;
+   text-align:center;
   }
 
     .inline-suggest-wrap{position:relative; z-index:40}
@@ -882,6 +986,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
       <span>Bitte hänge die gespeicherte Datei an die vorbereitete E-Mail an.</span>
      </div>
     </div>
+    <div class="hero-note-block" aria-hidden="true"></div>
     <p class="hero-note">Bitte nutze für die Erfassung möglichst durchgehend dasselbe Gerät – also entweder einen PC oder ein Mobilgerät. Ein geräteübergreifendes Fortsetzen zwischen verschiedenen Geräten ist derzeit nicht möglich. Über die Schaltflächen unterhalb dieses Headers kannst Du weitere Tage anlegen, Deinen Zwischenstand speichern oder das Formular bei Bedarf zurücksetzen. Die finalen Schritte für Download und E-Mail findest Du weiter unten im Abschnitt „Export &amp; Versand“.</p>
    </div>
    <div class="hero-brand">
@@ -892,7 +997,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   <div class="sticky-controls-shell">
    <section class="card sticky-controls-card">
     <div class="toolbar action-toolbar">
-     <button id="addDayBtn">+ Neuen Tag hinzufügen</button>
+     <button id="addDayBtn">+ Weiteren Tag hinzufügen</button>
      <button id="saveDraftBtn" class="secondary">Zwischenstand speichern</button>
      <button id="resetAllBtn" class="danger">Alles zurücksetzen</button>
     </div>
@@ -938,20 +1043,12 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    <aside>
     <section class="card">
      <h2>Kurzübersicht</h2>
-     <div class="summary-grid">
-      <div class="stat"><strong id="sumDays">0</strong><div class="stat-label">Tage</div></div>
-      <div class="stat"><strong id="sumEntries">0</strong><div class="stat-label">Einträge</div></div>
-      <div class="stat"><strong id="sumFoods">0</strong><div class="stat-label">Speisen-Positionen</div></div>
-      <div class="stat"><strong id="sumDrinks">0</strong><div class="stat-label">Getränke-Positionen</div></div>
-      <div class="stat"><strong id="sumSports">0</strong><div class="stat-label">Sport-Positionen</div></div>
-      <div class="stat"><strong id="sumNotes">0</strong><div class="stat-label">Speisen / Getränke mit Motivation oder Anmerkung</div></div>
-     </div>
-
      <table>
       <thead>
        <tr>
         <th>Datum</th>
         <th>Tagesart</th>
+        <th>Status</th>
         <th>Einträge</th>
        </tr>
       </thead>
@@ -976,6 +1073,18 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
      </div>
     </section>
    </aside>
+  </div>
+ </div>
+
+
+ <div id="noticeOverlay" class="notice-overlay" aria-hidden="true">
+  <div class="notice-dialog" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" aria-describedby="noticeMessage">
+   <h3 id="noticeTitle">Bitte beachte</h3>
+   <p id="noticeMessage"></p>
+   <div class="notice-actions">
+    <button id="noticeCancelBtn" type="button" class="secondary" hidden>Zurück</button>
+    <button id="noticeOkBtn" type="button">OK</button>
+   </div>
   </div>
  </div>
 
@@ -1097,9 +1206,26 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    return {
     id: uid(),
     date: dateStr || today,
-    dayType: 'Arbeitstag',
+    dayType: '',
     entries: [createEmptyEntry()]
    };
+  }
+
+  function normalizeDayType(value){
+   const raw = String(value || '').trim();
+   if (!raw) return '';
+
+   const mapping = {
+    'Arbeitstag': 'Alltag / Schule / Arbeit',
+    'Frei / WE': 'Frei / Wochenende',
+    'Urlaub': 'Urlaub / Reise',
+    'Alltag / Schule / Arbeit': 'Alltag / Schule / Arbeit',
+    'Frei / Wochenende': 'Frei / Wochenende',
+    'Urlaub / Reise': 'Urlaub / Reise',
+    'Besonderer Tag': 'Besonderer Tag'
+   };
+
+   return mapping[raw] || raw;
   }
 
   function normalizeDateKey(dateStr){
@@ -1197,8 +1323,8 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     const targetDay = byDate.get(key);
     targetDay.entries = [...(targetDay.entries || []), ...(day.entries || [])];
 
-    if ((!targetDay.dayType || targetDay.dayType === 'Arbeitstag') && day.dayType && day.dayType !== targetDay.dayType){
-     targetDay.dayType = day.dayType;
+    if (!normalizeDayType(targetDay.dayType) && normalizeDayType(day.dayType)){
+     targetDay.dayType = normalizeDayType(day.dayType);
     }
 
     if (preferredDayId === day.id || activeDayId === day.id){
@@ -1244,6 +1370,61 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    el.classList.add('show');
    clearTimeout(setStatus._t);
    setStatus._t = setTimeout(() => el.classList.remove('show'), 2600);
+  }
+
+
+  let noticeFocusTarget = null;
+  let noticeConfirmAction = null;
+
+  function showNoticeDialog(message, focusTarget = null, options = {}){
+   const overlay = document.getElementById('noticeOverlay');
+   const messageEl = document.getElementById('noticeMessage');
+   const okBtn = document.getElementById('noticeOkBtn');
+   const cancelBtn = document.getElementById('noticeCancelBtn');
+   if (!overlay || !messageEl || !okBtn){
+    const fallback = String(message || '').trim();
+    if (options && typeof options.onConfirm === 'function'){
+     if (window.confirm(fallback)) options.onConfirm();
+    } else {
+     window.alert(fallback);
+    }
+    return;
+   }
+   const confirmLabel = String(options.confirmLabel || 'OK').trim() || 'OK';
+   const cancelLabel = String(options.cancelLabel || 'Zurück').trim() || 'Zurück';
+   const hasConfirmAction = typeof options.onConfirm === 'function';
+   noticeFocusTarget = focusTarget || null;
+   noticeConfirmAction = hasConfirmAction ? options.onConfirm : null;
+   messageEl.textContent = String(message || '').trim();
+   okBtn.textContent = confirmLabel;
+   if (cancelBtn){
+    cancelBtn.textContent = cancelLabel;
+    cancelBtn.hidden = !hasConfirmAction;
+   }
+   overlay.classList.add('show');
+   overlay.setAttribute('aria-hidden', 'false');
+   (hasConfirmAction && cancelBtn ? cancelBtn : okBtn).focus();
+  }
+
+  function hideNoticeDialog(restoreFocus = true){
+   const overlay = document.getElementById('noticeOverlay');
+   if (!overlay) return;
+   overlay.classList.remove('show');
+   overlay.setAttribute('aria-hidden', 'true');
+   noticeConfirmAction = null;
+   const focusTarget = noticeFocusTarget;
+   noticeFocusTarget = null;
+   if (restoreFocus && focusTarget && typeof focusTarget.focus === 'function'){
+    focusTarget.focus();
+   }
+  }
+
+  function confirmNoticeDialog(){
+   const action = noticeConfirmAction;
+   hideNoticeDialog(false);
+   if (typeof action === 'function'){
+    action();
+   }
   }
 
   function escapeHtml(str=''){
@@ -1312,7 +1493,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   function updateDay(dayId, key, value){
    const day = state.days.find(d => d.id === dayId);
    if (!day) return;
-   day[key] = value;
+   day[key] = key === 'dayType' ? normalizeDayType(value) : value;
 
    if (key === 'date'){
     const mergedCount = mergeDuplicateDaysByDate(dayId);
@@ -1490,11 +1671,15 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    const activeDay = currentActiveDay();
    return state.days.map((day, idx) => {
     const isActive = day.id === activeDay?.id;
+    const quality = getDayQualityStatus(day);
     return `
      <button class="day-nav-item ${isActive ? 'active' : ''}" onclick="selectDay('${day.id}')">
-      <span class="nav-title">Tag ${idx + 1}</span>
+      <span class="nav-head">
+       <span class="nav-title">Tag ${idx + 1}</span>
+       <span class="nav-status"><span class="status-dot ${quality.dotClass}"></span>${escapeHtml(quality.label)}</span>
+      </span>
       <span class="nav-meta">${escapeHtml(formatDateDisplay(day.date))}</span>
-      <span class="nav-meta">${escapeHtml(day.dayType || 'ohne Tagesart')} · ${formatEntryCountLabel((day.entries || []).length)}</span>
+      <span class="nav-meta">${escapeHtml(normalizeDayType(day.dayType) || 'ohne Tagesart')} · ${formatEntryCountLabel((day.entries || []).length)}</span>
      </button>
     `;
    }).join('');
@@ -1569,9 +1754,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
       <div class="col-6">
        <label>Tagesart</label>
        <select onchange="updateDay('${day.id}','dayType',this.value)">
-        <option ${day.dayType === 'Arbeitstag' ? 'selected' : ''}>Arbeitstag</option>
-        <option ${day.dayType === 'Frei / WE' ? 'selected' : ''}>Frei / WE</option>
-        <option ${day.dayType === 'Urlaub' ? 'selected' : ''}>Urlaub</option>
+        <option value="" ${!normalizeDayType(day.dayType) ? 'selected' : ''}>Bitte auswählen</option>
+        <option ${normalizeDayType(day.dayType) === 'Alltag / Schule / Arbeit' ? 'selected' : ''}>Alltag / Schule / Arbeit</option>
+        <option ${normalizeDayType(day.dayType) === 'Frei / Wochenende' ? 'selected' : ''}>Frei / Wochenende</option>
+        <option ${normalizeDayType(day.dayType) === 'Urlaub / Reise' ? 'selected' : ''}>Urlaub / Reise</option>
+        <option ${normalizeDayType(day.dayType) === 'Besonderer Tag' ? 'selected' : ''}>Besonderer Tag</option>
        </select>
       </div>
      </div>
@@ -1581,13 +1768,15 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
      ${day.entries.map((entry, idx) => `
       <div class="entry">
        <div class="entry-head">
-        <div>
+        <div class="entry-head-copy">
          <div class="entry-title">Eintrag ${idx + 1}</div>
          <div class="small">Ein Eintrag kann eine Mahlzeit, Getränke, Bewegung oder eine Kombination daraus enthalten.</div>
+         <div class="small entry-tip">Bitte auch Kleinigkeiten mit erfassen, z. B. Öl, Dressing, Zucker, Milch im Kaffee, Snacks oder Alkohol.</div>
         </div>
         <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag entfernen</button>
        </div>
 
+       <div class="entry-start-spacer" aria-hidden="true"></div>
        <div class="row">
         <div class="col-12">
          <label>Uhrzeit / Zeitraum</label>
@@ -1601,10 +1790,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
         <div class="subsection-head">
          <div>
           <h4>Speisen</h4>
-          <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
+          <div class="small">Art, Menge und Einheit getrennt erfassen. Bitte möglichst konkret eintragen, z. B. Sorte, Marke, Zubereitung, Sauce, Öl oder Dressing.</div>
          </div>
          <button class="ghost" onclick="addItem('${day.id}','${entry.id}','foods')">+ Speise</button>
         </div>
+        <div class="subsection-start-spacer" aria-hidden="true"></div>
         ${renderFoodRows(day.id, entry.id, entry.foods || [])}
        </div>
 
@@ -1612,10 +1802,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
         <div class="subsection-head">
          <div>
           <h4>Getränke</h4>
-          <div class="small">Art, Menge und Einheit getrennt erfassen.</div>
+          <div class="small">Art, Menge und Einheit getrennt erfassen. Bitte möglichst konkret eintragen, z. B. Getränkesorte, Light, Milch, Zucker oder Alkohol.</div>
          </div>
          <button class="ghost" onclick="addItem('${day.id}','${entry.id}','drinks')">+ Getränk</button>
         </div>
+        <div class="subsection-start-spacer" aria-hidden="true"></div>
         ${renderDrinkRows(day.id, entry.id, entry.drinks || [])}
        </div>
 
@@ -1627,6 +1818,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
          </div>
          <button class="ghost" onclick="addItem('${day.id}','${entry.id}','sports')">+ Sport</button>
         </div>
+        <div class="subsection-start-spacer" aria-hidden="true"></div>
         ${renderSportRows(day.id, entry.id, entry.sports || [])}
        </div>
 
@@ -1708,30 +1900,18 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
   function renderSummary(){
    const days = [...(state.days || [])].sort((a, b) => compareDates(a.date, b.date));
-   const entries = (state.days || []).flatMap(d => d.entries || []);
-   const foodsCount = entries.reduce((sum, e) => sum + filledCount(e.foods, 'name'), 0);
-   const drinksCount = entries.reduce((sum, e) => sum + filledCount(e.drinks, 'name'), 0);
-   const sportsCount = entries.reduce((sum, e) => sum + filledCount(e.sports, 'type'), 0);
-   const withNotes = entries.reduce((sum, e) => {
-    const relatedItems = [...(e.foods || []), ...(e.drinks || [])];
-    return sum + relatedItems.filter(item => String(item.motivation || '').trim() || String(item.notes || '').trim()).length;
-   }, 0);
-
-   document.getElementById('sumDays').textContent = days.length;
-   document.getElementById('sumEntries').textContent = entries.length;
-   document.getElementById('sumFoods').textContent = foodsCount;
-   document.getElementById('sumDrinks').textContent = drinksCount;
-   document.getElementById('sumSports').textContent = sportsCount;
-   document.getElementById('sumNotes').textContent = withNotes;
-
    const tbody = document.getElementById('summaryTableBody');
-   tbody.innerHTML = days.map(d => `
+   tbody.innerHTML = days.map(d => {
+    const quality = getDayQualityStatus(d);
+    return `
     <tr>
      <td>${escapeHtml(formatDateDisplay(d.date) || '–')}</td>
-     <td>${escapeHtml(d.dayType || '–')}</td>
-     <td>${(d.entries || []).length}</td>
+     <td>${escapeHtml(normalizeDayType(d.dayType) || '–')}</td>
+     <td><span class="nav-status"><span class="status-dot ${quality.dotClass}"></span>${escapeHtml(quality.label)}</span></td>
+     <td>${countLoggedEntries(d)}</td>
     </tr>
-   `).join('') || '<tr><td colspan="3" class="muted">Noch keine Daten vorhanden.</td></tr>';
+   `;
+   }).join('') || '<tr><td colspan="4" class="muted">Noch keine Daten vorhanden.</td></tr>';
   }
 
   function getPortalItems(){
@@ -1890,7 +2070,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     days: (parsed.days || []).map(day => ({
      id: uid(),
      date: day.date || '',
-     dayType: day.dayType || 'Arbeitstag',
+     dayType: normalizeDayType(day.dayType),
      entries: (day.entries || []).map(migrateEntry)
     }))
    };
@@ -2006,6 +2186,169 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    )).length;
   }
 
+  function isValidEmailAddress(value){
+   const raw = String(value || '').trim();
+   if (!raw) return false;
+   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw);
+  }
+
+  function dayHasMeaningfulContent(day){
+   if (!day || !String(day.date || '').trim()) return false;
+   return (day.entries || []).some(entry =>
+    String(entry.time || '').trim() ||
+    (entry.foods || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
+    (entry.drinks || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
+    (entry.sports || []).some(item => String(item.type || '').trim() || String(item.duration || '').trim())
+   );
+  }
+
+  function countMeaningfullyLoggedDays(){
+   return (state.days || []).filter(dayHasMeaningfulContent).length;
+  }
+
+
+  function entryHasLoggedContent(entry){
+   if (!entry) return false;
+   return Boolean(
+    String(entry.time || '').trim() ||
+    (entry.foods || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim() || String(item.motivation || '').trim() || String(item.notes || '').trim()) ||
+    (entry.drinks || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim() || String(item.motivation || '').trim() || String(item.notes || '').trim()) ||
+    (entry.sports || []).some(item => String(item.type || '').trim() || String(item.duration || '').trim())
+   );
+  }
+
+  function dayHasLoggedDrinks(day){
+   return (day?.entries || []).some(entry =>
+    (entry.drinks || []).some(item =>
+     String(item.name || '').trim() ||
+     String(item.amount || '').trim() ||
+     String(item.motivation || '').trim() ||
+     String(item.notes || '').trim()
+    )
+   );
+  }
+
+  function countLoggedEntries(day){
+   return (day?.entries || []).filter(entryHasLoggedContent).length;
+  }
+
+  function getDayQualityStatus(day){
+   const hasDate = Boolean(String(day?.date || '').trim());
+   const loggedEntries = countLoggedEntries(day);
+   const hasMeaningfulContent = dayHasMeaningfulContent(day);
+   const hasDrinks = dayHasLoggedDrinks(day);
+
+   if (!hasDate || !hasMeaningfulContent){
+    return { key: 'review', label: 'noch prüfen', dotClass: 'status-review' };
+   }
+
+   if (loggedEntries >= 2 && hasDrinks){
+    return { key: 'good', label: 'gut erfasst', dotClass: 'status-good' };
+   }
+
+   return { key: 'partial', label: 'teilweise', dotClass: 'status-partial' };
+  }
+
+  function formatDateList(values = []){
+   const unique = [...new Set(values.filter(Boolean))];
+   return unique.join(', ');
+  }
+
+  function collectSubmissionWarnings(){
+   const meaningfulDays = (state.days || []).filter(dayHasMeaningfulContent);
+   const datedEmptyDays = (state.days || [])
+    .filter(day => String(day.date || '').trim() && !dayHasMeaningfulContent(day))
+    .map(day => formatDateDisplay(day.date || ''));
+
+   const daysWithoutDrinks = meaningfulDays
+    .filter(day => !dayHasLoggedDrinks(day))
+    .map(day => formatDateDisplay(day.date || ''));
+
+   const sparseDays = meaningfulDays
+    .filter(day => countLoggedEntries(day) <= 1)
+    .map(day => formatDateDisplay(day.date || ''));
+
+   const warnings = [];
+   if (datedEmptyDays.length){
+    warnings.push(`Diese Tage enthalten noch keine Einträge: ${formatDateList(datedEmptyDays)}.`);
+   }
+   if (daysWithoutDrinks.length){
+    warnings.push(`Für diese Tage wurden noch keine Getränke erfasst: ${formatDateList(daysWithoutDrinks)}.`);
+   }
+   if (sparseDays.length){
+    warnings.push(`Diese Tage wirken noch sehr knapp dokumentiert: ${formatDateList(sparseDays)}.`);
+   }
+   return warnings;
+  }
+
+  function runSubmissionAction(action){
+   if (hasInvalidTimeEntries()){
+    showNoticeDialog('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+    return;
+   }
+   if (!validateSubmissionReadiness()) return;
+
+   const warnings = collectSubmissionWarnings();
+   if (!warnings.length){
+    action();
+    return;
+   }
+
+   showNoticeDialog(
+    `Dein Protokoll kann bereits versendet werden. Vor dem Versand solltest Du aber bitte noch kurz prüfen:
+
+• ${warnings.join('\n• ')}
+
+Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem mit dem CSV Download fortfahren.`,
+    null,
+    {
+     cancelLabel: 'Zurück',
+     confirmLabel: 'Trotzdem fortfahren',
+     onConfirm: action
+    }
+   );
+  }
+
+  function validateSubmissionReadiness(){
+   const name = String(state.clientName || '').trim();
+   const email = String(state.clientEmail || '').trim();
+   const meaningfulDays = countMeaningfullyLoggedDays();
+
+   if (!name){
+    const nameEl = document.getElementById('clientName');
+    showNoticeDialog('Bitte ergänze zuerst Deinen Namen in den persönlichen Angaben.', nameEl);
+    return false;
+   }
+
+   if (!email){
+    const emailEl = document.getElementById('clientEmail');
+    showNoticeDialog('Bitte ergänze zuerst Deine E-Mail-Adresse in den persönlichen Angaben.', emailEl);
+    return false;
+   }
+
+   if (!isValidEmailAddress(email)){
+    const emailEl = document.getElementById('clientEmail');
+    showNoticeDialog('Bitte prüfe Deine E-Mail-Adresse.', emailEl);
+    return false;
+   }
+
+   if (!meaningfulDays){
+    const contentWithoutDate = (state.days || []).some(day => !String(day.date || '').trim() && (day.entries || []).some(entry =>
+     String(entry.time || '').trim() ||
+     (entry.foods || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
+     (entry.drinks || []).some(item => String(item.name || '').trim() || String(item.amount || '').trim()) ||
+     (entry.sports || []).some(item => String(item.type || '').trim() || String(item.duration || '').trim())
+    ));
+
+    showNoticeDialog(contentWithoutDate
+     ? 'Bitte ergänze zuerst bei mindestens einem erfassten Tag das Datum. Erst danach kannst Du die CSV-Datei herunterladen oder die E-Mail öffnen.'
+     : 'Bitte erfasse mindestens einen Tag mit Datum und mindestens einem tatsächlichen Eintrag, bevor Du die CSV-Datei herunterlädst oder die E-Mail öffnest.');
+    return false;
+   }
+
+   return true;
+  }
+
   function buildCsvPayload(){
    const rows = [[
     'Name','Kunden-E-Mail','Datum','Tagesart','Uhrzeit / Zeitraum',
@@ -2019,7 +2362,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
      state.clientName || '',
      state.clientEmail || '',
      formatDateForCsv(day.date || ''),
-     day.dayType || '',
+     normalizeDayType(day.dayType) || '',
      formatTimeForCsv(entry.time || ''),
      area,
      isSport ? (item.type || '') : (item.name || ''),
@@ -2068,7 +2411,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
        state.clientName || '',
        state.clientEmail || '',
        formatDateForCsv(day.date || ''),
-       day.dayType || '',
+       normalizeDayType(day.dayType) || '',
        formatTimeForCsv(entry.time || ''),
        '',
        '',
@@ -2155,7 +2498,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
   function exportJson(){
    if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
+    showNoticeDialog('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
     return;
    }
    const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.json`;
@@ -2249,35 +2592,30 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
 
   function exportCsv(){
-   if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-    return;
-   }
-   const csv = buildCsvPayload();
-   const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-   download(fileName, csv, 'text/csv;charset=utf-8');
-   setStatus('CSV-Datei exportiert.');
+   runSubmissionAction(() => {
+    const csv = buildCsvPayload();
+    const fileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
+    download(fileName, csv, 'text/csv;charset=utf-8');
+    setStatus(`CSV-Datei gespeichert: ${fileName}. Bitte hänge die Datei jetzt an.`);
+   });
   }
   function openPreparedMail(){
-   if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-    return;
-   }
+   runSubmissionAction(() => {
+    const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
+    const daysWithEntries = countMeaningfullyLoggedDays();
+    const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
+    const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
+    const body = encodeURIComponent(buildMailBody(csvFileName));
 
-   const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-   const daysWithEntries = countDaysWithEntries();
-   const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
-   const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
-   const body = encodeURIComponent(buildMailBody(csvFileName));
-
-   window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-   setStatus('E-Mail geöffnet. Bitte hänge jetzt noch die zuvor heruntergeladene CSV-Datei an.');
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    setStatus('E-Mail geöffnet. Bitte hänge jetzt noch die zuvor heruntergeladene CSV-Datei an.');
+   });
   }
 
   function buildMailBody(csvFileName){
    const days = state.days || [];
    const entriesCount = days.flatMap(d => d.entries || []).length;
-   const daysWithEntries = countDaysWithEntries();
+   const daysWithEntries = countMeaningfullyLoggedDays();
    const summaryLines = [
     'WICHTIG: Bitte hänge die heruntergeladene CSV-Datei an diese E-Mail an.',
     csvFileName ? `Dateiname: ${csvFileName}` : '',
@@ -2293,32 +2631,29 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    ].filter(Boolean);
 
    days.slice().sort((a, b) => daySortValue(a.date) - daySortValue(b.date)).forEach(day => {
-    summaryLines.push(`${formatDateForCsv(day.date || '') || (day.date || 'ohne Datum')} | ${day.dayType || 'ohne Tagesart'} | ${formatEntryCountLabel((day.entries || []).length)}`);
+    summaryLines.push(`${formatDateForCsv(day.date || '') || (day.date || 'ohne Datum')} | ${normalizeDayType(day.dayType) || 'ohne Tagesart'} | ${formatEntryCountLabel((day.entries || []).length)}`);
    });
 
    return summaryLines.join('\n');
   }
 
   function prepareMail(){
-   if (hasInvalidTimeEntries()){
-    alert('Mindestens ein Uhrzeitfeld ist nicht im richtigen Format ausgefüllt. Bitte korrigiere die markierten Felder zuerst.');
-    return;
-   }
+   runSubmissionAction(() => {
+    const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
+    const csv = buildCsvPayload();
+    download(csvFileName, csv, 'text/csv;charset=utf-8');
 
-   const csvFileName = `ernaehrungsprotokoll_${(state.clientName || 'kunde').replaceAll(' ','_')}.csv`;
-   const csv = buildCsvPayload();
-   download(csvFileName, csv, 'text/csv;charset=utf-8');
+    const daysWithEntries = countMeaningfullyLoggedDays();
+    const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
+    const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
+    const body = encodeURIComponent(buildMailBody(csvFileName));
 
-   const daysWithEntries = countDaysWithEntries();
-   const to = encodeURIComponent(DEFAULT_CONSULTANT_EMAIL);
-   const subject = encodeURIComponent(`Ernährungsprotokoll | ${state.clientName || 'Kunde'} | ${daysWithEntries} Tage`);
-   const body = encodeURIComponent(buildMailBody(csvFileName));
+    setTimeout(() => {
+     window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    }, 250);
 
-   setTimeout(() => {
-    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-   }, 250);
-
-   setStatus(`CSV-Datei heruntergeladen: ${csvFileName}. Bitte füge die Datei jetzt noch an.`);
+    setStatus(`CSV-Datei heruntergeladen: ${csvFileName}. Bitte füge die Datei jetzt noch an.`);
+   });
   }
 
   function importJson(file){
@@ -2334,7 +2669,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
      renderAll();
      setStatus('JSON-Datei erfolgreich importiert.');
     }catch(err){
-     alert('Die Datei konnte nicht importiert werden. Bitte verwende eine gültige JSON-Datei aus dieser Anwendung.');
+     showNoticeDialog('Die Datei konnte nicht importiert werden. Bitte verwende eine gültige JSON-Datei aus dieser Anwendung.');
     }
    };
    reader.readAsText(file, 'utf-8');
@@ -2439,6 +2774,41 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
   state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
   activeDayId = state.days[0]?.id || null;
+
+  const noticeOkBtn = document.getElementById('noticeOkBtn');
+  if (noticeOkBtn){
+   noticeOkBtn.addEventListener('click', () => {
+    if (noticeConfirmAction){
+     confirmNoticeDialog();
+    } else {
+     hideNoticeDialog();
+    }
+   });
+  }
+
+  const noticeCancelBtn = document.getElementById('noticeCancelBtn');
+  if (noticeCancelBtn){
+   noticeCancelBtn.addEventListener('click', () => {
+    hideNoticeDialog();
+   });
+  }
+  const noticeOverlay = document.getElementById('noticeOverlay');
+  if (noticeOverlay){
+   noticeOverlay.addEventListener('click', (event) => {
+    if (event.target === noticeOverlay){
+     hideNoticeDialog();
+    }
+   });
+  }
+  document.addEventListener('keydown', (event) => {
+   if (event.key === 'Escape'){
+    const overlay = document.getElementById('noticeOverlay');
+    if (overlay && overlay.classList.contains('show')){
+      hideNoticeDialog();
+    }
+   }
+  });
+
   renderAll();
  </script>
 </body>
