@@ -156,6 +156,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    display:grid;
    grid-template-columns:1.35fr 0.65fr;
    gap:14px;
+   align-items:start;
+  }
+  main, aside{
+   min-width:0;
+   align-self:start;
   }
   @media (max-width:1020px){
    .grid{grid-template-columns:1fr}
@@ -390,16 +395,35 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    margin-top:14px;
    align-items:start;
   }
-  .day-nav{
+  .sticky-controls-card{
+   position:-webkit-sticky;
    position:sticky;
    top:10px;
-   z-index:5;
+   z-index:140;
    align-self:start;
-   background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(245,248,249,0.98) 100%);
-   border:1px solid #d7e2e7;
-   border-radius:18px;
-   padding:12px;
-   backdrop-filter:blur(6px);
+   background:rgba(255,255,255,0.98);
+   backdrop-filter:none;
+   -webkit-backdrop-filter:none;
+  }
+  .sticky-controls-card .action-toolbar{
+   margin-top:0;
+  }
+  .sticky-day-nav-wrap{
+   margin-top:12px;
+   padding-top:12px;
+   border-top:1px solid #d7e2e7;
+  }
+  .day-nav{
+   position:relative;
+   top:auto;
+   z-index:1;
+   align-self:start;
+   background:transparent;
+   border:none;
+   border-radius:0;
+   padding:0;
+   backdrop-filter:none;
+   -webkit-backdrop-filter:none;
   }
   .day-nav-list{
    display:flex;
@@ -627,9 +651,51 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    display:block;
    opacity:0.98;
   }
-  .hero h1,
-  .hero p,
-  .hero
+  .hero-intro{
+   margin:0;
+   max-width:900px;
+   line-height:1.52;
+   font-size:13px;
+   color:rgba(255,255,255,0.96);
+   position:relative;
+   z-index:1;
+  }
+  .hero-process{
+   display:grid;
+   grid-template-columns:repeat(3, minmax(0,1fr));
+   gap:16px;
+   margin-top:22px;
+   position:relative;
+   z-index:1;
+  }
+  .hero-step{
+   padding:14px 2px 0;
+   border-top:2px solid rgba(141,217,231,0.45);
+   display:flex;
+   flex-direction:column;
+   gap:8px;
+   min-height:100%;
+  }
+  .hero-step strong{
+   font-size:13px;
+   line-height:1.35;
+   color:#ffffff;
+  }
+  .hero-step span{
+   font-size:12px;
+   line-height:1.55;
+   color:rgba(255,255,255,0.92);
+  }
+  .hero-note{
+   display:block;
+   margin:40px 0 0;
+   padding-top:6px;
+   font-size:12px;
+   line-height:1.65;
+   color:rgba(255,255,255,0.90);
+   position:relative;
+   z-index:1;
+  }
   @media (max-width: 900px){
    .hero{
     flex-wrap:wrap;
@@ -646,6 +712,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    .hero-brand img{
     width:160px;
     max-width:160px;
+   }
+   .hero-process{
+    grid-template-columns:1fr;
+    gap:18px;
+    margin-top:20px;
    }
   }
 
@@ -707,25 +778,23 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
       align-items:center;
       justify-content:center;
     }
-    .day-nav{
-      position:sticky;
-      top:0;
-      z-index:120;
-      background:var(--card);
-    }
     .day-nav-list{
       position:relative;
-      z-index:121;
+      z-index:2;
     }
     @media (max-width: 900px){
       .toolbar > button{
         min-height:44px;
       }
-      .day-nav{
-        z-index:160;
+      .sticky-controls-card{
+        top:8px;
       }
-      .day-nav-list{
-        z-index:161;
+      .day-layout{
+        overflow:visible;
+      }
+      .card{
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
       }
       .inline-suggest-wrap{
         z-index:40 !important;
@@ -794,7 +863,22 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   <section class="hero">
    <div class="hero-content">
     <h1>Dein digitales Ernährungsprotokoll</h1>
-    <p>Bitte trage Deine Mahlzeiten, Getränke und Aktivitäten möglichst vollständig und genau ein. So lassen sich Deine Angaben später besser nachvollziehen und fundierter auswerten. Am hilfreichsten ist es, wenn Du Deine Einträge möglichst zeitnah nach dem Essen, Trinken oder einer Aktivität festhältst.</p>
+    <p class="hero-intro">Bitte trage Deine Mahlzeiten, Getränke und Aktivitäten möglichst vollständig und möglichst zeitnah ein und plane dafür einige Minuten pro Tag ein. Deine Eingaben werden lokal im Browser auf dem jeweils verwendeten Gerät gespeichert, bis Du sie versendest oder bewusst zurücksetzt.</p>
+    <div class="hero-process" aria-label="Kurzanleitung zum Ausfüllen und Versenden">
+     <div class="hero-step">
+      <strong>1. Persönliche Angaben ergänzen</strong>
+      <span>Trage zuerst Name und E-Mail ein und erfasse danach Deine Tage mit den einzelnen Einträgen.</span>
+     </div>
+     <div class="hero-step">
+      <strong>2. CSV-Datei herunterladen</strong>
+      <span>Nutze dazu am Ende den Abschnitt „Export &amp; Versand“.</span>
+     </div>
+     <div class="hero-step">
+      <strong>3. CSV per E-Mail zurücksenden</strong>
+      <span>Bitte hänge die gespeicherte Datei an die vorbereitete E-Mail an.</span>
+     </div>
+    </div>
+    <p class="hero-note">Bitte nutze für die Erfassung möglichst durchgehend dasselbe Gerät – also entweder einen PC oder ein Mobilgerät. Ein geräteübergreifendes Fortsetzen zwischen verschiedenen Geräten ist derzeit nicht möglich. Über die Schaltflächen unterhalb dieses Headers kannst Du weitere Tage anlegen, Deinen Zwischenstand speichern oder das Formular bei Bedarf zurücksetzen. Die finalen Schritte für Download und E-Mail findest Du weiter unten im Abschnitt „Export &amp; Versand“.</p>
    </div>
    <div class="hero-brand">
     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMoAAABTCAYAAADeDJgjAAAACXBIWXMAAAsSAAALEgHS3X78AAAM2UlEQVR4nO2d7XHjOBKGX1/tf/siEC8CKwNjI7A3AnMiGF8Ew4lgvRGsnIEngoUjWDmCpSM4OwLeDxDDZgtNNkhIpG08VSpRINBoAWx8AzxrmgaZzIIYAH8F3M/a7wrAN3bvqQ13Mv51ysgymfdKNpRMRkE2lExGQTaUTEZBNpRMRsFZHvXKZMbJNUomo+CX9ruKCGMB7AG8KvyWAIqAeyi+GB24PkCacXXbfgo43aewA1C31zFyXtGlbSoKAHdwaXMZuP8DwCOczkMY6NO3hvsf9Yi/EuFnYyeErQQ53L2AnOY1wv/VIPz/OtlN06CZxq5pmqINL32sEDbkdypV+0lB1epiZsgwTfefpsipiR5zPmXTNK/KOPdN02wHZE1JX9v000L7bEhhJLi/oTSvBdnS//vpZ07T6xbAP5he8mbCbOBmoi2Ai4kySgB/AjhX+r9EV5Om4gpuxv0uocy5bDDxP6boo/yJEy8n+CRcAbifEK6Ay5NYzjHeBJvC7wBujiB3KpN0SdWZ3yWSk+lzC2AbGaaaEd/VhPg0TDH4Y2GmBPpl5P739nvbfjaCvw2cpT5OUeIT8oJ+4VJCTtsS+ubLBZxxDcVZw+XVdYL4ntANphSt3FBzb03Ph5kUKrKjVA743QX8z+3MW8Gv9iN10sY6y1KHMFafGDlSWu0j4rsRZLw2hwMvjxG6adNx28gDCNzvEp15Dx+4SN6Z3wF4EO4Vkyw145FK8dCwroTUbHrE4ZBrFSlDwx5yM9zMkJsaExtgSh9lJ7hfTZCV6UgxfyI95HVEfNqRMok1NK/GMLEBphiKnRAmcxqk4eSUk5gfARMbIC9h+RxoVlF8Js4R2cTMhvK5ORM+nwET4zkbSuaz8MZ+m5jA2VDWQyG48wxeOzEDCktiYjxnQ1kPpeBuT6hDCqQlIksPKFj2O6qfMjYzvzRbjD8o5vhq/ORY+hjI8yjvYbjVU0GeJlj6f1gcrkYwUBrw2g3lHOuan0mlDzW4AvLylRekf8CMwk/MfiMvbwt5DuYByze99nDNWKrjh6lRPioag3uDa8akHtoNHTbH+RW6Jt8GspF7nrGepfYW/VrFaAPmPso6eUFEs2DF/ID7H2uZx7Hst3p/SjaUdbKBa+9P3bi1Fq6xrr0oNuBmNAGzoayXa8zbW7IW1rSxz/dTKEYTcO2G8gR59niJWeRU+jzD9QN+BfCllRviK9Zdqzyg+x//hWsyhqhOpZAC3pw1mkBrN5SPij9xxcKtxjaQjSV104UatRSnlhrd/7iH/NBdYT0Gb9lvVT8lG8p62AnuxQl1mEsN14EPcYwtxlOwAbdR3bKhrIdacF/LA6Zl7SN1NuA2WttlQ1k/a2myzMUsrQCBNznH5oKyoWQ+JTY2QDaUzGfExgbIhvK5eW/9n1TY2ABTDMUI7u9t38RnQjKIuQdJvGeihsanGMpa9xtk5DVVoQGB4oh6zKEIuB1jQMPGeI41lC0+zgajj4hUWIUKt6XXYEm6lgE3Sdc5rRgb43lsmb0h1zdwf0Kqro+xMUezUQpwy7hPUaNp9SmxzP4LKc5LuJlzv9zdYPllJVJ+XcFNvt7B1ZA3kM8utjPijwo7ZiiavQuAa+8d40HVbpQ61VyDVp96gmw7IUyMjK/tZy3YgXu3kM9QpswtnJ+g3IiXatRr6Y05duH4KdLCwFNQY/76rblo957UkI/n1cAPOp+C1XpMYShfsGxHfm2jbfXC8VeR/lMbdsyzUGF6/qUonK3W4xxDeYFbXr2bISMFaxttS61P7FyHBfCH0u93nM6wQ83jGq6/FGssX5CmT2y1HmMM5RmuWv8DwG9ww3jqiI5IvbQCjDnbXp8DblPmOu7gHiaptniD2z9SIX36SfIkg9/DPUsPGDeYBwD/QdrCWdVUze+Z//gYuIf0As6I91hHASdh4AynaH97nbUnwxyFbCiZjIK81iuTUZANJZNRkA0lk1GQDSWTUZANJZNRkA0lk1GQDSWTUZANJZNRkA0lk1GwJkO5R3c8p99J6X+Xi2iUybSs6UVCW3SbaC7g1vr433YBfTKZn6ypRslkVsuaapQdupqjRr8WschkFuSsaRoz4sfCNYWG9hPw5c9Upl8mjYAcy8IVODyuhsvnMuh9v5ycx0v1odQ43D9BZdD7ku5cZ0kfHtcFXN9ri25vzx7hDUncr18q/8j8xOQR1W0ojBHu1xjee8Jl24i4qQ4FwmlYoJ/uXj6XLeVH6Lkq0c8P/wGacdA0jRnxU7X+/IdzIcgB++wCYQ3zw2XQ+5a42wF9GuavEGTQ/yXpXjH3O4WsbdM0rwP6XBC/F03T7AW/uwH9ODyP7LD3n+k6BNd1SPY2Im6qg5SGPN0l2aVwjz43Q/mxa5omWR/lG4b3MBulnGJG2KlcIe1RS0bh5xHyzsUr9NPyHu64oRC30J/P9Q3pRw+ltAvVbEXiuLWYkfsXcLWGlB+3AEpuKH67L/2E+A63JZhu3UxhKKGjYwplWC1PcPrTbbeXSGeQ1yP3DfqvGfjR6kPTsiTXt8zvb8yvZCgxefSCw3wP7SZ8aOXSLcZX6BvGBcIPHW8u+3j4duUxHWIxI/dv0Nc3mB+8M38HXce5ar9f4UoqYPgdE0Yhs4h0n4qF0/8ewP+Iu0G6QYMhWYb9LuHSsYZ7MSjQpSUvmf1c0yM6AyqEeKr2e0/kSjXTDrrTW3boXqf3D3HfousPSv0k6k4NtkL3DAHpWxD+1XO1cL8g1y/oFzxer6u5TS+r9HeJ8c5bQa5paa86oGwCrwgf5pACo/RHS806cF9Ks5BfiRi/U2UW5JoaxJPg59QY5b2aXFvq6ZTDwwbDVakh1xb90q/AcTL8WIcVmAlhargqfwhvOJaFWxMFud6jK+ik2uwUGMSf3FKD5MdcQ4k5ytRguNNMZfnS3idugeM8EMeqrabIrXHY/OFnhFXgw5broCbXfAj9K7u3xDlsZkKYGiQ/uKHw9iWdiwhRkmvpDCn/wBsMGwrv7Bny20B+MEritxiQz+GdYEl+DG/oOoZSWz2GV/TPx71Et/Zt7IEz7fc9cZPe2Fvg8GGyA7L5oADVpSDXoQLvlIbi80P1iuwhuKH8zn4/IWyNFu5BoKMF9wF/3u8lxvsp9MHyBuofkGIgnOYwZ0oJZyS0KfCMdIdk+1EvExGuCrjt4Eq1OwB/E3dvLHcYbk7wA9bfhHiA8KHYZwF/Po9p2vED2umgDp/U2+I4bz2QoM+QiQhXcYepTS/etPiBYUPx1a9UyvIhRYv+HytilBthg35mviHdu0J8TXiOuIz5FnCzcIayhzv18R5dGp2jG8naKeNI0R/j/QyediYQJ31YU9SyMVhMM5SD/BibR9FWk9cDimhkhBLQkuuhNj/VecqBz+eQjXwKtv02CWXuED6j90/ID993uALMh9lALs1D8ygaztEvfQty7WW8CvdPhdfDzBHCDeWuFeg/0gTVGdwZsHR4VfJbo+u/GMEPzewXuMQvmZ9CCEt11hjldzj96QjT9YD8WGz7fQ59Cfod469A8Oue+JB2Jfiv4Ep7WuJvEM6DHfr5HvIDuEPZ/42+rrSzXrDrirktMfJl2+8N9INPB/kxZx6lxuGiPAnbfks1Q0GuN3BVH28zF0gLr0VSybfkWnvAdgVdE+oV7iGmAydjKwEs+13oVBrUoWJuhn0Dcj4u0fzyaA21AsuPlPtRhppHdiSsJvGMWhMdx5pD2SPdO1sKdCW8T6NXzGsqFnMUaqlnyE4RfwxJRtlONeFoR+4X5PoBXUaU6Dre1M/asRgv6TWU6DqWdARyibkIDXSQhOYj7RyfeuSLD1FP4lSGUsM1F6T1YNR9h/7egiUNhdZ0MfFb6AwlZsI2xu8QdSI5HN4qqEhcBsuNfAGHKz009NL7lFuBreBu2O+aXNOS81iz6Bw+7u8TjHaKx5pWVhnXJToDHBuipvNQMcPZJftdR4SNoRiIh15zfzGU5NqQ67E1e1Z5T8rvA0P5C0DDPgYyMU0AK7gX7HctXIf8HgNLrjfoXmJzLfgJMdRP4Wm2x+FSDw9vouzhalzqV5ptt+ivHEarkw34/YbDfI/tB/GRS0pNrmNLdpoGG3S7HGnBaUdkDN2vyfU5uvzuDUJoapR64F5Mh9gK7gW5Hkpg7jc1viTZMT02OMzcSiHPCu6PTP7QK7n36M9pbHA4iiTpcoVDvaUh/BCxgx3UUGp2jxcOMc2vHfqFTmjCeMyofT8lxGNA/oExzzWUGGqE14OZgbjsgN8U0MSjo0o3CE+6vcBtnNLUpHbg3g0O0+IZ4ZeUptDlB+JfTGtH7tOH6wKH+9Qp3Ohi+luhIXHPS3uvVsixA/JvcNgCeAKprfOr6YYpcPguwZSYCNnH1uU9QPsQJ82P/wMUzx+4Ju4uoQAAAABJRU5ErkJggg==" alt="Dieter Grün Ernährungsberatung">
@@ -804,12 +888,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   <div class="grid">
    <main>
     <section class="card">
-     <div class="split">
-      <div>
-       <h2>Deine Angaben</h2>
-       <div class="muted">Bitte trage hier Deine Angaben ein und ergänze danach darunter die einzelnen Tage. Deine Eingaben werden lokal im Browser auf dem jeweils verwendeten Gerät gespeichert, bis Du sie versendest oder bewusst zurücksetzt. Bitte nutze für die Erfassung möglichst durchgehend dasselbe Gerät – also entweder einen PC oder ein Mobilgerät. Ein geräteübergreifendes Fortsetzen zwischen verschiedenen Geräten ist derzeit nicht möglich.<br><br>Wie Du Deine Angaben anschließend versenden kannst, findest Du weiter unten im Abschnitt „Export & Versand“.</div>
-      </div>
-     </div>
+     <h2>Persönliche Angaben</h2>
 
      <div class="row" style="margin-top:14px;">
       <div class="col-6">
@@ -824,23 +903,28 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
     </section>
 
-    <section class="card actions-card">
+    <section class="card sticky-controls-card">
      <div class="toolbar action-toolbar">
       <button id="addDayBtn">+ Neuen Tag hinzufügen</button>
       <button id="saveDraftBtn" class="secondary">Zwischenstand speichern</button>
       <button id="resetAllBtn" class="danger">Alles zurücksetzen</button>
      </div>
      <div id="status" class="status"></div>
+     <div class="sticky-day-nav-wrap">
+      <div class="day-nav">
+       <div class="day-nav-list" id="daysNavList"></div>
+      </div>
+     </div>
     </section>
 
     <section class="card">
      <div class="split">
       <div>
-       <h2>Tagesnavigation & Details</h2>
-       <div class="muted">Unter diesem Text wählst Du den gewünschten Tag aus. Oben über „Neuen Tag hinzufügen“ legst Du weitere Tage an, die danach ebenfalls hier auswählbar sind. Sichtbar ist immer nur der aktuell ausgewählte Tag.</div>
+       <h2>Ernährungs-Angaben</h2>
+       <div class="muted">Unterhalb dieses Bereichs erfasst Du die Einträge für den oben ausgewählten Tag. Über die Tagesnavigation im fixierten Bereich wechselst Du zwischen Deinen Tagen. Sichtbar ist immer nur der aktuell ausgewählte Tag.</div>
       </div>
      </div>
-     <div id="daysContainer"></div>
+     <div id="dayDetailContainer"></div>
     </section>
    </main>
 
@@ -870,25 +954,18 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
     <section class="card">
      <h2>Export & Versand</h2>
-     <div class="muted">Bitte gehe die folgenden Schritte nacheinander durch:</div>
-     <div class="footer-note" style="margin-top:8px;">
-      <strong>1. CSV herunterladen</strong><br>
-      Klicke zuerst auf <strong>„1. CSV herunterladen“</strong>. Dadurch wird Deine Datei für den Versand gespeichert.
-     </div>
-     <div class="footer-note" style="margin-top:10px;">
-      <strong>2. E-Mail öffnen</strong><br>
-      Klicke danach auf <strong>„2. E-Mail öffnen“</strong>. Dein Mailprogramm wird mit einer vorbereiteten E-Mail an <strong>gesundmitgruen@gmail.com</strong> geöffnet.
-     </div>
-     <div class="footer-note" style="margin-top:10px;">
-      <strong>3. Datei anhängen und senden</strong><br>
-      Bitte hänge die zuvor heruntergeladene CSV-Datei an die vorbereitete E-Mail an und sende sie danach ab.
-     </div>
      <div class="toolbar">
       <button id="downloadCsvBtn" class="secondary">1. CSV herunterladen</button>
       <button id="openMailBtn" class="warning">2. E-Mail öffnen</button>
      </div>
-     <div class="footer-note">
-      <strong>Hinweis:</strong> Wenn sich kein Mailprogramm öffnet, kannst Du die heruntergeladene CSV-Datei auch manuell über Deinen E-Mail-Anbieter versenden, zum Beispiel über Web.de, GMX, Gmail oder andere Dienste.
+     <div class="footer-note" style="margin-top:12px;">
+      <strong>Kurz zur Erinnerung:</strong> Bitte speichere zuerst die CSV-Datei (Button 1. CSV herunterladen). Öffne danach die vorbereitete E-Mail (Button 2. E-Mail öffnen), hänge die CSV-Datei an und sende sie anschließend ab.
+     </div>
+     <div class="footer-note" style="margin-top:10px;">
+      <strong>Wichtig:</strong> Bitte hänge die zuvor gespeicherte CSV-Datei an die vorbereitete E-Mail an. Die Datei findest Du in der Regel im Download-Ordner Deines Geräts oder in Deinen zuletzt heruntergeladenen Dateien.
+     </div>
+     <div class="footer-note" style="margin-top:10px;">
+      <strong>Falls etwas nicht klappt:</strong> Wenn sich kein Mailprogramm öffnet oder das Anhängen nicht funktioniert, kannst Du die gespeicherte CSV-Datei auch manuell an <strong>gesundmitgruen@gmail.com</strong> senden oder mich kurz kontaktieren.
      </div>
     </section>
    </aside>
@@ -914,6 +991,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   let activeTextTarget = null;
   let activeTextTargetKind = null;
   let activeDayId = null;
+
 
   let state = {
    clientName: '',
@@ -1556,21 +1634,20 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
 
   function renderDays(){
-   const container = document.getElementById('daysContainer');
+   const nav = document.getElementById('daysNavList');
+   const detail = document.getElementById('dayDetailContainer');
    ensureActiveDay();
    const activeDay = state.days.find(day => day.id === activeDayId) || state.days[0];
-   container.innerHTML = `
-    <div class="day-layout">
-     <div class="day-nav">
-      <div class="day-nav-list" id="daysNavList">
-       ${dayNavListTemplate()}
-      </div>
-     </div>
-     <div class="day-detail">
-      ${activeDay ? dayCardTemplate(activeDay, state.days.findIndex(day => day.id === activeDay.id)) : ''}
-     </div>
-    </div>
-   `;
+
+   if (nav){
+    nav.innerHTML = dayNavListTemplate();
+   }
+
+   if (detail){
+    detail.innerHTML = activeDay
+     ? `<div class="day-detail">${dayCardTemplate(activeDay, state.days.findIndex(day => day.id === activeDay.id))}</div>`
+     : '';
+   }
   }
 
   function renderDayNavList(){
