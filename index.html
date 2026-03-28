@@ -177,8 +177,8 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    border:1px solid var(--line);
    border-radius:18px;
    box-shadow:var(--shadow);
-   padding:10px;
-   margin-bottom:14px;
+   padding:9px;
+   margin-bottom:12px;
    backdrop-filter:blur(4px);
   }
   aside .card{
@@ -252,8 +252,8 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   .row{
    display:grid;
    grid-template-columns:repeat(12,1fr);
-   gap:10px;
-   margin-bottom:10px;
+   gap:8px;
+   margin-bottom:8px;
   }
   .col-12{grid-column:span 12}
   .col-9{grid-column:span 9}
@@ -270,13 +270,13 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    display:block;
    font-size:12px;
    font-weight:700;
-   margin-bottom:6px;
+   margin-bottom:5px;
    color:var(--brand-dark);
   }
   input, select, textarea{
    width:100%;
-   padding:9px 11px;
-   border-radius:11px;
+   padding:7px 10px;
+   border-radius:6px;
    border:1px solid #cfd8dd;
    background:#fff;
    color:var(--text);
@@ -295,9 +295,9 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    box-shadow:0 0 0 4px rgba(81,188,213,0.14);
   }
   textarea{
-   min-height:82px;
+   min-height:74px;
    resize:vertical;
-   line-height:1.45;
+   line-height:1.4;
   }
   .chips{
    display:flex;
@@ -336,10 +336,10 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
   .day-card{
    border:1px solid #d7e3e8;
-   border-radius:18px;
-   padding:10px;
+   border-radius:16px;
+   padding:8px;
    background:linear-gradient(180deg, #ffffff 0%, #f8fafb 100%);
-   margin-top:14px;
+   margin-top:12px;
   }
   .day-head, .entry-head, .split, .subsection-head{
    display:flex;
@@ -352,22 +352,74 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    min-width:0;
    flex:1 1 auto;
   }
+  .entry-head{
+   align-items:center;
+   flex-wrap:nowrap;
+   gap:8px;
+  }
   .entry-remove-btn{
    margin-left:auto;
    flex:0 0 auto;
-   align-self:flex-start;
+   align-self:center;
   }
   .entry{
    border:1px solid #dde5e9;
    background:#fff;
-   border-radius:14px;
-   padding:12px;
-   margin-top:12px;
+   border-radius:12px;
+   padding:10px;
+   margin-top:10px;
+  }
+  .entry-toggle{
+   appearance:none;
+   -webkit-appearance:none;
+   border:none;
+   background:transparent;
+   padding:0;
+   margin:0;
+   min-width:0;
+   flex:1 1 auto;
+   text-align:left;
+   cursor:pointer;
+   color:inherit;
+  }
+  .entry-toggle-main{
+   display:block;
+   min-width:0;
+  }
+  .entry-title-row{
+   display:flex;
+   align-items:center;
+   justify-content:space-between;
+   gap:10px;
   }
   .entry-title{
    font-weight:700;
    color:var(--brand-dark);
-   margin-bottom:8px;
+   margin-bottom:0;
+  }
+  .entry-chevron{
+   flex:0 0 auto;
+   color:#60727c;
+   font-size:15px;
+   line-height:1;
+   transition:transform .18s ease;
+  }
+  .entry.is-open .entry-chevron{
+   transform:rotate(0deg);
+  }
+  .entry.is-collapsed .entry-chevron{
+   transform:rotate(-90deg);
+  }
+  .entry-meta-line{
+   margin-top:4px;
+   font-size:12px;
+   color:var(--muted);
+   line-height:1.4;
+   white-space:normal;
+   overflow-wrap:anywhere;
+  }
+  .entry-body[hidden]{
+   display:none !important;
   }
   .small{
    font-size:12px;
@@ -378,46 +430,46 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    margin-top:4px;
   }
   .entry-tip{
-   margin-top:6px;
+   margin-top:4px;
   }
   .entry-start-spacer{
-   height:16px;
+   height:10px;
   }
   .entry .row:first-of-type{
    margin-top:0;
   }
   .entry .row + .subsection{
-   margin-top:16px;
+   margin-top:12px;
   }
   .subsection-head .small{
-   margin-top:6px;
+   margin-top:4px;
   }
   .subsection-start-spacer{
-   height:14px;
+   height:10px;
   }
   .subsection-head + *{
    margin-top:0;
   }
   .subsection{
    border:1px solid #e2e8eb;
-   border-radius:14px;
-   padding:12px;
-   margin-top:12px;
+   border-radius:12px;
+   padding:10px;
+   margin-top:10px;
    background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
   }
   .item-row{
    border:1px solid #e3e8eb;
-   border-radius:13px;
-   padding:10px;
-   margin-top:10px;
+   border-radius:10px;
+   padding:8px;
+   margin-top:8px;
    background:#fff;
   }
 
   .day-layout{
    display:grid;
    grid-template-columns:minmax(0,1fr);
-   gap:16px;
-   margin-top:14px;
+   gap:12px;
+   margin-top:12px;
    align-items:start;
    overflow:visible;
   }
@@ -538,10 +590,10 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
   .day-overview{
    border:1px solid #d7e2e7;
-   border-radius:14px;
-   padding:12px;
+   border-radius:12px;
+   padding:10px;
    background:linear-gradient(180deg, #fbfcfd 0%, #f5f8f9 100%);
-   margin:14px 0 0;
+   margin:12px 0 0;
    min-width:0;
   }
   .day-overview-scroll{
@@ -611,6 +663,14 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    .day-overview-table{
     min-width:760px;
    }
+   .entry-head{
+    flex-wrap:wrap;
+    align-items:flex-start;
+   }
+   .entry-remove-btn{
+    margin-left:0;
+    align-self:flex-start;
+   }
   }
 
   .portal-list{
@@ -668,25 +728,25 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    opacity:1;
   }
   .actions-card{
-   padding:12px 14px;
+   padding:10px 12px;
   }
   .actions-card .toolbar{
    margin-top:0;
   }
   .helper-group{
-   margin-top:12px;
+   margin-top:10px;
   }
   .helper-title{
    font-size:12px;
    font-weight:700;
-   margin-bottom:6px;
+   margin-bottom:5px;
    color:var(--text);
   }
   .inline-help{
    font-size:12px;
    color:var(--muted);
-   margin-top:4px;
-   line-height:1.45;
+   margin-top:3px;
+   line-height:1.4;
   }
  
   .hero{
@@ -1042,21 +1102,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
    <aside>
     <section class="card">
-     <h2>Kurzübersicht</h2>
-     <table>
-      <thead>
-       <tr>
-        <th>Datum</th>
-        <th>Tagesart</th>
-        <th>Status</th>
-        <th>Einträge</th>
-       </tr>
-      </thead>
-      <tbody id="summaryTableBody"></tbody>
-     </table>
-    </section>
-
-    <section class="card">
      <h2>Export & Versand</h2>
      <div class="toolbar">
       <button id="downloadCsvBtn" class="secondary">1. CSV herunterladen</button>
@@ -1107,6 +1152,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   let activeTextTarget = null;
   let activeTextTargetKind = null;
   let activeDayId = null;
+  let activeEntryIdsByDay = {};
 
 
   let state = {
@@ -1352,8 +1398,65 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    }
   }
 
+  function ensureActiveEntry(day){
+   if (!day) return null;
+   const entries = day.entries || [];
+   if (!entries.length){
+    activeEntryIdsByDay[day.id] = null;
+    return null;
+   }
+
+   const current = activeEntryIdsByDay[day.id];
+   if (entries.some(entry => entry.id === current)){
+    return current;
+   }
+
+   activeEntryIdsByDay[day.id] = entries[0].id;
+   return activeEntryIdsByDay[day.id];
+  }
+
+  function countEntryItems(items, kind = 'foodDrink'){
+   if (kind === 'sport'){
+    return (items || []).filter(item =>
+     String(item?.type || '').trim() ||
+     String(item?.duration || '').trim()
+    ).length;
+   }
+
+   return (items || []).filter(item =>
+    String(item?.name || '').trim() ||
+    String(item?.amount || '').trim() ||
+    String(item?.motivation || '').trim() ||
+    String(item?.notes || '').trim()
+   ).length;
+  }
+
+  function buildEntryCompactSummary(entry){
+   const parts = [];
+   const time = sanitizeTimeValue(entry?.time || '');
+   if (time) parts.push(time);
+
+   const foods = countEntryItems(entry?.foods || [], 'foodDrink');
+   const drinks = countEntryItems(entry?.drinks || [], 'foodDrink');
+   const sports = countEntryItems(entry?.sports || [], 'sport');
+
+   if (foods) parts.push(`${foods} ${foods === 1 ? 'Speise' : 'Speisen'}`);
+   if (drinks) parts.push(`${drinks} ${drinks === 1 ? 'Getränk' : 'Getränke'}`);
+   if (sports) parts.push(`${sports} ${sports === 1 ? 'Sport' : 'Sporteinträge'}`);
+
+   return parts.join(' · ') || 'Noch keine Angaben';
+  }
+
   function selectDay(dayId){
    activeDayId = dayId;
+   const day = state.days.find(d => d.id === dayId);
+   ensureActiveEntry(day);
+   renderAll();
+  }
+
+  function selectEntry(dayId, entryId){
+   if (activeEntryIdsByDay[dayId] === entryId) return;
+   activeEntryIdsByDay[dayId] = entryId;
    renderAll();
   }
 
@@ -1470,15 +1573,20 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
   function removeDay(dayId){
    state.days = state.days.filter(d => d.id !== dayId);
+   delete activeEntryIdsByDay[dayId];
    ensureAtLeastOneDay();
    ensureActiveDay();
+   const activeDay = state.days.find(d => d.id === activeDayId) || state.days[0] || null;
+   ensureActiveEntry(activeDay);
    renderAll();
   }
 
   function addEntry(dayId){
    const day = state.days.find(d => d.id === dayId);
    if (!day) return;
-   day.entries.push(createEmptyEntry());
+   const newEntry = createEmptyEntry();
+   day.entries.push(newEntry);
+   activeEntryIdsByDay[dayId] = newEntry.id;
    renderAll();
   }
 
@@ -1486,7 +1594,13 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    const day = state.days.find(d => d.id === dayId);
    if (!day) return;
    day.entries = day.entries.filter(e => e.id !== entryId);
-   if (!day.entries.length) day.entries.push(createEmptyEntry());
+   if (!day.entries.length){
+    const fallbackEntry = createEmptyEntry();
+    day.entries.push(fallbackEntry);
+    activeEntryIdsByDay[dayId] = fallbackEntry.id;
+   } else if (activeEntryIdsByDay[dayId] === entryId){
+    activeEntryIdsByDay[dayId] = day.entries[0].id;
+   }
    renderAll();
   }
 
@@ -1736,6 +1850,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
 
   function dayCardTemplate(day, dayIndex){
+   const activeEntryId = ensureActiveEntry(day);
    return `
     <div class="day-card">
      <div class="day-head">
@@ -1765,65 +1880,79 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
      <div id="activeDayOverview">${dayOverviewTable(day)}</div>
 
-     ${day.entries.map((entry, idx) => `
-      <div class="entry">
+     ${(day.entries || []).map((entry, idx) => {
+      const isOpen = entry.id === activeEntryId;
+      const entrySummary = buildEntryCompactSummary(entry);
+      return `
+      <div class="entry ${isOpen ? 'is-open' : 'is-collapsed'}">
        <div class="entry-head">
-        <div class="entry-head-copy">
-         <div class="entry-title">Eintrag ${idx + 1}</div>
-         <div class="small">Ein Eintrag kann eine Mahlzeit, Getränke, Bewegung oder eine Kombination daraus enthalten.</div>
-         <div class="small entry-tip">Bitte auch Kleinigkeiten mit erfassen, z. B. Öl, Dressing, Zucker, Milch im Kaffee, Snacks oder Alkohol.</div>
-        </div>
+        <button type="button" class="entry-toggle" aria-expanded="${isOpen ? 'true' : 'false'}" onclick="selectEntry('${day.id}','${entry.id}')">
+         <span class="entry-toggle-main">
+          <span class="entry-title-row">
+           <span class="entry-title">Eintrag ${idx + 1}</span>
+           <span class="entry-chevron" aria-hidden="true">▾</span>
+          </span>
+          <span class="entry-meta-line">${escapeHtml(entrySummary)}</span>
+         </span>
+        </button>
         <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag entfernen</button>
        </div>
 
-       <div class="entry-start-spacer" aria-hidden="true"></div>
-       <div class="row">
-        <div class="col-12">
-         <label>Uhrzeit / Zeitraum</label>
-         <input value="${escapeHtml(entry.time)}" inputmode="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this; activeTextTargetKind='time'" />
-         <div class="inline-help">Erlaubt sind z. B. 08:30, 08:30-09:15 oder 8-9.</div>
-         <div class="field-error">Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.</div>
-        </div>
-       </div>
+       <div class="entry-body" ${isOpen ? '' : 'hidden'}>
+        <div class="entry-start-spacer" aria-hidden="true"></div>
+        <div class="small">Ein Eintrag kann eine Mahlzeit, Getränke, Bewegung oder eine Kombination daraus enthalten.</div>
+        <div class="small entry-tip">Bitte auch Kleinigkeiten mit erfassen, z. B. Öl, Dressing, Zucker, Milch im Kaffee, Snacks oder Alkohol.</div>
+        <div class="entry-start-spacer" aria-hidden="true"></div>
 
-       <div class="subsection">
-        <div class="subsection-head">
-         <div>
-          <h4>Speisen</h4>
-          <div class="small">Art, Menge und Einheit getrennt erfassen. Bitte möglichst konkret eintragen, z. B. Sorte, Marke, Zubereitung, Sauce, Öl oder Dressing.</div>
+        <div class="row">
+         <div class="col-12">
+          <label>Uhrzeit / Zeitraum</label>
+          <input value="${escapeHtml(entry.time)}" inputmode="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="13" pattern="^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$" title="Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9." placeholder="z. B. 08:30, 08:30-09:15 oder 8-9" oninput="updateEntry('${day.id}','${entry.id}','time',this.value); validateTimeInput(this)" onblur="validateTimeInput(this)" onfocus="activeTextTarget=this; activeTextTargetKind='time'" />
+          <div class="inline-help">Erlaubt sind z. B. 08:30, 08:30-09:15 oder 8-9.</div>
+          <div class="field-error">Bitte nutze z. B. 08:30, 08:30-09:15 oder 8-9.</div>
          </div>
-         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','foods')">+ Speise</button>
         </div>
-        <div class="subsection-start-spacer" aria-hidden="true"></div>
-        ${renderFoodRows(day.id, entry.id, entry.foods || [])}
-       </div>
 
-       <div class="subsection">
-        <div class="subsection-head">
-         <div>
-          <h4>Getränke</h4>
-          <div class="small">Art, Menge und Einheit getrennt erfassen. Bitte möglichst konkret eintragen, z. B. Getränkesorte, Light, Milch, Zucker oder Alkohol.</div>
+        <div class="subsection">
+         <div class="subsection-head">
+          <div>
+           <h4>Speisen</h4>
+           <div class="small">Art, Menge und Einheit getrennt erfassen. Bitte möglichst konkret eintragen, z. B. Sorte, Marke, Zubereitung, Sauce, Öl oder Dressing.</div>
+          </div>
+          <button class="ghost" onclick="addItem('${day.id}','${entry.id}','foods')">+ Speise</button>
          </div>
-         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','drinks')">+ Getränk</button>
+         <div class="subsection-start-spacer" aria-hidden="true"></div>
+         ${renderFoodRows(day.id, entry.id, entry.foods || [])}
         </div>
-        <div class="subsection-start-spacer" aria-hidden="true"></div>
-        ${renderDrinkRows(day.id, entry.id, entry.drinks || [])}
-       </div>
 
-       <div class="subsection">
-        <div class="subsection-head">
-         <div>
-          <h4>Bewegung / Sport</h4>
-          <div class="small">Art und Dauer werden getrennt erfasst.</div>
+        <div class="subsection">
+         <div class="subsection-head">
+          <div>
+           <h4>Getränke</h4>
+           <div class="small">Art, Menge und Einheit getrennt erfassen. Bitte möglichst konkret eintragen, z. B. Getränkesorte, Light, Milch, Zucker oder Alkohol.</div>
+          </div>
+          <button class="ghost" onclick="addItem('${day.id}','${entry.id}','drinks')">+ Getränk</button>
          </div>
-         <button class="ghost" onclick="addItem('${day.id}','${entry.id}','sports')">+ Sport</button>
+         <div class="subsection-start-spacer" aria-hidden="true"></div>
+         ${renderDrinkRows(day.id, entry.id, entry.drinks || [])}
         </div>
-        <div class="subsection-start-spacer" aria-hidden="true"></div>
-        ${renderSportRows(day.id, entry.id, entry.sports || [])}
+
+        <div class="subsection">
+         <div class="subsection-head">
+          <div>
+           <h4>Bewegung / Sport</h4>
+           <div class="small">Art und Dauer werden getrennt erfasst.</div>
+          </div>
+          <button class="ghost" onclick="addItem('${day.id}','${entry.id}','sports')">+ Sport</button>
+         </div>
+         <div class="subsection-start-spacer" aria-hidden="true"></div>
+         ${renderSportRows(day.id, entry.id, entry.sports || [])}
+        </div>
        </div>
 
       </div>
-     `).join('')}
+     `;
+     }).join('')}
 
      <div class="toolbar">
       <button class="secondary" onclick="addEntry('${day.id}')">+ Eintrag hinzufügen</button>
@@ -1837,6 +1966,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    const detail = document.getElementById('dayDetailContainer');
    ensureActiveDay();
    const activeDay = state.days.find(day => day.id === activeDayId) || state.days[0];
+   ensureActiveEntry(activeDay);
 
    if (nav){
     nav.innerHTML = dayNavListTemplate();
@@ -1899,8 +2029,9 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
 
   function renderSummary(){
-   const days = [...(state.days || [])].sort((a, b) => compareDates(a.date, b.date));
    const tbody = document.getElementById('summaryTableBody');
+   if (!tbody) return;
+   const days = [...(state.days || [])].sort((a, b) => compareDates(a.date, b.date));
    tbody.innerHTML = days.map(d => {
     const quality = getDayQualityStatus(d);
     return `
@@ -2083,6 +2214,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     const parsed = JSON.parse(raw);
     if (parsed && typeof parsed === 'object'){
      state = migrateState(parsed);
+     activeEntryIdsByDay = {};
      mergeDuplicateDaysByDate();
      ensureAtLeastOneDay();
      return true;
@@ -2113,9 +2245,12 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    const items = getPortalItems();
    if (!items[index]) return;
    state = migrateState(items[index].payload || {});
+   activeEntryIdsByDay = {};
    mergeDuplicateDaysByDate();
    ensureAtLeastOneDay();
    activeDayId = state.days[0]?.id || null;
+   const activeDay = state.days[0] || null;
+   ensureActiveEntry(activeDay);
    renderAll();
    setStatus('Datensatz aus dem Portal-Zwischenspeicher geladen.');
   }
@@ -2135,7 +2270,9 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     consultantEmail: DEFAULT_CONSULTANT_EMAIL,
     days: [createEmptyDay()]
    };
+   activeEntryIdsByDay = {};
    activeDayId = state.days[0]?.id || null;
+   ensureActiveEntry(state.days[0] || null);
    renderAll();
    setStatus('Aktuelle Eingaben wurden zurückgesetzt.');
   }
@@ -2711,6 +2848,7 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
   window.addItem = addItem;
   window.removeItem = removeItem;
   window.selectDay = selectDay;
+  window.selectEntry = selectEntry;
   window.insertPreset = insertPreset;
   window.loadPortalItem = loadPortalItem;
   window.deletePortalItem = deletePortalItem;
@@ -2774,6 +2912,7 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
   }
   state.consultantEmail = DEFAULT_CONSULTANT_EMAIL;
   activeDayId = state.days[0]?.id || null;
+  ensureActiveEntry(state.days[0] || null);
 
   const noticeOkBtn = document.getElementById('noticeOkBtn');
   if (noticeOkBtn){
