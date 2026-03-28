@@ -255,6 +255,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    gap:8px;
    margin-bottom:8px;
   }
+  .row > [class^="col-"],
+  .row > [class*=" col-"]{
+   position:relative;
+   z-index:1;
+  }
   .col-12{grid-column:span 12}
   .col-9{grid-column:span 9}
   .col-8{grid-column:span 8}
@@ -911,6 +916,8 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
 
     .inline-suggest-wrap{position:relative; z-index:40}
+    .inline-suggest-wrap:focus-within{z-index:120}
+    .inline-suggest-wrap:focus-within .inline-suggest-menu{z-index:121}
     .inline-suggest-menu{
       position:absolute;
       left:0;
