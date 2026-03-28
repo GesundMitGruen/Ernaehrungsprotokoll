@@ -415,8 +415,9 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    font-size:12px;
    color:var(--muted);
    line-height:1.4;
-   white-space:normal;
-   overflow-wrap:anywhere;
+   white-space:nowrap;
+   overflow:hidden;
+   text-overflow:ellipsis;
   }
   .entry-body[hidden]{
    display:none !important;
@@ -667,9 +668,14 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     flex-wrap:wrap;
     align-items:flex-start;
    }
+   .entry-toggle{
+    min-width:0;
+   }
+   .entry-meta-line{
+    font-size:11px;
+   }
    .entry-remove-btn{
-    margin-left:0;
-    align-self:flex-start;
+    padding:8px 10px;
    }
   }
 
@@ -1146,14 +1152,35 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   const DEFAULT_CONSULTANT_EMAIL = 'gesundmitgruen@gmail.com';
   const TIME_PATTERN = /^\s*(\d{1,2}:\d{2}(\s*-\s*\d{1,2}:\d{2})?|\d{1,2}(\s*-\s*\d{1,2})?)\s*$/;
 
-  const motivationPresets = ['Hunger', 'Appetit', 'Gewohnheit', 'Langeweile', 'Stress', 'Ärger', 'Belohnung', 'Geselligkeit'];
+  const motivationPresets = ['Hunger', 'Durst', 'Appetit', 'Gewohnheit', 'Langeweile', 'Stress', 'Ärger', 'Belohnung', 'Geselligkeit'];
   const feelingPresets = ['Zufrieden', 'Sehr gut', 'Erfrischt', 'Müde', 'Völlegefühl', 'Übel', 'Blähungen', 'Schlechtes Gewissen'];
 
   let activeTextTarget = null;
   let activeTextTargetKind = null;
   let activeDayId = null;
   let activeEntryIdsByDay = {};
+  let pendingEntryScroll = null;
 
+  function queueEntryScroll(dayId, entryId){
+   pendingEntryScroll = dayId && entryId ? { dayId, entryId } : null;
+  }
+
+  function scrollPendingEntryIntoView(){
+   if (!pendingEntryScroll) return;
+   const { dayId, entryId } = pendingEntryScroll;
+   pendingEntryScroll = null;
+   requestAnimationFrame(() => {
+    const target = document.querySelector(`.entry[data-day-id="${dayId}"][data-entry-id="${entryId}"]`);
+    if (!target) return;
+    const stickyShell = document.querySelector('.sticky-controls-shell');
+    const stickyRect = stickyShell ? stickyShell.getBoundingClientRect() : null;
+    const stickyHeight = stickyRect ? stickyRect.height : 0;
+    const shellTop = stickyRect ? Math.max(stickyRect.top, 0) : 0;
+    const offset = stickyHeight + shellTop + 12;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(targetTop, 0), behavior: 'smooth' });
+   });
+  }
 
   let state = {
    clientName: '',
@@ -1434,7 +1461,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   function buildEntryCompactSummary(entry){
    const parts = [];
    const time = sanitizeTimeValue(entry?.time || '');
-   if (time) parts.push(time);
+   if (time) parts.push(`${time} Uhr`);
 
    const foods = countEntryItems(entry?.foods || [], 'foodDrink');
    const drinks = countEntryItems(entry?.drinks || [], 'foodDrink');
@@ -1457,6 +1484,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   function selectEntry(dayId, entryId){
    if (activeEntryIdsByDay[dayId] === entryId) return;
    activeEntryIdsByDay[dayId] = entryId;
+   queueEntryScroll(dayId, entryId);
    renderAll();
   }
 
@@ -1587,6 +1615,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    const newEntry = createEmptyEntry();
    day.entries.push(newEntry);
    activeEntryIdsByDay[dayId] = newEntry.id;
+   queueEntryScroll(dayId, newEntry.id);
    renderAll();
   }
 
@@ -1884,7 +1913,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
       const isOpen = entry.id === activeEntryId;
       const entrySummary = buildEntryCompactSummary(entry);
       return `
-      <div class="entry ${isOpen ? 'is-open' : 'is-collapsed'}">
+      <div class="entry ${isOpen ? 'is-open' : 'is-collapsed'}" data-day-id="${day.id}" data-entry-id="${entry.id}">
        <div class="entry-head">
         <button type="button" class="entry-toggle" aria-expanded="${isOpen ? 'true' : 'false'}" onclick="selectEntry('${day.id}','${entry.id}')">
          <span class="entry-toggle-main">
@@ -1895,7 +1924,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
           <span class="entry-meta-line">${escapeHtml(entrySummary)}</span>
          </span>
         </button>
-        <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag entfernen</button>
+        <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag löschen</button>
        </div>
 
        <div class="entry-body" ${isOpen ? '' : 'hidden'}>
@@ -2819,6 +2848,7 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
    ensureActiveDay();
    bindTopFields();
    renderDays();
+   scrollPendingEntryIntoView();
    renderSummary();
    renderChips();
    saveDraft();
