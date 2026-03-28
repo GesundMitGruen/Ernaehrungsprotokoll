@@ -255,11 +255,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    gap:8px;
    margin-bottom:8px;
   }
-  .row > [class^="col-"],
-  .row > [class*=" col-"]{
-   position:relative;
-   z-index:1;
-  }
   .col-12{grid-column:span 12}
   .col-9{grid-column:span 9}
   .col-8{grid-column:span 8}
@@ -684,6 +679,37 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    }
   }
 
+  @media (max-width:760px){
+   .entry-head{
+    flex-wrap:nowrap !important;
+    align-items:center !important;
+    gap:6px;
+   }
+   .entry-toggle{
+    flex:1 1 auto;
+    min-width:0;
+   }
+   .entry-toggle-main{
+    min-width:0;
+   }
+   .entry-title-row{
+    gap:6px;
+   }
+   .entry-meta-line{
+    font-size:10px;
+    margin-top:2px;
+    line-height:1.2;
+   }
+   .entry-remove-btn{
+    flex:0 0 auto;
+    padding:6px 8px;
+    font-size:11px;
+    min-width:auto;
+   }
+   .entry-remove-btn .label-desktop{display:none}
+   .entry-remove-btn .label-mobile{display:inline}
+  }
+
   .portal-list{
    display:grid;
    gap:10px;
@@ -916,8 +942,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
   }
 
     .inline-suggest-wrap{position:relative; z-index:40}
-    .inline-suggest-wrap:focus-within{z-index:120}
-    .inline-suggest-wrap:focus-within .inline-suggest-menu{z-index:121}
     .inline-suggest-menu{
       position:absolute;
       left:0;
@@ -952,6 +976,42 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
       font-size:12px;
       color:var(--muted);
     }
+
+    .suggestion-portal{
+      position:fixed;
+      z-index:2600;
+      background:#fff;
+      border:1px solid #dbe3ea;
+      border-radius:12px;
+      box-shadow:0 12px 28px rgba(0,0,0,0.12);
+      max-height:180px;
+      overflow:auto;
+      padding:6px;
+      display:none;
+    }
+    .suggestion-portal.show{display:block}
+    .suggestion-portal-option{
+      display:block;
+      width:100%;
+      text-align:left;
+      background:transparent;
+      color:var(--text);
+      border:none;
+      border-radius:8px;
+      padding:8px 10px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .suggestion-portal-option:hover{background:#f1f6f8}
+    .suggestion-portal-empty{
+      padding:8px 10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .entry-remove-btn{
+      white-space:nowrap;
+    }
+    .entry-remove-btn .label-mobile{display:none}
 
     .toolbar > button{
       min-height:42px;
@@ -1135,6 +1195,8 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
  </div>
 
 
+ <div id="suggestionPortal" class="suggestion-portal" hidden></div>
+
  <div id="noticeOverlay" class="notice-overlay" aria-hidden="true">
   <div class="notice-dialog" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" aria-describedby="noticeMessage">
    <h3 id="noticeTitle">Bitte beachte</h3>
@@ -1164,6 +1226,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
   let activeTextTarget = null;
   let activeTextTargetKind = null;
+  let activeSuggestionInput = null;
   let activeDayId = null;
   let activeEntryIdsByDay = {};
   let pendingEntryScroll = null;
@@ -1931,7 +1994,7 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
           <span class="entry-meta-line">${escapeHtml(entrySummary)}</span>
          </span>
         </button>
-        <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')">Eintrag löschen</button>
+        <button class="secondary entry-remove-btn" onclick="removeEntry('${day.id}','${entry.id}')"><span class="label-desktop">Eintrag löschen</span><span class="label-mobile">Löschen</span></button>
        </div>
 
        <div class="entry-body" ${isOpen ? '' : 'hidden'}>
@@ -2168,6 +2231,18 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
    menu.classList.add('show');
   }
+
+  window.addEventListener('resize', () => {
+   if (activeSuggestionInput){
+    positionSuggestionPortal(activeSuggestionInput);
+   }
+  });
+
+  window.addEventListener('scroll', () => {
+   if (activeSuggestionInput){
+    positionSuggestionPortal(activeSuggestionInput);
+   }
+  }, true);
 
   function applyInlineSuggestion(inputEl, value){
    if (!inputEl) return;
@@ -2910,6 +2985,13 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
   });
 
   document.addEventListener('pointerdown', (event) => {
+   const portalOption = event.target.closest('.suggestion-portal-option');
+   if (portalOption){
+    event.preventDefault();
+    applyInlineSuggestion(activeSuggestionInput, portalOption.getAttribute('data-value') || portalOption.textContent || '');
+    return;
+   }
+
    const option = event.target.closest('.inline-suggest-option');
    if (option){
     event.preventDefault();
@@ -2922,7 +3004,7 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
     return;
    }
 
-   if (!event.target.closest('.inline-suggest-wrap')){
+   if (!event.target.closest('.inline-suggest-wrap') && !event.target.closest('#suggestionPortal')){
     hideAllInlineSuggestions();
    }
   });
@@ -2937,9 +3019,10 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
    const wrap = event.target.closest('.inline-suggest-wrap');
    if (!wrap) return;
    setTimeout(() => {
+    const portal = getSuggestionPortal();
+    if (portal && portal.contains(document.activeElement)) return;
     if (!wrap.contains(document.activeElement)){
-      const menu = wrap.querySelector('.inline-suggest-menu');
-      if (menu) menu.classList.remove('show');
+      hideAllInlineSuggestions();
     }
    }, 120);
   });
@@ -2978,6 +3061,11 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
   }
   document.addEventListener('keydown', (event) => {
    if (event.key === 'Escape'){
+    const portal = getSuggestionPortal();
+    if (portal && portal.classList.contains('show')){
+      hideAllInlineSuggestions();
+      return;
+    }
     const overlay = document.getElementById('noticeOverlay');
     if (overlay && overlay.classList.contains('show')){
       hideNoticeDialog();
