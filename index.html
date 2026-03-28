@@ -361,7 +361,9 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    margin-left:auto;
    flex:0 0 auto;
    align-self:center;
+   white-space:nowrap;
   }
+  .entry-remove-btn .label-mobile{display:none}
   .entry{
    border:1px solid #dde5e9;
    background:#fff;
@@ -679,32 +681,35 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    }
   }
 
+
   @media (max-width:760px){
    .entry-head{
-    flex-wrap:nowrap !important;
-    align-items:center !important;
-    gap:6px;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:4px;
    }
    .entry-toggle{
-    flex:1 1 auto;
     min-width:0;
+    flex:1 1 auto;
    }
    .entry-toggle-main{
     min-width:0;
    }
+   .entry-title{
+    font-size:13px;
+   }
    .entry-title-row{
-    gap:6px;
+    gap:4px;
    }
    .entry-meta-line{
-    font-size:10px;
+    font-size:9px;
+    line-height:1.15;
     margin-top:2px;
-    line-height:1.2;
    }
    .entry-remove-btn{
-    flex:0 0 auto;
-    padding:6px 8px;
+    padding:5px 7px;
     font-size:11px;
-    min-width:auto;
+    min-width:72px;
    }
    .entry-remove-btn .label-desktop{display:none}
    .entry-remove-btn .label-mobile{display:inline}
@@ -941,13 +946,14 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
    text-align:center;
   }
 
-    .inline-suggest-wrap{position:relative; z-index:40}
+    .inline-suggest-wrap{position:relative; z-index:1}
+    .inline-suggest-wrap.active{z-index:120}
     .inline-suggest-menu{
       position:absolute;
       left:0;
       right:0;
       top:calc(100% + 4px);
-      z-index:30;
+      z-index:130;
       background:#fff;
       border:1px solid #dbe3ea;
       border-radius:12px;
@@ -977,42 +983,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
       color:var(--muted);
     }
 
-    .suggestion-portal{
-      position:fixed;
-      z-index:2600;
-      background:#fff;
-      border:1px solid #dbe3ea;
-      border-radius:12px;
-      box-shadow:0 12px 28px rgba(0,0,0,0.12);
-      max-height:180px;
-      overflow:auto;
-      padding:6px;
-      display:none;
-    }
-    .suggestion-portal.show{display:block}
-    .suggestion-portal-option{
-      display:block;
-      width:100%;
-      text-align:left;
-      background:transparent;
-      color:var(--text);
-      border:none;
-      border-radius:8px;
-      padding:8px 10px;
-      font-size:13px;
-      cursor:pointer;
-    }
-    .suggestion-portal-option:hover{background:#f1f6f8}
-    .suggestion-portal-empty{
-      padding:8px 10px;
-      font-size:12px;
-      color:var(--muted);
-    }
-    .entry-remove-btn{
-      white-space:nowrap;
-    }
-    .entry-remove-btn .label-mobile{display:none}
-
     .toolbar > button{
       min-height:42px;
       display:inline-flex;
@@ -1037,11 +1007,11 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
         backdrop-filter:none;
         -webkit-backdrop-filter:none;
       }
-      .inline-suggest-wrap{
-        z-index:40 !important;
+      .inline-suggest-wrap.active{
+        z-index:140 !important;
       }
       .inline-suggest-menu{
-        z-index:41 !important;
+        z-index:141 !important;
       }
     }
 
@@ -1195,8 +1165,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
  </div>
 
 
- <div id="suggestionPortal" class="suggestion-portal" hidden></div>
-
  <div id="noticeOverlay" class="notice-overlay" aria-hidden="true">
   <div class="notice-dialog" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" aria-describedby="noticeMessage">
    <h3 id="noticeTitle">Bitte beachte</h3>
@@ -1226,7 +1194,6 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
   let activeTextTarget = null;
   let activeTextTargetKind = null;
-  let activeSuggestionInput = null;
   let activeDayId = null;
   let activeEntryIdsByDay = {};
   let pendingEntryScroll = null;
@@ -2214,13 +2181,17 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
 
   function hideAllInlineSuggestions(){
    document.querySelectorAll('.inline-suggest-menu').forEach(el => el.classList.remove('show'));
+   document.querySelectorAll('.inline-suggest-wrap.active').forEach(el => el.classList.remove('active'));
   }
 
   function showInlineSuggestions(inputEl){
+   if (!inputEl) return;
    const menuId = inputEl.getAttribute('data-menu-id');
    if (!menuId) return;
    const menu = document.getElementById(menuId);
    if (!menu) return;
+
+   hideAllInlineSuggestions();
 
    const source = getSuggestionSourceForInput(inputEl);
    const matches = getSuggestionMatches(source, inputEl.value || '');
@@ -2229,20 +2200,10 @@ Nutzung, Vervielfältigung oder Weitergabe nur mit Zustimmung von Dieter Grün E
     ? matches.map(item => `<div class="inline-suggest-option" tabindex="0" data-value="${escapeHtml(item)}">${escapeHtml(item)}</div>`).join('')
     : '<div class="inline-suggest-empty">Keine weiteren passenden Vorschläge.</div>';
 
+   const wrap = inputEl.closest('.inline-suggest-wrap');
+   if (wrap) wrap.classList.add('active');
    menu.classList.add('show');
   }
-
-  window.addEventListener('resize', () => {
-   if (activeSuggestionInput){
-    positionSuggestionPortal(activeSuggestionInput);
-   }
-  });
-
-  window.addEventListener('scroll', () => {
-   if (activeSuggestionInput){
-    positionSuggestionPortal(activeSuggestionInput);
-   }
-  }, true);
 
   function applyInlineSuggestion(inputEl, value){
    if (!inputEl) return;
@@ -2985,13 +2946,6 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
   });
 
   document.addEventListener('pointerdown', (event) => {
-   const portalOption = event.target.closest('.suggestion-portal-option');
-   if (portalOption){
-    event.preventDefault();
-    applyInlineSuggestion(activeSuggestionInput, portalOption.getAttribute('data-value') || portalOption.textContent || '');
-    return;
-   }
-
    const option = event.target.closest('.inline-suggest-option');
    if (option){
     event.preventDefault();
@@ -3004,7 +2958,7 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
     return;
    }
 
-   if (!event.target.closest('.inline-suggest-wrap') && !event.target.closest('#suggestionPortal')){
+   if (!event.target.closest('.inline-suggest-wrap')){
     hideAllInlineSuggestions();
    }
   });
@@ -3019,10 +2973,10 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
    const wrap = event.target.closest('.inline-suggest-wrap');
    if (!wrap) return;
    setTimeout(() => {
-    const portal = getSuggestionPortal();
-    if (portal && portal.contains(document.activeElement)) return;
     if (!wrap.contains(document.activeElement)){
-      hideAllInlineSuggestions();
+      const menu = wrap.querySelector('.inline-suggest-menu');
+      if (menu) menu.classList.remove('show');
+      wrap.classList.remove('active');
     }
    }, 120);
   });
@@ -3061,11 +3015,6 @@ Du kannst jetzt zurückgehen und weitere Informationen ergänzen oder trotzdem m
   }
   document.addEventListener('keydown', (event) => {
    if (event.key === 'Escape'){
-    const portal = getSuggestionPortal();
-    if (portal && portal.classList.contains('show')){
-      hideAllInlineSuggestions();
-      return;
-    }
     const overlay = document.getElementById('noticeOverlay');
     if (overlay && overlay.classList.contains('show')){
       hideNoticeDialog();
